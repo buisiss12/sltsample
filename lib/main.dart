@@ -22,17 +22,15 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'solotteサンプル',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      theme: ThemeData.dark(),
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          title: const Text('SLTサンプル'),
           leading: IconButton(
-            icon: const Icon(Icons.menu),
+            icon: _selectedPage == 0
+                ? Image.asset('assets/images/oriraji.png')
+                : Image.asset('assets/images/SOLOTTE!.png'),
             onPressed: () {
               setState(() {
                 _selectedPage = (_selectedPage + 1) % _pageOptions.length;
@@ -142,24 +140,24 @@ class _AgPageState extends State<AgPage> {
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'ホーム',
+            icon: Icon(Icons.emoji_events),
+            label: '特典',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.email),
-            label: 'メッセージ',
+            icon: Icon(Icons.store),
+            label: '店内人数',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.edit_note),
-            label: '投稿',
+            icon: Icon(Icons.restaurant_menu),
+            label: 'メニュー',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.receipt_long),
+            label: '会計',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.notifications),
             label: 'お知らせ',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'プロフィール',
           ),
         ],
         currentIndex: _counter,
