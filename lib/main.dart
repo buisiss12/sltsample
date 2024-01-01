@@ -10,20 +10,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'sltサンプル',
+      title: 'solotteサンプル',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'sltサンプル Home Page'),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -32,9 +30,42 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
-  void _incrementCounter() {
+  static const List<Widget> _widgetOptions = <Widget>[
+    Center(
+      child: Icon(
+        Icons.home,
+        size: 150,
+      ),
+    ),
+    Center(
+      child: Icon(
+        Icons.search,
+        size: 150,
+      ),
+    ),
+    Center(
+      child: Icon(
+        Icons.favorite,
+        size: 150,
+      ),
+    ),
+    Center(
+      child: Icon(
+        Icons.message,
+        size: 150,
+      ),
+    ),
+    Center(
+      child: Icon(
+        Icons.settings,
+        size: 150,
+      ),
+    ),
+  ];
+
+  void _incrementCounter(int index) {
     setState(() {
-      _counter++;
+      _counter = index;
     });
   }
 
@@ -43,26 +74,38 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        title: const Text('SLTサンプル'),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
+        child: _widgetOptions.elementAt(_counter),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'ホーム',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.email),
+            label: 'メッセージ',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.edit_note),
+            label: '投稿',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.notifications),
+            label: 'お知らせ',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'プロフィール',
+          ),
+        ],
+        currentIndex: _counter,
+        selectedItemColor: Colors.amber[800],
+        onTap: _incrementCounter,
       ),
     );
   }
