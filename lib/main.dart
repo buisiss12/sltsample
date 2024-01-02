@@ -13,11 +13,31 @@ class MyApp extends StatefulWidget {
 
 class MyAppState extends State<MyApp> {
   int _selectedPage = 0;
+  String _appBarTitle = 'ホーム';
 
   final _pageOptions = [
     const SolottePage(),
     const OriAgPage(),
   ];
+
+  final _appBarTitles = [
+    'ホーム',
+    '特典',
+  ];
+
+  void updateAppBarTitle(String title) {
+    setState(() {
+      _appBarTitle = title;
+    });
+  }
+
+  void _changePage() {
+    int newPage = (_selectedPage + 1) % _pageOptions.length;
+    setState(() {
+      _selectedPage = newPage;
+      _appBarTitle = _appBarTitles[newPage];
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,13 +47,10 @@ class MyAppState extends State<MyApp> {
       theme: ThemeData.dark(),
       home: Scaffold(
         appBar: AppBar(
+          title: Text(_appBarTitle),
           actions: <Widget>[
             InkWell(
-              onTap: () {
-                setState(() {
-                  _selectedPage = (_selectedPage + 1) % _pageOptions.length;
-                });
-              },
+              onTap: _changePage,
               child: Stack(
                 alignment: Alignment.bottomCenter, // テキストを画像の下部中央に配置
                 children: <Widget>[
@@ -73,6 +90,10 @@ class _SolottePageState extends State<SolottePage> {
     setState(() {
       _currentIndex = index;
     });
+    final appBarTitles = ['ホーム', 'メッセージ', '投稿', 'お知らせ', 'プロフィール'];
+    (context as Element)
+        .findAncestorStateOfType<MyAppState>()
+        ?.updateAppBarTitle(appBarTitles[index]);
   }
 
   @override
@@ -123,6 +144,10 @@ class _OriAgPageState extends State<OriAgPage> {
     setState(() {
       _currentIndex = index;
     });
+    final appBarTitles = ['特典', '店内人数', 'メニュー', '会計', 'お知らせ'];
+    (context as Element)
+        .findAncestorStateOfType<MyAppState>()
+        ?.updateAppBarTitle(appBarTitles[index]);
   }
 
   @override
