@@ -8,15 +8,15 @@ class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   @override
-  _MyAppState createState() => _MyAppState();
+  MyAppState createState() => MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class MyAppState extends State<MyApp> {
   int _selectedPage = 0;
 
   final _pageOptions = [
     const SolottePage(),
-    const AgPage(),
+    const OriAgPage(),
   ];
 
   @override
@@ -37,9 +37,9 @@ class _MyAppState extends State<MyApp> {
               child: Stack(
                 alignment: Alignment.bottomCenter, // テキストを画像の下部中央に配置
                 children: <Widget>[
-                  _selectedPage == 0
-                      ? Image.asset('assets/images/263x105olag.png')
-                      : Image.asset('assets/images/263x105solotte.png'),
+                  Image.asset(_selectedPage == 0
+                      ? 'assets/images/263x105olag.png'
+                      : 'assets/images/263x105solotte.png'),
                   Text(
                     _selectedPage == 0 ? "タップで掲示板へ" : "タップで店舗メニューへ",
                     style: const TextStyle(
@@ -67,28 +67,17 @@ class SolottePage extends StatefulWidget {
 }
 
 class _SolottePageState extends State<SolottePage> {
-  int _counter = 0;
-
-  static const List<Widget> _widgetOptions = <Widget>[
-    Center(child: Text('Solotte: Tab 1')),
-    Center(child: Text('Solotte: Tab 2')),
-    Center(child: Text('Solotte: Tab 3')),
-    Center(child: Text('Solotte: Tab 4')),
-    Center(child: Text('Solotte: Tab 5')),
-  ];
+  int _currentIndex = 0;
 
   void _incrementCounter(int index) {
     setState(() {
-      _counter = index;
+      _currentIndex = index;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: _widgetOptions.elementAt(_counter),
-      ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
@@ -113,44 +102,32 @@ class _SolottePageState extends State<SolottePage> {
             label: 'プロフィール',
           ),
         ],
-        currentIndex: _counter,
-        selectedItemColor: Colors.amber[800],
+        currentIndex: _currentIndex,
         onTap: _incrementCounter,
       ),
     );
   }
 }
 
-class AgPage extends StatefulWidget {
-  const AgPage({super.key});
+class OriAgPage extends StatefulWidget {
+  const OriAgPage({super.key});
 
   @override
-  State<AgPage> createState() => _AgPageState();
+  State<OriAgPage> createState() => _OriAgPageState();
 }
 
-class _AgPageState extends State<AgPage> {
-  int _counter = 0;
-
-  static const List<Widget> _widgetOptions = <Widget>[
-    Center(child: Text('ag: Tab 1')),
-    Center(child: Text('ag: Tab 2')),
-    Center(child: Text('ag: Tab 3')),
-    Center(child: Text('ag: Tab 4')),
-    Center(child: Text('ag: Tab 5')),
-  ];
+class _OriAgPageState extends State<OriAgPage> {
+  int _currentIndex = 0;
 
   void _incrementCounter(int index) {
     setState(() {
-      _counter = index;
+      _currentIndex = index;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: _widgetOptions.elementAt(_counter),
-      ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
@@ -175,8 +152,7 @@ class _AgPageState extends State<AgPage> {
             label: 'お知らせ',
           ),
         ],
-        currentIndex: _counter,
-        selectedItemColor: Colors.amber[800],
+        currentIndex: _currentIndex,
         onTap: _incrementCounter,
       ),
     );
