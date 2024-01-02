@@ -27,30 +27,31 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData.dark(),
       home: Scaffold(
         appBar: AppBar(
-          leadingWidth: MediaQuery.of(context).size.width * 0.3,
-          leading: InkWell(
-            onTap: () {
-              setState(() {
-                _selectedPage = (_selectedPage + 1) % _pageOptions.length;
-              });
-            },
-            child: Stack(
-              alignment: Alignment.bottomCenter, // テキストを画像の下部中央に配置
-              children: <Widget>[
-                _selectedPage == 0
-                    ? Image.asset('assets/images/263x105olag.png')
-                    : Image.asset('assets/images/263x105solotte.png'),
-                Text(
-                  _selectedPage == 0 ? "タップで掲示板へ" : "タップで店舗メニューへ",
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.yellow,
-                    fontSize: 9,
+          actions: <Widget>[
+            InkWell(
+              onTap: () {
+                setState(() {
+                  _selectedPage = (_selectedPage + 1) % _pageOptions.length;
+                });
+              },
+              child: Stack(
+                alignment: Alignment.bottomCenter, // テキストを画像の下部中央に配置
+                children: <Widget>[
+                  _selectedPage == 0
+                      ? Image.asset('assets/images/263x105olag.png')
+                      : Image.asset('assets/images/263x105solotte.png'),
+                  Text(
+                    _selectedPage == 0 ? "タップで掲示板へ" : "タップで店舗メニューへ",
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.yellow,
+                      fontSize: 9,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
+          ],
         ),
         body: _pageOptions[_selectedPage],
       ),
