@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 void main() {
   runApp(const MyApp());
@@ -140,6 +141,10 @@ class OriAgPage extends StatefulWidget {
 class _OriAgPageState extends State<OriAgPage> {
   int _currentIndex = 0;
 
+  final _controller = WebViewController()
+    ..setJavaScriptMode(JavaScriptMode.unrestricted)
+    ..loadRequest(Uri.parse('https://oriental-lounge.com/'));
+
   void _incrementCounter(int index) {
     setState(() {
       _currentIndex = index;
@@ -153,33 +158,35 @@ class _OriAgPageState extends State<OriAgPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.emoji_events),
-            label: '特典',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.store),
-            label: '店内人数',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.restaurant_menu),
-            label: 'メニュー',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.receipt_long),
-            label: '会計',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: 'お知らせ',
-          ),
-        ],
-        currentIndex: _currentIndex,
-        onTap: _incrementCounter,
-      ),
-    );
+        bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.emoji_events),
+              label: '特典',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.store),
+              label: '店内人数',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.restaurant_menu),
+              label: 'メニュー',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.receipt_long),
+              label: '会計',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.notifications),
+              label: 'お知らせ',
+            ),
+          ],
+          currentIndex: _currentIndex,
+          onTap: _incrementCounter,
+        ),
+        body: _currentIndex == 1
+            ? WebViewWidget(controller: _controller)
+            : Container());
   }
 }
