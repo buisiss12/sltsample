@@ -20,3 +20,4 @@ samples, guidance on mobile development, and a full API reference.
 ・掲示板タグ付け
 ・待ち人数表示
 ・GPT機能
+・店内人数確認時のwebviewで他のページ閲覧時にエラー

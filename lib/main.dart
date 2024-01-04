@@ -87,7 +87,7 @@ class SolottePage extends StatefulWidget {
 class _SolottePageState extends State<SolottePage> {
   int _currentIndex = 0;
 
-  void _incrementCounter(int index) {
+  void _onItemTapped(int index) {
     setState(() {
       _currentIndex = index;
     });
@@ -125,7 +125,7 @@ class _SolottePageState extends State<SolottePage> {
           ),
         ],
         currentIndex: _currentIndex,
-        onTap: _incrementCounter,
+        onTap: _onItemTapped,
       ),
     );
   }
@@ -147,10 +147,21 @@ class _OriAgPageState extends State<OriAgPage> {
     super.initState();
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..loadRequest(Uri.parse('https://oriental-lounge.com/'));
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onPageFinished: (String url) {
+            _controller.runJavaScript(
+                "document.getElementById('shop').scrollIntoView();");
+          },
+        ),
+      );
   }
 
-  void _incrementCounter(int index) {
+  void _checkPeople() {
+    _controller.loadRequest(Uri.parse('https://oriental-lounge.com/'));
+  }
+
+  void _onItemTapped(int index) {
     setState(() {
       _currentIndex = index;
     });
@@ -158,6 +169,9 @@ class _OriAgPageState extends State<OriAgPage> {
     (context as Element)
         .findAncestorStateOfType<MyAppState>()
         ?.updateAppBarTitle(appBarTitles[index]);
+    if (index == 1) {
+      _checkPeople();
+    }
   }
 
   @override
@@ -188,7 +202,7 @@ class _OriAgPageState extends State<OriAgPage> {
             ),
           ],
           currentIndex: _currentIndex,
-          onTap: _incrementCounter,
+          onTap: _onItemTapped,
         ),
         body: _currentIndex == 1
             ? WebViewWidget(controller: _controller)
