@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "360265573932",
+    "project_id": "sltsampleapp",
+    "storage_bucket": "sltsampleapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:360265573932:android:afcba510dd886dde24d389",
+        "android_client_info": {
+          "package_name": "com.example.sltsampleapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDketZRNpyTPpxzyGts0sWjERgf-ifcKH8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
