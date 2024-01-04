@@ -140,10 +140,15 @@ class OriAgPage extends StatefulWidget {
 
 class _OriAgPageState extends State<OriAgPage> {
   int _currentIndex = 0;
+  late final WebViewController _controller;
 
-  final _controller = WebViewController()
-    ..setJavaScriptMode(JavaScriptMode.unrestricted)
-    ..loadRequest(Uri.parse('https://oriental-lounge.com/'));
+  @override
+  void initState() {
+    super.initState();
+    _controller = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..loadRequest(Uri.parse('https://oriental-lounge.com/'));
+  }
 
   void _incrementCounter(int index) {
     setState(() {
