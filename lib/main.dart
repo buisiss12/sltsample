@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 
+import 'login.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:sltsampleapp/firebase_options.dart';
@@ -14,6 +15,7 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  //プッシュ通知
   final messaging = FirebaseMessaging.instance;
   await messaging.requestPermission(
     alert: true,
