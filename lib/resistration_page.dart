@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({super.key});
@@ -11,6 +12,7 @@ class RegistrationPage extends StatefulWidget {
 }
 
 class _RegistrationPageState extends State<RegistrationPage> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final _phoneNumber = TextEditingController();
   final _passWord = TextEditingController();
   bool _hidePassword = true;
@@ -37,8 +39,43 @@ class _RegistrationPageState extends State<RegistrationPage> {
     super.dispose();
   }
 
-  void _register() {
-    print('電話番号: ${_phoneNumber.text}, パスワード: ${_passWord.text}');
+  Future<void> verifyPhone() async {
+    await FirebaseAuth.instance.verifyPhoneNumber(
+      phoneNumber: '+81${_phoneNumber.text}',
+      verificationCompleted: (PhoneAuthCredential credential) {},
+      verificationFailed: (FirebaseAuthException e) {
+        if (e.code == 'invalid-phone-number') {
+          print('電話番号が正しくありません。');
+        }
+      },
+      codeSent: (String verificationId, int? resendToken) async {
+        String smsCode = '';
+        await showDialog(
+          context: context,
+          builder: (_) {
+            return AlertDialog(
+              title: const Text("認証コード"),
+              content: const Text("SMS宛に届いた認証コードを入力してください"),
+              actions: <Widget>[
+                TextFormField(
+                  onChanged: (value) {
+                    smsCode = value;
+                  },
+                ),
+                ElevatedButton(
+                  child: const Text("認証"),
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ],
+            );
+          },
+        );
+        final credential = PhoneAuthProvider.credential(
+            verificationId: verificationId, smsCode: smsCode);
+        await _auth.signInWithCredential(credential);
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {},
+    );
   }
 
   @override
@@ -91,7 +128,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
               ),
               const SizedBox(height: 24),
               ElevatedButton(
-                onPressed: _isResistrationButton ? _register : null,
+                onPressed: _isResistrationButton ? verifyPhone : null,
                 child: const Text('会員登録'),
               ),
             ],

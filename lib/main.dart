@@ -99,7 +99,7 @@ class MyAppState extends State<MyApp> {
             ),
           ],
         ),
-        body: _pageOptions[_selectedPage],
+        body: const LoginPage(),
       ),
     );
   }
