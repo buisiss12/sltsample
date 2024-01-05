@@ -14,18 +14,18 @@ class _LoginPageState extends State<LoginPage> {
   final _phoneNumber = TextEditingController();
   final _passWord = TextEditingController();
   bool _hidePassword = false;
-  bool _isButtonEnabled = false; // ボタンの有効状態を追跡
+  bool _isLoginButton = false; // ボタンの有効状態を追跡
 
   @override
   void initState() {
     super.initState();
-    _phoneNumber.addListener(_updateButtonState);
-    _passWord.addListener(_updateButtonState);
+    _phoneNumber.addListener(_loginButtonState);
+    _passWord.addListener(_loginButtonState);
   }
 
-  void _updateButtonState() {
+  void _loginButtonState() {
     setState(() {
-      _isButtonEnabled =
+      _isLoginButton =
           _phoneNumber.text.isNotEmpty && _passWord.text.isNotEmpty;
     });
   }
@@ -61,7 +61,8 @@ class _LoginPageState extends State<LoginPage> {
               const Text('ログイン',
                   style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
               const SizedBox(height: 16),
-              const Text('電話番号 または 会員ID'),
+              const Text('電話番号 または 会員ID',
+                  style: TextStyle(fontWeight: FontWeight.bold)),
               TextField(
                 controller: _phoneNumber,
                 decoration: InputDecoration(
@@ -74,7 +75,8 @@ class _LoginPageState extends State<LoginPage> {
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               ),
               const SizedBox(height: 16),
-              const Text('パスワード (数字6桁以上)'),
+              const Text('パスワード (数字6桁以上)',
+                  style: TextStyle(fontWeight: FontWeight.bold)),
               TextField(
                 controller: _passWord,
                 decoration: InputDecoration(
@@ -99,7 +101,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 24),
               ElevatedButton(
-                onPressed: _isButtonEnabled ? _login : null,
+                onPressed: _isLoginButton ? _login : null,
                 child: const Text('ログイン'),
               ),
               TextButton(

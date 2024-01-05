@@ -1,11 +1,11 @@
 // ignore_for_file: avoid_print
 
-import 'login.dart';
+import 'login_page.dart';
+import 'solotte_page.dart';
+import 'oriag_page.dart';
 import 'package:flutter/material.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 import 'package:sltsampleapp/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 Future<void> main() async {
@@ -102,138 +102,5 @@ class MyAppState extends State<MyApp> {
         body: _pageOptions[_selectedPage],
       ),
     );
-  }
-}
-
-class SolottePage extends StatefulWidget {
-  const SolottePage({super.key});
-
-  @override
-  State<SolottePage> createState() => _SolottePageState();
-}
-
-class _SolottePageState extends State<SolottePage> {
-  int _currentIndex = 0;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
-    final appBarTitles = ['ホーム', 'メッセージ', '投稿', 'お知らせ', 'プロフィール'];
-    (context as Element)
-        .findAncestorStateOfType<MyAppState>()
-        ?.updateAppBarTitle(appBarTitles[index]);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'ホーム',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.email),
-            label: 'メッセージ',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.edit_note),
-            label: '投稿',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: 'お知らせ',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'プロフィール',
-          ),
-        ],
-        currentIndex: _currentIndex,
-        onTap: _onItemTapped,
-      ),
-    );
-  }
-}
-
-class OriAgPage extends StatefulWidget {
-  const OriAgPage({super.key});
-
-  @override
-  State<OriAgPage> createState() => _OriAgPageState();
-}
-
-class _OriAgPageState extends State<OriAgPage> {
-  int _currentIndex = 0;
-  late final WebViewController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setNavigationDelegate(
-        NavigationDelegate(
-          onPageFinished: (String url) {
-            _controller.runJavaScript(
-                "document.getElementById('shop').scrollIntoView();");
-          },
-        ),
-      );
-  }
-
-  void _checkPeople() {
-    _controller.loadRequest(Uri.parse('https://oriental-lounge.com/'));
-  }
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
-    final appBarTitles = ['特典', '店内人数', 'メニュー', '会計', 'お知らせ'];
-    (context as Element)
-        .findAncestorStateOfType<MyAppState>()
-        ?.updateAppBarTitle(appBarTitles[index]);
-    if (index == 1) {
-      _checkPeople();
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.emoji_events),
-              label: '特典',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.store),
-              label: '店内人数',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.restaurant_menu),
-              label: 'メニュー',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.receipt_long),
-              label: '会計',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.notifications),
-              label: 'お知らせ',
-            ),
-          ],
-          currentIndex: _currentIndex,
-          onTap: _onItemTapped,
-        ),
-        body: _currentIndex == 1
-            ? WebViewWidget(controller: _controller)
-            : Container());
   }
 }
