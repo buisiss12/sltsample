@@ -15,7 +15,7 @@ class _SolottePageState extends State<SolottePage> {
     setState(() {
       _currentIndex = index;
     });
-    final appBarTitles = ['ホーム', 'メッセージ', '投稿', 'お知らせ', 'プロフィール'];
+    final appBarTitles = ['ホーム', 'メッセージ', '投稿', 'お知らせ', '設定'];
     (context as Element)
         .findAncestorStateOfType<MyAppState>()
         ?.updateAppBarTitle(appBarTitles[index]);
@@ -44,8 +44,8 @@ class _SolottePageState extends State<SolottePage> {
             label: 'お知らせ',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'プロフィール',
+            icon: Icon(Icons.manage_accounts),
+            label: '設定',
           ),
         ],
         currentIndex: _currentIndex,
