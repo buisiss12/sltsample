@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'resistration_page.dart';
+import 'forgetpw_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -54,10 +55,7 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Flexible(
-                child: Image.asset('assets/images/1080x384solotte.png',
-                    fit: BoxFit.cover),
-              ),
+              Image.asset('assets/images/1080x384solotte.png'),
               const Text('ログイン',
                   style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
               const SizedBox(height: 16),
@@ -99,13 +97,19 @@ class _LoginPageState extends State<LoginPage> {
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: _isLoginButton ? _login : null,
                 child: const Text('ログイン'),
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ForgetPwPage()),
+                  );
+                },
                 child: const Text('パスワードを忘れてしまった場合'),
               ),
               ElevatedButton(
