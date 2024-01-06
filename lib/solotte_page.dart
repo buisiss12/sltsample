@@ -67,7 +67,67 @@ class _SolottePageState extends State<SolottePage> {
                 ],
               ),
             )
-          : Container(),
+          : _currentIndex == 4
+              ? ListView(
+                  children: ListTile.divideTiles(
+                    context: context,
+                    tiles: [
+                      ListTile(
+                        title: const Text('プロフィール編集'),
+                        onTap: () {},
+                      ),
+                      ListTile(
+                        title: const Text('ブロック済みのユーザー'),
+                        onTap: () {},
+                      ),
+                      ListTile(
+                        title: const Text('各種設定'),
+                        onTap: () {},
+                      ),
+                      ListTile(
+                        title: const Text('ログアウト'),
+                        onTap: () {},
+                      ),
+                      ListTile(
+                        title: const Text('よくある質問'),
+                        onTap: () {},
+                      ),
+                      ListTile(
+                        title: const Text('お問い合わせ'),
+                        onTap: () {},
+                      ),
+                      ListTile(
+                        title: const Text('オリエンタルラウンジHP'),
+                        onTap: () {},
+                      ),
+                      ListTile(
+                        title: const Text('ag(アグ)HP'),
+                        onTap: () {},
+                      ),
+                      ListTile(
+                        title: const Text('リクルート'),
+                        onTap: () {},
+                      ),
+                      ListTile(
+                        title: const Text('アプリを評価する'),
+                        onTap: () {},
+                      ),
+                      ListTile(
+                        title: const Text('利用規約'),
+                        onTap: () {},
+                      ),
+                      ListTile(
+                        title: const Text('プライバシーポリシー'),
+                        onTap: () {},
+                      ),
+                      const Text(
+                        'SOLOTTE!',
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ).toList(),
+                )
+              : Container(),
     );
   }
 }
