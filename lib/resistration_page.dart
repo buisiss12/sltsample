@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 
+import 'login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -179,8 +180,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 ),
                 const SizedBox(height: 16),
                 ElevatedButton(
-                  onPressed: () {},
-                  child: const Text('ログイン'),
+                  onPressed: () {
+                    Navigator.pop(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginPage()),
+                    );
+                  },
+                  child: const Text('ログインページ'),
                 ),
                 const SizedBox(height: 16),
                 ElevatedButton(
