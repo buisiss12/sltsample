@@ -50,19 +50,19 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDketZRNpyTPpxzyGts0sWjERgf-ifcKH8',
-    appId: '1:360265573932:android:afcba510dd886dde24d389',
-    messagingSenderId: '360265573932',
-    projectId: 'sltsampleapp',
-    storageBucket: 'sltsampleapp.appspot.com',
+    apiKey: 'AIzaSyBxPFQ5cScI2nzZH2zgSX6pTD5F-LUCKzk',
+    appId: '1:154543454752:android:fa07d6aa85c6ed0f839a45',
+    messagingSenderId: '154543454752',
+    projectId: 'solottesample',
+    storageBucket: 'solottesample.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAZCluUbEDY4E6_fvk7zDY_FH65i2Y78aI',
-    appId: '1:360265573932:ios:6223eee4aebdc52024d389',
-    messagingSenderId: '360265573932',
-    projectId: 'sltsampleapp',
-    storageBucket: 'sltsampleapp.appspot.com',
-    iosBundleId: 'com.example.sltsampleapp2',
+    apiKey: 'AIzaSyAidijjPxPZZK0vuMaqeM1XPweLPk_9rm4',
+    appId: '1:154543454752:ios:9085fab1b1530795839a45',
+    messagingSenderId: '154543454752',
+    projectId: 'solottesample',
+    storageBucket: 'solottesample.appspot.com',
+    iosBundleId: 'com.sample.sltsampleapp',
   );
 }
