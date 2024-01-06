@@ -51,6 +51,23 @@ class _SolottePageState extends State<SolottePage> {
         currentIndex: _currentIndex,
         onTap: _onItemTapped,
       ),
+      body: _currentIndex == 3
+          ? const DefaultTabController(
+              length: 3,
+              child: Column(
+                children: <Widget>[
+                  TabBar(
+                    labelPadding: EdgeInsets.symmetric(vertical: 15.0),
+                    tabs: [
+                      Text('すべて'),
+                      Text('開催中'),
+                      Text('終了'),
+                    ],
+                  ),
+                ],
+              ),
+            )
+          : Container(),
     );
   }
 }

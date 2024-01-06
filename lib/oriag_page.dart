@@ -48,35 +48,68 @@ class _OriAgPageState extends State<OriAgPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.emoji_events),
-              label: '特典',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.store),
-              label: '店内人数',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.restaurant_menu),
-              label: 'メニュー',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.receipt_long),
-              label: '会計',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.notifications),
-              label: 'お知らせ',
-            ),
-          ],
-          currentIndex: _currentIndex,
-          onTap: _onItemTapped,
-        ),
-        body: _currentIndex == 1
-            ? WebViewWidget(controller: _controller)
-            : Container());
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.emoji_events),
+            label: '特典',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.store),
+            label: '店内人数',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.restaurant_menu),
+            label: 'メニュー',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.receipt_long),
+            label: '会計',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.notifications),
+            label: 'お知らせ',
+          ),
+        ],
+        currentIndex: _currentIndex,
+        onTap: _onItemTapped,
+      ),
+      body: _currentIndex == 0
+          ? const DefaultTabController(
+              length: 3,
+              child: Column(
+                children: <Widget>[
+                  TabBar(
+                    labelPadding: EdgeInsets.symmetric(vertical: 15.0),
+                    tabs: [
+                      Text('会員ランク'),
+                      Text('特別会員'),
+                      Text('称号'),
+                    ],
+                  ),
+                ],
+              ),
+            )
+          : _currentIndex == 1
+              ? WebViewWidget(controller: _controller)
+              : _currentIndex == 4
+                  ? const DefaultTabController(
+                      length: 3,
+                      child: Column(
+                        children: <Widget>[
+                          TabBar(
+                            labelPadding: EdgeInsets.symmetric(vertical: 15.0),
+                            tabs: [
+                              Text('すべて'),
+                              Text('開催中'),
+                              Text('終了'),
+                            ],
+                          ),
+                        ],
+                      ),
+                    )
+                  : Container(),
+    );
   }
 }
