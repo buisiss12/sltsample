@@ -3,6 +3,7 @@
 import 'login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class RegistrationPage extends StatefulWidget {
@@ -131,9 +132,17 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 const Text('生年月日',
                     style: TextStyle(fontWeight: FontWeight.bold)),
                 ElevatedButton(
-                  onPressed: () {},
-                  child: const Text('生年月日を選択'),
-                ),
+                    onPressed: () {
+                      DatePicker.showDatePicker(context,
+                          showTitleActions: true,
+                          minTime: DateTime(1924, 1, 1),
+                          maxTime: DateTime.now(), onChanged: (date) {
+                        print('change $date');
+                      }, onConfirm: (date) {
+                        print('confirm $date');
+                      }, currentTime: DateTime.now(), locale: LocaleType.jp);
+                    },
+                    child: const Text('生年月日を選択')),
                 const SizedBox(height: 16),
                 const Text('電話番号',
                     style: TextStyle(fontWeight: FontWeight.bold)),
