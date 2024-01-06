@@ -50,6 +50,7 @@ class _LoginPageState extends State<LoginPage> {
         FocusScope.of(context).unfocus(); // キーボードを隠す
       },
       child: Scaffold(
+        resizeToAvoidBottomInset: false, //キーボードをUIに影響なく表示
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(

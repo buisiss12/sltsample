@@ -74,7 +74,8 @@ class MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       title: 'solotteサンプル',
       theme: ThemeData.dark(),
-      home: Scaffold(
+      home: LoginPage(),
+      /*home: Scaffold(
         appBar: AppBar(
           title: Text(_appBarTitle),
           actions: <Widget>[
@@ -99,8 +100,8 @@ class MyAppState extends State<MyApp> {
             ),
           ],
         ),
-        body: const LoginPage(),
-      ),
+        body: _pageOptions[_selectedPage],
+      ), */
     );
   }
 }
