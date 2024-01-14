@@ -2,6 +2,7 @@ import 'login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'resistration_page.dart';
+import 'package:flutter_picker/flutter_picker.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -18,6 +19,8 @@ class _OldMemberPageState extends State<OldMemberPage> {
   final _phoneNumber = TextEditingController();
   bool _isResistrationButton = false;
   DateTime? _selectedBirthDay;
+
+  String _selectedStore = '会員登録した店舗を選択';
 
   @override
   void initState() {
@@ -139,6 +142,10 @@ class _OldMemberPageState extends State<OldMemberPage> {
                 const SizedBox(height: 16),
                 const Text('登録店舗',
                     style: TextStyle(fontWeight: FontWeight.bold)),
+                ElevatedButton(
+                  onPressed: _showPicker,
+                  child: Text(_selectedStore),
+                ),
                 const SizedBox(height: 16),
                 const SizedBox(height: 16),
                 ElevatedButton(
@@ -173,5 +180,50 @@ class _OldMemberPageState extends State<OldMemberPage> {
         ),
       ),
     );
+  }
+
+  void _showPicker() {
+    Picker(
+        adapter: PickerDataAdapter<String>(pickerData: [
+          "ag札幌",
+          "ag仙台",
+          "ソウル カンナム",
+          "ag金沢",
+          "宇都宮",
+          "大宮",
+          "ag上野",
+          "上野",
+          "新宿",
+          "ag渋谷",
+          "渋谷本店",
+          "渋谷駅前",
+          "恵比寿",
+          "町田",
+          "横浜",
+          "静岡",
+          "浜松",
+          "名古屋 栄",
+          "名古屋 錦",
+          "ag名古屋",
+          "京都",
+          "梅田",
+          "茶屋町",
+          "心斎橋",
+          "難波",
+          "神戸",
+          "岡山",
+          "広島",
+          "福岡",
+          "小倉",
+          "熊本",
+          "宮崎",
+          "鹿児島",
+          "ag沖縄"
+        ]),
+        onConfirm: (Picker picker, List value) {
+          setState(() {
+            _selectedStore = picker.getSelectedValues()[0];
+          });
+        }).showModal(context);
   }
 }
