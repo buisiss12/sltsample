@@ -1,49 +1,42 @@
-// ignore_for_file: avoid_print
-
 import 'login_page.dart';
-import 'oldmember_resistration_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'resistration_page.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class RegistrationPage extends StatefulWidget {
-  const RegistrationPage({super.key});
+class OldMemberPage extends StatefulWidget {
+  const OldMemberPage({super.key});
 
   @override
-  State<RegistrationPage> createState() => _RegistrationPageState();
+  State<OldMemberPage> createState() => _OldMemberPageState();
 }
 
-class _RegistrationPageState extends State<RegistrationPage> {
+class _OldMemberPageState extends State<OldMemberPage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final _userName = TextEditingController();
+  final _userId = TextEditingController();
   final _phoneNumber = TextEditingController();
-  final _passWord = TextEditingController();
-  bool _hidePassword = true;
   bool _isResistrationButton = false;
   DateTime? _selectedBirthDay;
 
   @override
   void initState() {
     super.initState();
-    _userName.addListener(_resistrationButtonState);
+    _userId.addListener(_resistrationButtonState);
     _phoneNumber.addListener(_resistrationButtonState);
-    _passWord.addListener(_resistrationButtonState);
   }
 
   void _resistrationButtonState() {
     setState(() {
-      _isResistrationButton = _userName.text.isNotEmpty &&
-          _phoneNumber.text.isNotEmpty &&
-          _passWord.text.isNotEmpty;
+      _isResistrationButton =
+          _userId.text.isNotEmpty && _phoneNumber.text.isNotEmpty;
     });
   }
 
   @override
   void dispose() {
-    _userName.dispose();
+    _userId.dispose();
     _phoneNumber.dispose();
-    _passWord.dispose();
     super.dispose();
   }
 
@@ -92,7 +85,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('新規会員登録'),
+          title: const Text('以前会員登録した方'),
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -100,17 +93,17 @@ class _RegistrationPageState extends State<RegistrationPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                const Text('本名フルネーム(ひらがな)',
+                const Text('会員ID(数字４桁以上)',
                     style: TextStyle(fontWeight: FontWeight.bold)),
                 TextField(
-                  controller: _userName,
+                  controller: _phoneNumber,
                   decoration: const InputDecoration(
-                    hintText: '本名をフルネームで入力(ひらがな)',
+                    hintText: '会員IDを入力',
                     border: OutlineInputBorder(),
                   ),
-                  keyboardType: TextInputType.multiline,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 ),
-                const Text('*店舗での本人確認にのみ使用いたします。第三者には公開されません。'),
                 const SizedBox(height: 16),
                 const Text('性別', style: TextStyle(fontWeight: FontWeight.bold)),
                 Row(
@@ -144,48 +137,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         ? "${_selectedBirthDay!.year}-${_selectedBirthDay!.month}-${_selectedBirthDay!.day}"
                         : '生年月日を選択')),
                 const SizedBox(height: 16),
-                const Text('電話番号',
+                const Text('登録店舗',
                     style: TextStyle(fontWeight: FontWeight.bold)),
-                TextField(
-                  controller: _phoneNumber,
-                  decoration: const InputDecoration(
-                    hintText: '電話番号を入力(ハイフンなし)',
-                    border: OutlineInputBorder(),
-                  ),
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                ),
                 const SizedBox(height: 16),
-                const Text('パスワード(数字6桁以上)',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-                TextField(
-                  controller: _passWord,
-                  decoration: InputDecoration(
-                    hintText: 'パスワードを入力',
-                    border: const OutlineInputBorder(),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        _hidePassword ? Icons.visibility : Icons.visibility_off,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _hidePassword = !_hidePassword;
-                        });
-                      },
-                    ),
-                  ),
-                  obscureText: _hidePassword,
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                ),
-                const SizedBox(height: 16),
-                const Text('*オリエンタルラウンジ・ag入店時に身分証を確認させていただきます'),
-                const SizedBox(height: 16),
-                const Text('*「会員登録」のボタンを押すことにより、利用規約に同意したものとみなします。'),
                 const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: _isResistrationButton ? _verifyPhone : null,
-                  child: const Text('会員登録'),
+                  child: const Text('会員情報を引き継いで登録'),
                 ),
                 const SizedBox(height: 16),
                 ElevatedButton(
@@ -204,10 +162,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const OldMemberPage()),
+                          builder: (context) => const RegistrationPage()),
                     );
                   },
-                  child: const Text('以前会員登録した方はこちら'),
+                  child: const Text('新規会員登録'),
                 ),
               ],
             ),

@@ -2,6 +2,7 @@
 
 import 'resistration_page.dart';
 import 'forgetpw_page.dart';
+import 'oldmember_resistration_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -124,7 +125,13 @@ class _LoginPageState extends State<LoginPage> {
                 child: const Text('新規会員登録'),
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const OldMemberPage()),
+                  );
+                },
                 child: const Text('以前会員登録した方はこちら'),
               ),
             ],
