@@ -15,7 +15,6 @@ class RegistrationPage extends StatefulWidget {
 }
 
 class _RegistrationPageState extends State<RegistrationPage> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
   final _userName = TextEditingController();
   final _phoneNumber = TextEditingController();
   final _passWord = TextEditingController();
@@ -47,11 +46,16 @@ class _RegistrationPageState extends State<RegistrationPage> {
     super.dispose();
   }
 
-  Future<void> _verifyPhone() async {
-    await _auth.verifyPhoneNumber(
+  Future<void> _verifySms() async {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    await auth.verifyPhoneNumber(
       phoneNumber: '+81${_phoneNumber.text}',
       verificationCompleted: (PhoneAuthCredential credential) async {},
-      verificationFailed: (FirebaseAuthException e) {},
+      verificationFailed: (FirebaseAuthException e) {
+        if (e.code == 'invalid-phone-number') {
+          print('電話番号が正しくありません。');
+        }
+      },
       codeSent: (String verificationId, int? resendToken) async {
         String smsCode = '';
         await showDialog(
@@ -78,7 +82,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         );
         final PhoneAuthCredential credential = PhoneAuthProvider.credential(
             verificationId: verificationId, smsCode: smsCode);
-        await _auth.signInWithCredential(credential);
+        await auth.signInWithCredential(credential);
       },
       codeAutoRetrievalTimeout: (String verificationId) {},
     );
@@ -184,7 +188,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 const Text('*「会員登録」のボタンを押すことにより、利用規約に同意したものとみなします。'),
                 const SizedBox(height: 16),
                 ElevatedButton(
-                  onPressed: _isResistrationButton ? _verifyPhone : null,
+                  onPressed: _isResistrationButton ? _verifySms : null,
                   child: const Text('会員登録'),
                 ),
                 const SizedBox(height: 16),

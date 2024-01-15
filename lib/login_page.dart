@@ -41,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _login() {
-    print('電話番号: ${_phoneNumber.text}, パスワード: ${_passWord.text}');
+    print('ログインボタンが押されました。　電話番号:${_phoneNumber.text}, パスワード:${_passWord.text}');
   }
 
   @override
