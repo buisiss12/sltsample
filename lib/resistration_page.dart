@@ -47,14 +47,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
   }
 
   Future<void> _verifySms() async {
-    final FirebaseAuth auth = FirebaseAuth.instance;
-    await auth.verifyPhoneNumber(
+    await FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: '+81${_phoneNumber.text}',
       verificationCompleted: (PhoneAuthCredential credential) async {},
       verificationFailed: (FirebaseAuthException e) {
-        if (e.code == 'invalid-phone-number') {
-          print('電話番号が正しくありません。');
-        }
+        print(e.message);
       },
       codeSent: (String verificationId, int? resendToken) async {
         String smsCode = '';
@@ -82,7 +79,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         );
         final PhoneAuthCredential credential = PhoneAuthProvider.credential(
             verificationId: verificationId, smsCode: smsCode);
-        await auth.signInWithCredential(credential);
+        await FirebaseAuth.instance.signInWithCredential(credential);
       },
       codeAutoRetrievalTimeout: (String verificationId) {},
     );
