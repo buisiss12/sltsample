@@ -41,66 +41,13 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> {
-  int _selectedPage = 0;
-  String _appBarTitle = 'ホーム';
-
-  final _pageOptions = [
-    const SolottePage(),
-    const OriAgPage(),
-  ];
-
-  final _appBarTitles = [
-    'ホーム',
-    '特典',
-  ];
-
-  void updateAppBarTitle(String title) {
-    setState(() {
-      _appBarTitle = title;
-    });
-  }
-
-  void _changePage() {
-    int newPage = (_selectedPage + 1) % _pageOptions.length;
-    setState(() {
-      _selectedPage = newPage;
-      _appBarTitle = _appBarTitles[newPage];
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'solotteサンプル',
       theme: ThemeData.dark(),
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text(_appBarTitle),
-          actions: <Widget>[
-            InkWell(
-              onTap: _changePage,
-              child: Stack(
-                alignment: Alignment.bottomCenter, // テキストを画像の下部中央に配置
-                children: <Widget>[
-                  Image.asset(_selectedPage == 0
-                      ? 'assets/images/263x105olag.png'
-                      : 'assets/images/263x105solotte.png'),
-                  Text(
-                    _selectedPage == 0 ? "タップで掲示板へ" : "タップで店舗メニューへ",
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.yellow,
-                      fontSize: 9,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-        body: _pageOptions[_selectedPage],
-      ),
+      home: const OriAgPage(),
     );
   }
 }

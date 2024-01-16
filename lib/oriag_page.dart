@@ -1,6 +1,6 @@
 import 'main.dart';
+import 'solotte_page.dart';
 import 'package:flutter/material.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 class OriAgPage extends StatefulWidget {
   const OriAgPage({super.key});
@@ -10,106 +10,100 @@ class OriAgPage extends StatefulWidget {
 }
 
 class _OriAgPageState extends State<OriAgPage> {
-  int _currentIndex = 0;
-  late final WebViewController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setNavigationDelegate(
-        NavigationDelegate(
-          onPageFinished: (String url) {
-            _controller.runJavaScript(
-                "document.getElementById('shop').scrollIntoView();");
-          },
-        ),
-      );
-  }
-
-  void _checkPeople() {
-    _controller.loadRequest(Uri.parse('https://oriental-lounge.com/'));
-  }
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
-    final appBarTitles = ['特典', '店内人数', 'メニュー', '会計', 'お知らせ'];
-    (context as Element)
-        .findAncestorStateOfType<MyAppState>()
-        ?.updateAppBarTitle(appBarTitles[index]);
-    if (index == 1) {
-      _checkPeople();
-    }
-  }
+  int _currentPageIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
+      appBar: AppBar(
+        title: Text(_appbarTitle[_currentPageIndex]),
+        actions: <Widget>[
+          IconButton(
+            icon: Image.asset('assets/images/263x105solotte.png'),
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const SolottePage()),
+              );
+            },
+          ),
+        ],
+      ),
+      bottomNavigationBar: NavigationBar(
+        onDestinationSelected: (int index) {
+          setState(() {
+            _currentPageIndex = index;
+          });
+        },
+        selectedIndex: _currentPageIndex,
+        destinations: const [
+          NavigationDestination(
             icon: Icon(Icons.emoji_events),
             label: '特典',
           ),
-          BottomNavigationBarItem(
+          NavigationDestination(
             icon: Icon(Icons.store),
             label: '店内人数',
           ),
-          BottomNavigationBarItem(
+          NavigationDestination(
             icon: Icon(Icons.restaurant_menu),
             label: 'メニュー',
           ),
-          BottomNavigationBarItem(
+          NavigationDestination(
             icon: Icon(Icons.receipt_long),
             label: '会計',
           ),
-          BottomNavigationBarItem(
+          NavigationDestination(
             icon: Icon(Icons.notifications),
             label: 'お知らせ',
           ),
         ],
-        currentIndex: _currentIndex,
-        onTap: _onItemTapped,
       ),
-      body: _currentIndex == 0
-          ? const DefaultTabController(
-              length: 3,
-              child: Column(
-                children: <Widget>[
-                  TabBar(
-                    labelPadding: EdgeInsets.symmetric(vertical: 15.0),
-                    tabs: [
-                      Text('会員ランク'),
-                      Text('特別会員'),
-                      Text('称号'),
-                    ],
-                  ),
-                ],
-              ),
-            )
-          : _currentIndex == 1
-              ? WebViewWidget(controller: _controller)
-              : _currentIndex == 4
-                  ? const DefaultTabController(
-                      length: 3,
-                      child: Column(
-                        children: <Widget>[
-                          TabBar(
-                            labelPadding: EdgeInsets.symmetric(vertical: 15.0),
-                            tabs: [
-                              Text('すべて'),
-                              Text('開催中'),
-                              Text('終了'),
-                            ],
-                          ),
-                        ],
-                      ),
-                    )
-                  : Container(),
+      body: SafeArea(child: pages[_currentPageIndex]),
     );
   }
+
+  final List<String> _appbarTitle = [
+    '特典',
+    '店内人数',
+    'メニュー',
+    '会計',
+    'お知らせ',
+  ];
+
+  List<Widget> pages = [
+    const DefaultTabController(
+      length: 3,
+      child: Column(
+        children: <Widget>[
+          TabBar(
+            labelPadding: EdgeInsets.symmetric(vertical: 15.0),
+            tabs: [
+              Text('会員ランク'),
+              Text('特別会員'),
+              Text('称号'),
+            ],
+          ),
+        ],
+      ),
+    ),
+    const Center(child: Text('second Page')),
+    const Center(child: Text('Third Page')),
+    const Center(child: Text('force Page')),
+    const DefaultTabController(
+      length: 3,
+      child: Column(
+        children: <Widget>[
+          TabBar(
+            labelPadding: EdgeInsets.symmetric(vertical: 15.0),
+            tabs: [
+              Text('すべて'),
+              Text('開催中'),
+              Text('終了'),
+            ],
+          ),
+        ],
+      ),
+    ),
+  ];
 }

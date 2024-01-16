@@ -23,3 +23,4 @@ samples, guidance on mobile development, and a full API reference.
 ・店内人数確認時のwebviewで他のページ閲覧時にエラー
 ・webviewロード中アイコン実装
 ・認証の際、パーミッションが許可されていない場合の設定
+・iphone15の人はアクションボタンもflic2の様に使える
