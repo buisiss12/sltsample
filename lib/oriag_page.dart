@@ -1,4 +1,3 @@
-import 'main.dart';
 import 'solotte_page.dart';
 import 'package:flutter/material.dart';
 
