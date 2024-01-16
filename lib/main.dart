@@ -2,9 +2,9 @@
 
 import 'login_page.dart';
 import 'solotte_page.dart';
-import 'oriag_page.dart';
 import 'package:flutter/material.dart';
 import 'package:sltsampleapp/firebase_options.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
@@ -33,21 +33,36 @@ Future<void> main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  @override
-  MyAppState createState() => MyAppState();
-}
-
-class MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'solotteサンプル',
       theme: ThemeData.dark(),
-      home: const OriAgPage(),
+      home: const LandingPage(),
+    );
+  }
+}
+
+class LandingPage extends StatelessWidget {
+  const LandingPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<User?>(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          User user = snapshot.data!;
+          print("ユーザーがログインしました: ${user.uid}, ${user.email}");
+          return const SolottePage();
+        }
+        print("ユーザーはログアウト状態です");
+        return const LoginPage();
+      },
     );
   }
 }

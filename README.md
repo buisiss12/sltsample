@@ -24,3 +24,5 @@ samples, guidance on mobile development, and a full API reference.
 ・webviewロード中アイコン実装
 ・認証の際、パーミッションが許可されていない場合の設定
 ・iphone15の人はアクションボタンもflic2の様に使える
+
+*frebaseログイン情報は端末？に保存されている（firebaseホームページ内でユーザー削除関係ない）
