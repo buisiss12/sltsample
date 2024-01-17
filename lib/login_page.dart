@@ -5,6 +5,7 @@ import 'forgetpw_page.dart';
 import 'oldmember_resistration_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -22,6 +23,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
+    //ログインボタンを押せる様にするためのaddlistener
     _phoneNumber.addListener(_loginButtonState);
     _passWord.addListener(_loginButtonState);
   }
@@ -40,8 +42,17 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  void _login() {
-    print('ログインボタンが押されました。　電話番号:${_phoneNumber.text}, パスワード:${_passWord.text}');
+  void _login() async {
+    try {
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: '${_phoneNumber.text}@test.com',
+        password: _passWord.text,
+      );
+      print('ログイン成功: ${userCredential.user}');
+    } on FirebaseAuthException catch (e) {
+      print('ログイン失敗: $e');
+    }
   }
 
   @override

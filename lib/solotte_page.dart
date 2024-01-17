@@ -1,3 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:sltsampleapp/login_page.dart';
+
 import 'oriag_page.dart';
 import 'package:flutter/material.dart';
 
@@ -89,6 +92,27 @@ class _SolottePageState extends State<SolottePage> {
         ],
       ),
     ),
-    const Center(child: Text('Fifth Page')),
+    Center(
+      child: Builder(
+        builder: (BuildContext context) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              const Text('Fifth Page'),
+              ElevatedButton(
+                onPressed: () {
+                  FirebaseAuth.instance.signOut();
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => const LoginPage()),
+                  );
+                },
+                child: const Text('サインアウト'),
+              ),
+            ],
+          );
+        },
+      ),
+    ),
   ];
 }

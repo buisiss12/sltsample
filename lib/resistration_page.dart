@@ -15,7 +15,7 @@ class RegistrationPage extends StatefulWidget {
 }
 
 class _RegistrationPageState extends State<RegistrationPage> {
-  final _userName = TextEditingController();
+  final _userRealName = TextEditingController();
   final _phoneNumber = TextEditingController();
   final _passWord = TextEditingController();
   bool _hidePassword = true;
@@ -25,14 +25,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
   @override
   void initState() {
     super.initState();
-    _userName.addListener(_resistrationButtonState);
+    _userRealName.addListener(_resistrationButtonState);
     _phoneNumber.addListener(_resistrationButtonState);
     _passWord.addListener(_resistrationButtonState);
   }
 
   void _resistrationButtonState() {
     setState(() {
-      _isResistrationButton = _userName.text.isNotEmpty &&
+      _isResistrationButton = _userRealName.text.isNotEmpty &&
           _phoneNumber.text.isNotEmpty &&
           _passWord.text.isNotEmpty;
     });
@@ -40,7 +40,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   @override
   void dispose() {
-    _userName.dispose();
+    _userRealName.dispose();
     _phoneNumber.dispose();
     _passWord.dispose();
     super.dispose();
@@ -53,6 +53,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
       verificationFailed: (FirebaseAuthException e) {
         print(e.message);
       },
+      //iOSの場合resendTokenは常にnull
       codeSent: (String verificationId, int? resendToken) async {
         String smsCode = '';
         await showDialog(
@@ -104,7 +105,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 const Text('本名フルネーム(ひらがな)',
                     style: TextStyle(fontWeight: FontWeight.bold)),
                 TextField(
-                  controller: _userName,
+                  controller: _userRealName,
                   decoration: const InputDecoration(
                     hintText: '本名をフルネームで入力(ひらがな)',
                     border: OutlineInputBorder(),
