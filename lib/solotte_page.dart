@@ -1,8 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:sltsampleapp/login_page.dart';
+// ignore_for_file: avoid_print
 
+import 'login_page.dart';
 import 'oriag_page.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SolottePage extends StatefulWidget {
   const SolottePage({super.key});
@@ -108,6 +109,21 @@ class _SolottePageState extends State<SolottePage> {
                   );
                 },
                 child: const Text('サインアウト'),
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  try {
+                    await FirebaseAuth.instance.currentUser?.delete();
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginPage()),
+                    );
+                  } on FirebaseAuthException catch (e) {
+                    print('アカウント削除失敗: $e');
+                  }
+                },
+                child: const Text('アカウント削除'),
               ),
             ],
           );

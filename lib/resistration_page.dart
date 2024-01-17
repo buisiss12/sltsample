@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 
+import 'solotte_page.dart';
 import 'login_page.dart';
 import 'oldmember_resistration_page.dart';
 import 'package:flutter/material.dart';
@@ -84,6 +85,22 @@ class _RegistrationPageState extends State<RegistrationPage> {
       },
       codeAutoRetrievalTimeout: (String verificationId) {},
     );
+  }
+
+  Future<void> _signUp() async {
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: "${_phoneNumber.text}@test.com",
+        password: _passWord.text,
+      );
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => SolottePage()),
+        (Route<dynamic> route) => false,
+      );
+    } on FirebaseAuthException catch (e) {
+      print('登録失敗: $e');
+    }
   }
 
   @override
@@ -186,7 +203,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 const Text('*「会員登録」のボタンを押すことにより、利用規約に同意したものとみなします。'),
                 const SizedBox(height: 16),
                 ElevatedButton(
-                  onPressed: _isResistrationButton ? _verifySms : null,
+                  onPressed: _isResistrationButton ? _signUp : null,
                   child: const Text('会員登録'),
                 ),
                 const SizedBox(height: 16),
@@ -203,7 +220,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                           builder: (context) => const OldMemberPage()),

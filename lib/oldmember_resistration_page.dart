@@ -166,7 +166,7 @@ class _OldMemberPageState extends State<OldMemberPage> {
                 const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                           builder: (context) => const RegistrationPage()),

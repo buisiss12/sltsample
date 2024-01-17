@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'resistration_page.dart';
+import 'solotte_page.dart';
 import 'forgetpw_page.dart';
 import 'oldmember_resistration_page.dart';
 import 'package:flutter/material.dart';
@@ -42,14 +43,18 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  void _login() async {
+  void _logIn() async {
     try {
       UserCredential userCredential =
           await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: '${_phoneNumber.text}@test.com',
+        email: "${_phoneNumber.text}@test.com",
         password: _passWord.text,
       );
       print('ログイン成功: ${userCredential.user}');
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const SolottePage()),
+      );
     } on FirebaseAuthException catch (e) {
       print('ログイン失敗: $e');
     }
@@ -112,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 16),
               ElevatedButton(
-                onPressed: _isLoginButton ? _login : null,
+                onPressed: _isLoginButton ? _logIn : null,
                 child: const Text('ログイン'),
               ),
               TextButton(
