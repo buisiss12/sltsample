@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'oriag_page.dart';
+import 'user_profile_page.dart';
 import 'settings_drawer_page.dart';
 import 'package:flutter/material.dart';
 
@@ -103,6 +104,6 @@ class _SolottePageState extends State<SolottePage> {
         ],
       ),
     ),
-    const Center(child: Text('5 Page')),
+    const UserProfilePage(),
   ];
 }
