@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({super.key});
@@ -16,9 +17,13 @@ class RegistrationPage extends StatefulWidget {
 }
 
 class _RegistrationPageState extends State<RegistrationPage> {
-  final _userRealName = TextEditingController();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final _realName = TextEditingController();
+  final _gender = TextEditingController();
+  final _birthday = TextEditingController();
   final _phoneNumber = TextEditingController();
   final _passWord = TextEditingController();
+
   bool _hidePassword = true;
   bool _isResistrationButton = false;
   DateTime? _selectedBirthDay;
@@ -26,30 +31,36 @@ class _RegistrationPageState extends State<RegistrationPage> {
   @override
   void initState() {
     super.initState();
-    _userRealName.addListener(_resistrationButtonState);
+    _realName.addListener(_resistrationButtonState);
+    _gender.addListener(_resistrationButtonState);
+    _birthday.addListener(_resistrationButtonState);
     _phoneNumber.addListener(_resistrationButtonState);
     _passWord.addListener(_resistrationButtonState);
   }
 
-  void _resistrationButtonState() {
-    setState(() {
-      _isResistrationButton = _userRealName.text.isNotEmpty &&
-          _phoneNumber.text.isNotEmpty &&
-          _passWord.text.isNotEmpty;
-    });
-  }
-
   @override
   void dispose() {
-    _userRealName.dispose();
+    _realName.dispose();
+    _gender.dispose();
+    _birthday.dispose();
     _phoneNumber.dispose();
     _passWord.dispose();
     super.dispose();
   }
 
+  void _resistrationButtonState() {
+    setState(() {
+      _isResistrationButton = _realName.text.isNotEmpty &&
+          _gender.text.isNotEmpty &&
+          _birthday.text.isNotEmpty &&
+          _phoneNumber.text.isNotEmpty &&
+          _passWord.text.isNotEmpty;
+    });
+  }
+
   Future<void> _verifySms() async {
-    await FirebaseAuth.instance.verifyPhoneNumber(
-      phoneNumber: '+81${_phoneNumber.text}',
+    await _auth.verifyPhoneNumber(
+      phoneNumber: "+81${_phoneNumber.text}",
       verificationCompleted: (PhoneAuthCredential credential) async {},
       verificationFailed: (FirebaseAuthException e) {
         print(e.message);
@@ -81,26 +92,48 @@ class _RegistrationPageState extends State<RegistrationPage> {
         );
         final PhoneAuthCredential credential = PhoneAuthProvider.credential(
             verificationId: verificationId, smsCode: smsCode);
-        await FirebaseAuth.instance.signInWithCredential(credential);
+        await _auth.signInWithCredential(credential); //電話番号として登録
+        try {
+          UserCredential userCredential =
+              await _auth.createUserWithEmailAndPassword(
+            //メールアドレスとして登録
+            email: "${_phoneNumber.text}@test.com",
+            password: _passWord.text,
+          );
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(userCredential.user!.uid)
+              .set({
+            'realName': _realName.text,
+            'gender': _gender.text,
+            'birthdate': _birthday.text
+          });
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const SolottePage()),
+            (Route<dynamic> route) => false,
+          );
+        } on FirebaseAuthException catch (e) {
+          print('登録失敗: $e');
+        }
       },
       codeAutoRetrievalTimeout: (String verificationId) {},
     );
   }
 
-  Future<void> _signUp() async {
-    try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: "${_phoneNumber.text}@test.com",
-        password: _passWord.text,
-      );
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => SolottePage()),
-        (Route<dynamic> route) => false,
-      );
-    } on FirebaseAuthException catch (e) {
-      print('登録失敗: $e');
-    }
+  String _selectedGender = '';
+  void _setGender(String gender) {
+    setState(() {
+      _selectedGender = gender;
+      _gender.text = gender;
+    });
+  }
+
+  void _setBirthday(DateTime date) {
+    setState(() {
+      _selectedBirthDay = date;
+      _birthday.text = "${date.year}-${date.month}-${date.day}";
+    });
   }
 
   @override
@@ -122,7 +155,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 const Text('本名フルネーム(ひらがな)',
                     style: TextStyle(fontWeight: FontWeight.bold)),
                 TextField(
-                  controller: _userRealName,
+                  controller: _realName,
                   decoration: const InputDecoration(
                     hintText: '本名をフルネームで入力(ひらがな)',
                     border: OutlineInputBorder(),
@@ -136,11 +169,19 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () => _setGender('男性'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            _selectedGender == '男性' ? Colors.blue : null,
+                      ),
                       child: const Text('男性'),
                     ),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () => _setGender('女性'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            _selectedGender == '女性' ? Colors.pink : null,
+                      ),
                       child: const Text('女性'),
                     ),
                   ],
@@ -154,6 +195,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           showTitleActions: true,
                           minTime: DateTime(1924, 1, 1),
                           maxTime: DateTime.now(), onConfirm: (date) {
+                        _setBirthday(date);
                         setState(() {
                           _selectedBirthDay = date;
                         });
@@ -203,7 +245,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 const Text('*「会員登録」のボタンを押すことにより、利用規約に同意したものとみなします。'),
                 const SizedBox(height: 16),
                 ElevatedButton(
-                  onPressed: _isResistrationButton ? _signUp : null,
+                  onPressed: _isResistrationButton ? _verifySms : null,
                   child: const Text('会員登録'),
                 ),
                 const SizedBox(height: 16),
