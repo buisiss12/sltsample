@@ -2,6 +2,8 @@
 
 import 'oriag_page.dart';
 import 'user_profile_page.dart';
+import 'viewpost_page.dart';
+import 'addpost_page.dart';
 import 'settings_drawer_page.dart';
 import 'package:flutter/material.dart';
 
@@ -17,63 +19,68 @@ class _SolottePageState extends State<SolottePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(_appbarTitle[_currentPageIndex]),
-        actions: <Widget>[
-          IconButton(
-            icon: Image.asset('assets/images/263x105olag.png'),
-            onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => const OriAgPage()),
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(_appbarTitle[_currentPageIndex]),
+          actions: <Widget>[
+            IconButton(
+              icon: Image.asset('assets/images/263x105olag.png'),
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const OriAgPage()),
+                );
+              },
+            ),
+          ],
+          leading: Builder(
+            builder: (BuildContext context) {
+              return IconButton(
+                icon: const Icon(Icons.settings),
+                onPressed: () {
+                  Scaffold.of(context).openDrawer();
+                },
               );
             },
           ),
-        ],
-        leading: Builder(
-          builder: (BuildContext context) {
-            return IconButton(
-              icon: const Icon(Icons.settings),
-              onPressed: () {
-                Scaffold.of(context).openDrawer();
-              },
-            );
-          },
         ),
+        drawer: const SettingsDrawer(),
+        bottomNavigationBar: NavigationBar(
+          onDestinationSelected: (int index) {
+            setState(() {
+              _currentPageIndex = index;
+            });
+          },
+          selectedIndex: _currentPageIndex,
+          destinations: const [
+            NavigationDestination(
+              icon: Icon(Icons.home),
+              label: 'ホーム',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.email),
+              label: 'メッセージ',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.edit_note),
+              label: '投稿',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.notifications),
+              label: 'お知らせ',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.person),
+              label: 'プロフィール',
+            ),
+          ],
+        ),
+        body: SafeArea(child: pages[_currentPageIndex]),
       ),
-      drawer: const SettingsDrawer(),
-      bottomNavigationBar: NavigationBar(
-        onDestinationSelected: (int index) {
-          setState(() {
-            _currentPageIndex = index;
-          });
-        },
-        selectedIndex: _currentPageIndex,
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.home),
-            label: 'ホーム',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.email),
-            label: 'メッセージ',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.edit_note),
-            label: '投稿',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.notifications),
-            label: 'お知らせ',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.person),
-            label: 'プロフィール',
-          ),
-        ],
-      ),
-      body: SafeArea(child: pages[_currentPageIndex]),
     );
   }
 
@@ -86,9 +93,9 @@ class _SolottePageState extends State<SolottePage> {
   ];
 
   List<Widget> pages = [
-    const Center(child: Text('1 Page')),
+    ViewPostPage(),
     const Center(child: Text('2 Page')),
-    const Center(child: Text('3 Page')),
+    const AddPostPage(),
     const DefaultTabController(
       length: 3,
       child: Column(
