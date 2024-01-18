@@ -26,3 +26,5 @@ samples, guidance on mobile development, and a full API reference.
 ・iphone15の人はアクションボタンもflic2の様に使える
 
 *frebaseログイン情報は端末？に保存されている（firebaseホームページ内でユーザー削除関係ない）
+
+StreamBuilder は、 stream に設定したものに値が入ってくるたびに、builder によって画面が再描画されるようになっている
