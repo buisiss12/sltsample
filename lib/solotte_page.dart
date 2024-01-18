@@ -1,9 +1,8 @@
 // ignore_for_file: avoid_print
 
-import 'login_page.dart';
 import 'oriag_page.dart';
+import 'settings_drawer_page.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class SolottePage extends StatefulWidget {
   const SolottePage({super.key});
@@ -31,7 +30,18 @@ class _SolottePageState extends State<SolottePage> {
             },
           ),
         ],
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: const Icon(Icons.settings),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+            );
+          },
+        ),
       ),
+      drawer: const SettingsDrawer(),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
           setState(() {
@@ -57,8 +67,8 @@ class _SolottePageState extends State<SolottePage> {
             label: 'お知らせ',
           ),
           NavigationDestination(
-            icon: Icon(Icons.manage_accounts),
-            label: '設定',
+            icon: Icon(Icons.person),
+            label: 'プロフィール',
           ),
         ],
       ),
@@ -71,13 +81,13 @@ class _SolottePageState extends State<SolottePage> {
     'メッセージ',
     '投稿',
     'お知らせ',
-    '設定',
+    'プロフィール',
   ];
 
   List<Widget> pages = [
-    const Center(child: Text('first Page')),
-    const Center(child: Text('second Page')),
-    const Center(child: Text('third Page')),
+    const Center(child: Text('1 Page')),
+    const Center(child: Text('2 Page')),
+    const Center(child: Text('3 Page')),
     const DefaultTabController(
       length: 3,
       child: Column(
@@ -93,42 +103,6 @@ class _SolottePageState extends State<SolottePage> {
         ],
       ),
     ),
-    Center(
-      child: Builder(
-        builder: (BuildContext context) {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const Text('Fifth Page'),
-              ElevatedButton(
-                onPressed: () {
-                  FirebaseAuth.instance.signOut();
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => const LoginPage()),
-                  );
-                },
-                child: const Text('サインアウト'),
-              ),
-              ElevatedButton(
-                onPressed: () async {
-                  try {
-                    await FirebaseAuth.instance.currentUser?.delete();
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const LoginPage()),
-                    );
-                  } on FirebaseAuthException catch (e) {
-                    print('アカウント削除失敗: $e');
-                  }
-                },
-                child: const Text('アカウント削除'),
-              ),
-            ],
-          );
-        },
-      ),
-    ),
+    const Center(child: Text('5 Page')),
   ];
 }
