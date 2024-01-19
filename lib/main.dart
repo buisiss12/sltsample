@@ -3,6 +3,7 @@
 import 'login_page.dart';
 import 'solotte_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sltsampleapp/firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -30,7 +31,9 @@ Future<void> main() async {
   final token = await messaging.getToken();
   print('🐯 FCM TOKEN: $token');
 
-  runApp(const MyApp());
+  runApp(
+    const ProviderScope(child: MyApp()),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -42,27 +45,18 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'solotteサンプル',
       theme: ThemeData.dark(),
-      home: const LandingPage(),
-    );
-  }
-}
-
-class LandingPage extends StatelessWidget {
-  const LandingPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder<User?>(
-      stream: FirebaseAuth.instance.authStateChanges(),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          User user = snapshot.data!;
-          print("ユーザーがログインしました: ${user.uid}, ${user.email}");
-          return const SolottePage();
-        }
-        print("ユーザーはログアウト状態です");
-        return const LoginPage();
-      },
+      home: StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            User user = snapshot.data!;
+            print("ユーザーがログインしました: ${user.uid}, ${user.email}");
+            return const SolottePage();
+          }
+          print("ユーザーはログアウト状態です");
+          return const LoginPage();
+        },
+      ),
     );
   }
 }
