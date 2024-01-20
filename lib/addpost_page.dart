@@ -12,16 +12,27 @@ class AddPostPage extends StatefulWidget {
 class AddPostPageState extends State<AddPostPage> {
   final _auth = FirebaseAuth.instance;
   final _firestore = FirebaseFirestore.instance;
+  final _place = TextEditingController();
   final _postText = TextEditingController();
 
   void _addPost() async {
     if (_postText.text.isNotEmpty) {
-      await _firestore.collection('posts').add({
-        'text': _postText.text,
-        'uid': _auth.currentUser!.uid,
-        'timestamp': FieldValue.serverTimestamp(),
-      });
-      _postText.clear();
+      User? user = _auth.currentUser;
+      if (user != null) {
+        var userData = await _firestore.collection('users').doc(user.uid).get();
+        var age = userData['生年月日'];
+        var nickname = userData['ニックネーム'];
+
+        await _firestore.collection('posts').add({
+          '地域': _place.text,
+          '募集内容': _postText.text,
+          'UID': user.uid,
+          '生年月日': age,
+          'ニックネーム': nickname,
+          'timestamp': FieldValue.serverTimestamp(),
+        });
+        _postText.clear();
+      }
     }
   }
 
@@ -31,8 +42,12 @@ class AddPostPageState extends State<AddPostPage> {
       body: Column(
         children: <Widget>[
           TextField(
+            controller: _place,
+            decoration: const InputDecoration(labelText: '地域'),
+          ),
+          TextField(
             controller: _postText,
-            decoration: const InputDecoration(labelText: 'メッセージを入力'),
+            decoration: const InputDecoration(labelText: '募集内容'),
           ),
           ElevatedButton(
             onPressed: _addPost,

@@ -26,8 +26,9 @@ class ViewPostPage extends StatelessWidget {
               Map<String, dynamic> data =
                   document.data()! as Map<String, dynamic>;
               return ListTile(
-                title: Text(data['text']),
-                subtitle: Text('投稿者: ${data['uid']}'),
+                title: Text(data['募集内容']),
+                subtitle: Text(
+                    '地域: ${data['地域']}\nニックネーム: ${data['ニックネーム']}\n生年月日: ${data['生年月日']}'),
               );
             }).toList(),
           );
