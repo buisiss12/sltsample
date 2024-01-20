@@ -16,7 +16,7 @@ class ViewPostPage extends StatelessWidget {
             .snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
-            return const Text('エラーが発生しました');
+            return const Text('viewpostpageエラーが発生しました');
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
