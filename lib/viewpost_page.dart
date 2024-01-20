@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ViewPostPage extends StatelessWidget {
@@ -28,12 +29,25 @@ class ViewPostPage extends StatelessWidget {
               return ListTile(
                 title: Text(data['募集内容']),
                 subtitle: Text(
-                    '地域: ${data['地域']}\nニックネーム: ${data['ニックネーム']}\n生年月日: ${data['生年月日']}'),
+                    '地域: ${data['地域']}\nニックネーム: ${data['ニックネーム']}\n生年月日: ${data['生年月日']}\n${_whenPosted(data['timestamp'])}'),
               );
             }).toList(),
           );
         },
       ),
     );
+  }
+
+  String _whenPosted(Timestamp timestamp) {
+    DateTime postTime = timestamp.toDate();
+    Duration difference = DateTime.now().difference(postTime);
+
+    if (difference.inMinutes < 60) {
+      return '${difference.inMinutes}分前';
+    } else if (difference.inHours < 24) {
+      return '${difference.inHours}時間前';
+    } else {
+      return DateFormat('yyyy/MM/dd').format(postTime);
+    }
   }
 }
