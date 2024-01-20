@@ -126,102 +126,102 @@ class UserProfilePageState extends State<UserProfilePage> {
                 },
                 child: const Text("プロフィールを編集"),
               ),
-              TextFormField(
-                controller: _nicknameController,
-                decoration: const InputDecoration(
-                  labelText: "ニックネーム",
-                  border: OutlineInputBorder(),
-                ),
-                readOnly: true,
+              const Row(
+                children: <Widget>[
+                  Icon(Icons.emoji_events),
+                  SizedBox(width: 8),
+                  Text('REGULER'),
+                ],
               ),
-              TextFormField(
-                controller: _favoriteplaceController,
-                decoration: const InputDecoration(
-                  labelText: "お気に入りの地域",
-                  border: OutlineInputBorder(),
-                ),
-                readOnly: true,
+              const Divider(),
+              const Row(
+                children: <Widget>[
+                  Icon(Icons.remember_me),
+                  SizedBox(width: 8),
+                  Text('会員ID:'),
+                ],
               ),
-              TextFormField(
-                controller: _hashtagController,
-                decoration: const InputDecoration(
-                  labelText: "ハッシュタグ",
-                  border: OutlineInputBorder(),
-                ),
-                readOnly: true,
+              const Divider(),
+              const Row(
+                children: <Widget>[
+                  Icon(Icons.perm_identity),
+                  SizedBox(width: 8),
+                  Text('身分証明書:'),
+                ],
               ),
-              TextFormField(
-                controller: _introductionController,
-                decoration: const InputDecoration(
-                  labelText: "自己紹介",
-                  border: OutlineInputBorder(),
-                ),
-                readOnly: true,
+              const Divider(),
+              const Row(
+                children: <Widget>[
+                  Icon(Icons.star_rate),
+                  SizedBox(width: 8),
+                  Text('特別会員:'),
+                ],
               ),
-              TextFormField(
-                controller: _statureController,
-                decoration: const InputDecoration(
-                  labelText: "身長",
-                  border: OutlineInputBorder(),
-                ),
-                readOnly: true,
+              const Divider(),
+              const Row(
+                children: <Widget>[
+                  Icon(Icons.military_tech),
+                  SizedBox(width: 8),
+                  Text('称号:'),
+                ],
               ),
-              TextFormField(
-                controller: _worklocationController,
-                decoration: const InputDecoration(
-                  labelText: "勤務地",
-                  border: OutlineInputBorder(),
-                ),
-                readOnly: true,
+              const Divider(),
+              Row(
+                children: <Widget>[
+                  const Icon(Icons.cake),
+                  const SizedBox(width: 8),
+                  Text('年齢: ${_birthdayController.text}'),
+                ],
               ),
-              TextFormField(
-                controller: _livelocationController,
-                decoration: const InputDecoration(
-                  labelText: "住居地",
-                  border: OutlineInputBorder(),
-                ),
-                readOnly: true,
+              const Divider(),
+              Row(
+                children: <Widget>[
+                  const Icon(Icons.work),
+                  const SizedBox(width: 8),
+                  Text('職業: ${_occupationController.text}'),
+                ],
               ),
-              TextFormField(
-                controller: _occupationController,
-                decoration: const InputDecoration(
-                  labelText: "職業",
-                  border: OutlineInputBorder(),
-                ),
-                readOnly: true,
+              const Divider(),
+              Row(
+                children: <Widget>[
+                  const Icon(Icons.apartment),
+                  const SizedBox(width: 8),
+                  Text('勤務地: ${_worklocationController.text}'),
+                ],
               ),
-              TextFormField(
-                controller: _bodyshapeController,
-                decoration: const InputDecoration(
-                  labelText: "体型",
-                  border: OutlineInputBorder(),
-                ),
-                readOnly: true,
+              const Divider(),
+              Row(
+                children: <Widget>[
+                  const Icon(Icons.home),
+                  const SizedBox(width: 8),
+                  Text('住居地: ${_livelocationController.text}'),
+                ],
               ),
-              TextFormField(
-                controller: _holidayController,
-                decoration: const InputDecoration(
-                  labelText: "休日",
-                  border: OutlineInputBorder(),
-                ),
-                readOnly: true,
+              const Divider(),
+              Row(
+                children: <Widget>[
+                  const Icon(Icons.accessibility),
+                  const SizedBox(width: 8),
+                  Text('身長: ${_statureController.text}'),
+                ],
               ),
-              TextFormField(
-                controller: _genderController,
-                decoration: const InputDecoration(
-                  labelText: "性別",
-                  border: OutlineInputBorder(),
-                ),
-                readOnly: true,
+              const Divider(),
+              Row(
+                children: <Widget>[
+                  const Icon(Icons.accessibility_new),
+                  const SizedBox(width: 8),
+                  Text('体型: ${_bodyshapeController.text}'),
+                ],
               ),
-              TextFormField(
-                controller: _birthdayController,
-                decoration: const InputDecoration(
-                  labelText: "生年月日",
-                  border: OutlineInputBorder(),
-                ),
-                readOnly: true,
+              const Divider(),
+              Row(
+                children: <Widget>[
+                  const Icon(Icons.calendar_today),
+                  const SizedBox(width: 8),
+                  Text('休日: ${_holidayController.text}'),
+                ],
               ),
+              const Divider(),
             ],
           ),
         ),
