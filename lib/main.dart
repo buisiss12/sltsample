@@ -3,7 +3,6 @@
 import 'login_page.dart';
 import 'solotte_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sltsampleapp/firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -32,7 +31,7 @@ Future<void> main() async {
   print('🐯 FCM TOKEN: $token');
 
   runApp(
-    const ProviderScope(child: MyApp()),
+    const MyApp(),
   );
 }
 

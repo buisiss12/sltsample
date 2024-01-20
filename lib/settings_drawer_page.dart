@@ -42,7 +42,7 @@ class SettingsDrawer extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => const LoginPage()),
                 );
               } on FirebaseAuthException catch (e) {
-                print('アカウント削除失敗: $e');
+                print('ログアウト失敗: $e');
               }
             },
           ),

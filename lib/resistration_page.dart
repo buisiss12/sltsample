@@ -18,9 +18,9 @@ class RegistrationPage extends StatefulWidget {
 
 class _RegistrationPageState extends State<RegistrationPage> {
   final _auth = FirebaseAuth.instance;
-  final _realName = TextEditingController();
-  final _gender = TextEditingController();
-  final _birthday = TextEditingController();
+  final _realNameController = TextEditingController();
+  final _genderController = TextEditingController();
+  final _birthdayController = TextEditingController();
   final _phoneNumber = TextEditingController();
   final _passWord = TextEditingController();
 
@@ -31,18 +31,18 @@ class _RegistrationPageState extends State<RegistrationPage> {
   @override
   void initState() {
     super.initState();
-    _realName.addListener(_resistrationButtonState);
-    _gender.addListener(_resistrationButtonState);
-    _birthday.addListener(_resistrationButtonState);
+    _realNameController.addListener(_resistrationButtonState);
+    _genderController.addListener(_resistrationButtonState);
+    _birthdayController.addListener(_resistrationButtonState);
     _phoneNumber.addListener(_resistrationButtonState);
     _passWord.addListener(_resistrationButtonState);
   }
 
   @override
   void dispose() {
-    _realName.dispose();
-    _gender.dispose();
-    _birthday.dispose();
+    _realNameController.dispose();
+    _genderController.dispose();
+    _birthdayController.dispose();
     _phoneNumber.dispose();
     _passWord.dispose();
     super.dispose();
@@ -50,9 +50,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   void _resistrationButtonState() {
     setState(() {
-      _isResistrationButton = _realName.text.isNotEmpty &&
-          _gender.text.isNotEmpty &&
-          _birthday.text.isNotEmpty &&
+      _isResistrationButton = _realNameController.text.isNotEmpty &&
+          _genderController.text.isNotEmpty &&
+          _birthdayController.text.isNotEmpty &&
           _phoneNumber.text.isNotEmpty &&
           _passWord.text.isNotEmpty;
     });
@@ -104,9 +104,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
               .collection('users')
               .doc(userCredential.user!.uid)
               .set({
-            'realName': _realName.text,
-            'gender': _gender.text,
-            'birthdate': _birthday.text
+            '本名': _realNameController.text,
+            '性別': _genderController.text,
+            '生年月日': _birthdayController.text,
           });
           Navigator.pushAndRemoveUntil(
             context,
@@ -125,14 +125,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
   void _setGender(String gender) {
     setState(() {
       _selectedGender = gender;
-      _gender.text = gender;
+      _genderController.text = gender;
     });
   }
 
   void _setBirthday(DateTime date) {
     setState(() {
       _selectedBirthDay = date;
-      _birthday.text = "${date.year}-${date.month}-${date.day}";
+      _birthdayController.text = "${date.year}-${date.month}-${date.day}";
     });
   }
 
@@ -155,7 +155,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 const Text('本名フルネーム(ひらがな)',
                     style: TextStyle(fontWeight: FontWeight.bold)),
                 TextField(
-                  controller: _realName,
+                  controller: _realNameController,
                   decoration: const InputDecoration(
                     hintText: '本名をフルネームで入力(ひらがな)',
                     border: OutlineInputBorder(),
