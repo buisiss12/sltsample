@@ -4,70 +4,47 @@ import 'resistration_page.dart';
 import 'solotte_page.dart';
 import 'forgetpw_page.dart';
 import 'oldmember_resistration_page.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class LoginPage extends StatefulWidget {
+final phoneNumberProvider = StateProvider<String>((ref) => '');
+final passWordProvider = StateProvider<String>((ref) => '');
+final hidePasswordProvider = StateProvider<bool>((ref) => true);
+
+class LoginPage extends ConsumerWidget {
   const LoginPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final phoneNumber = ref.watch(phoneNumberProvider);
+    final passWord = ref.watch(passWordProvider);
+    final hidePassword = ref.watch(hidePasswordProvider);
 
-class _LoginPageState extends State<LoginPage> {
-  final _phoneNumber = TextEditingController();
-  final _passWord = TextEditingController();
-  bool _hidePassword = false;
-  bool _isLoginButton = false; // ボタンの有効状態を追跡
-
-  @override
-  void initState() {
-    super.initState();
-    //ログインボタンを押せる様にするためのaddlistener
-    _phoneNumber.addListener(_loginButtonState);
-    _passWord.addListener(_loginButtonState);
-  }
-
-  void _loginButtonState() {
-    setState(() {
-      _isLoginButton =
-          _phoneNumber.text.isNotEmpty && _passWord.text.isNotEmpty;
-    });
-  }
-
-  @override
-  void dispose() {
-    _phoneNumber.dispose();
-    _passWord.dispose();
-    super.dispose();
-  }
-
-  void _logIn() async {
-    try {
-      UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: "${_phoneNumber.text}@test.com",
-        password: _passWord.text,
-      );
-      print('ログイン成功: ${userCredential.user}');
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const SolottePage()),
-      );
-    } on FirebaseAuthException catch (e) {
-      print('ログイン失敗: $e');
+    void logIn() async {
+      try {
+        UserCredential userCredential =
+            await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: "$phoneNumber@test.com",
+          password: passWord,
+        );
+        print('ログイン成功: ${userCredential.user}');
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const SolottePage()),
+        );
+      } on FirebaseAuthException catch (e) {
+        print('ログイン失敗: $e');
+      }
     }
-  }
 
-  @override
-  Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        FocusScope.of(context).unfocus(); // キーボードを隠す
+        FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-        resizeToAvoidBottomInset: false, //キーボードをUIに影響なく表示
+        resizeToAvoidBottomInset: false,
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -80,44 +57,42 @@ class _LoginPageState extends State<LoginPage> {
               const Text('電話番号 または 会員ID',
                   style: TextStyle(fontWeight: FontWeight.bold)),
               TextField(
-                controller: _phoneNumber,
-                decoration: InputDecoration(
-                  hintText: '電話番号または会員IDを入力(ハイフンなし)',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5.0),
-                  ),
-                ),
+                decoration:
+                    const InputDecoration(labelText: '電話番号または会員IDを入力(ハイフンなし)'),
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                onChanged: (value) {
+                  ref.read(phoneNumberProvider.notifier).state = value;
+                },
               ),
               const SizedBox(height: 16),
               const Text('パスワード (数字6桁以上)',
                   style: TextStyle(fontWeight: FontWeight.bold)),
               TextField(
-                controller: _passWord,
                 decoration: InputDecoration(
-                  hintText: 'パスワードを入力',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5.0),
-                  ),
+                  labelText: 'パスワードを入力',
                   suffixIcon: IconButton(
                     icon: Icon(
-                      _hidePassword ? Icons.visibility : Icons.visibility_off,
+                      hidePassword ? Icons.visibility_off : Icons.visibility,
                     ),
                     onPressed: () {
-                      setState(() {
-                        _hidePassword = !_hidePassword;
-                      });
+                      ref.read(hidePasswordProvider.notifier).state =
+                          !hidePassword;
                     },
                   ),
                 ),
-                obscureText: !_hidePassword,
+                obscureText: hidePassword,
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                onChanged: (value) {
+                  ref.read(passWordProvider.notifier).state = value;
+                },
               ),
               const SizedBox(height: 16),
               ElevatedButton(
-                onPressed: _isLoginButton ? _logIn : null,
+                onPressed: phoneNumber.isNotEmpty && passWord.isNotEmpty
+                    ? logIn
+                    : null,
                 child: const Text('ログイン'),
               ),
               TextButton(

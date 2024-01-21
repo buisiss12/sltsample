@@ -46,7 +46,7 @@ class AddPostPage extends ConsumerWidget {
           DropdownButtonHideUnderline(
             child: DropdownButton<String>(
               value: null,
-              hint: const Text('都道府県を選択'),
+              hint: const Text('都道府県を選択(複数選択可)'),
               items: [
                 '北海道',
                 '青森県',
