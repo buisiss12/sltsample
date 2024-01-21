@@ -23,15 +23,23 @@ class ViewPostPage extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           }
           return ListView(
-            children: snapshot.data!.docs.map((DocumentSnapshot document) {
-              Map<String, dynamic> data =
-                  document.data()! as Map<String, dynamic>;
-              return ListTile(
-                title: Text(data['募集内容']),
-                subtitle: Text(
-                    '地域: ${data['地域']}\nニックネーム: ${data['ニックネーム']}\n生年月日: ${data['生年月日']}\n${_whenPosted(data['timestamp'])}'),
-              );
-            }).toList(),
+            children: snapshot.data!.docs
+                .map((DocumentSnapshot document) {
+                  Map<String, dynamic> data =
+                      document.data()! as Map<String, dynamic>;
+                  return Column(
+                    children: [
+                      ListTile(
+                        title: Text(data['ニックネーム']),
+                        subtitle: Text(
+                            '希望地域: ${data['希望地域']} 生年月日: ${data['生年月日']}\n募集内容: ${data['募集内容']}\n${_whenPosted(data['timestamp'])}'),
+                      ),
+                      const Divider(), // ここに Divider を追加
+                    ],
+                  );
+                })
+                .expand((element) => [element])
+                .toList(),
           );
         },
       ),
