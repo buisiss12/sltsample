@@ -1,46 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sltsampleapp/providers.dart';
 
-class ForgetPwPage extends StatefulWidget {
+class ForgetPwPage extends ConsumerWidget {
   const ForgetPwPage({super.key});
 
   @override
-  State<ForgetPwPage> createState() => _ForgetPwPageState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final phoneNumber = ref.watch(phoneNumberProvider);
+    final memberNumber = ref.watch(memberNumberProvider);
 
-class _ForgetPwPageState extends State<ForgetPwPage> {
-  final _memberNumber = TextEditingController();
-  final _phoneNumber = TextEditingController();
-  bool _isResetPwButton = false; // ボタンの有効状態を追跡
-
-  @override
-  void initState() {
-    super.initState();
-    _memberNumber.addListener(_resetPwButtonState);
-    _phoneNumber.addListener(_resetPwButtonState);
-  }
-
-  void _resetPwButtonState() {
-    setState(() {
-      _isResetPwButton =
-          _memberNumber.text.isNotEmpty && _phoneNumber.text.isNotEmpty;
-    });
-  }
-
-  @override
-  void dispose() {
-    _memberNumber.dispose();
-    _phoneNumber.dispose();
-    super.dispose();
-  }
-
-  void _resetPw() {}
-
-  @override
-  Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        FocusScope.of(context).unfocus(); // キーボードを隠す
+        FocusScope.of(context).unfocus();
       },
       child: Scaffold(
         appBar: AppBar(
@@ -58,7 +31,6 @@ class _ForgetPwPageState extends State<ForgetPwPage> {
               const SizedBox(height: 16),
               const Text('会員ID', style: TextStyle(fontWeight: FontWeight.bold)),
               TextField(
-                controller: _memberNumber,
                 decoration: InputDecoration(
                   hintText: '会員IDを入力',
                   border: OutlineInputBorder(
@@ -67,11 +39,13 @@ class _ForgetPwPageState extends State<ForgetPwPage> {
                 ),
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                onChanged: (value) {
+                  ref.read(memberNumberProvider.notifier).state = value;
+                },
               ),
               const SizedBox(height: 16),
               const Text('電話番号', style: TextStyle(fontWeight: FontWeight.bold)),
               TextField(
-                controller: _phoneNumber,
                 decoration: InputDecoration(
                   hintText: '電話番号を入力(ハイフンなし)',
                   border: OutlineInputBorder(
@@ -80,15 +54,18 @@ class _ForgetPwPageState extends State<ForgetPwPage> {
                 ),
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                onChanged: (value) {
+                  ref.read(phoneNumberProvider.notifier).state = value;
+                },
               ),
               const SizedBox(height: 16),
               const Text(
                   '*会員IDを忘れた場合や、電話番号を変更された場合はお手数ですがオリエンタルラウンジ・agの店舗スタッフへお問い合わせください。'),
               const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: _isResetPwButton ? _resetPw : null,
+              /*ElevatedButton(
+                onPressed: memberNumber.isNotEmpty && phoneNumber.isNotEmpty ? _resetPw : null,
                 child: const Text('パスワードを再設定する'),
-              ),
+              ),*/
             ],
           ),
         ),

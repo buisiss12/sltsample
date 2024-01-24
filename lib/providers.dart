@@ -14,3 +14,6 @@ final hidePasswordProvider = StateProvider.autoDispose<bool>((ref) => true);
 final realNameProvider = StateProvider.autoDispose<String>((ref) => '');
 final genderProvider = StateProvider.autoDispose<String>((ref) => '');
 final birthdayProvider = StateProvider.autoDispose<DateTime?>((ref) => null);
+
+// used in 'forgetpw_page.dart' ''
+final memberNumberProvider = StateProvider.autoDispose<String>((ref) => '');
