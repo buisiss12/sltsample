@@ -169,7 +169,7 @@ class _OldMemberPageState extends State<OldMemberPage> {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const RegistrationPage()),
+                          builder: (context) => RegistrationPage()),
                     );
                   },
                   child: const Text('新規会員登録'),

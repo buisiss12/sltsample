@@ -1,11 +1,9 @@
-import 'package:flutter/material.dart';
 import 'solotte_page.dart';
+import 'providers.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
-final addPostProvider = StateProvider<String>((ref) => '');
-final selectedAreaProvider = StateProvider<List<String>>((ref) => []);
 
 class AddPostPage extends ConsumerWidget {
   const AddPostPage({super.key});
@@ -36,8 +34,6 @@ class AddPostPage extends ConsumerWidget {
       Navigator.of(context).pushReplacement(MaterialPageRoute(
         builder: (context) => const SolottePage(),
       ));
-      ref.read(addPostProvider.notifier).state = '';
-      ref.read(selectedAreaProvider.notifier).state = [];
     }
 
     return Scaffold(
