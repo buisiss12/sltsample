@@ -49,15 +49,15 @@ class _OriAgPageState extends State<OriAgPage> {
               label: '店内人数',
             ),
             NavigationDestination(
-              icon: Icon(Icons.restaurant_menu),
+              icon: Icon(Icons.qr_code_scanner),
               label: 'チェックイン',
             ),
             NavigationDestination(
-              icon: Icon(Icons.receipt_long),
+              icon: Icon(Icons.restaurant_menu),
               label: 'メニュー',
             ),
             NavigationDestination(
-              icon: Icon(Icons.notifications),
+              icon: Icon(Icons.receipt_long),
               label: '会計',
             ),
           ],

@@ -14,7 +14,7 @@ class OldMemberPage extends StatefulWidget {
 }
 
 class _OldMemberPageState extends State<OldMemberPage> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final _auth = FirebaseAuth.instance;
   final _userId = TextEditingController();
   final _phoneNumber = TextEditingController();
   bool _isResistrationButton = false;

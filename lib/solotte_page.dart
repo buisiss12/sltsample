@@ -111,6 +111,6 @@ class _SolottePageState extends State<SolottePage> {
         ],
       ),
     ),
-    const UserProfilePage(),
+    UserProfilePage(),
   ];
 }
