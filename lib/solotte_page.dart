@@ -28,7 +28,7 @@ class _SolottePageState extends State<SolottePage> {
           title: Text(_appbarTitle[_currentPageIndex]),
           actions: <Widget>[
             IconButton(
-              icon: Image.asset('assets/images/263x105olag.png'),
+              icon: Image.asset('assets/images/263x105oriag.png'),
               onPressed: () {
                 Navigator.pushReplacement(
                   context,

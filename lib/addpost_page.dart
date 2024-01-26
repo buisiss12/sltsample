@@ -12,8 +12,9 @@ class AddPostPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final auth = FirebaseAuth.instance;
     final firestore = FirebaseFirestore.instance;
+
     final post = ref.watch(addPostProvider);
-    final selectedArea = ref.watch(selectedAreaProvider);
+    final area = ref.watch(areaProvider);
 
     void addPost() async {
       User? user = auth.currentUser;
@@ -27,7 +28,7 @@ class AddPostPage extends ConsumerWidget {
           '生年月日': age,
           'ニックネーム': nickname,
           '募集内容': post,
-          '希望地域': selectedArea,
+          '希望地域': area,
           'timestamp': FieldValue.serverTimestamp(),
         });
       }
@@ -98,21 +99,19 @@ class AddPostPage extends ConsumerWidget {
                 );
               }).toList(),
               onChanged: (String? newValue) {
-                if (newValue != null && !selectedArea.contains(newValue)) {
-                  ref.read(selectedAreaProvider.notifier).state =
-                      List.from(selectedArea)..add(newValue);
+                if (newValue != null && !area.contains(newValue)) {
+                  ref.read(areaProvider.notifier).state = List.from(area)
+                    ..add(newValue);
                 }
               },
             ),
           ),
           Wrap(
-            children: selectedArea
+            children: area
                 .map((prefecture) => Chip(
                     label: Text(prefecture),
-                    onDeleted: () => ref
-                            .read(selectedAreaProvider.notifier)
-                            .state =
-                        selectedArea.where((p) => p != prefecture).toList()))
+                    onDeleted: () => ref.read(areaProvider.notifier).state =
+                        area.where((p) => p != prefecture).toList()))
                 .toList(),
           ),
           TextField(
@@ -122,8 +121,7 @@ class AddPostPage extends ConsumerWidget {
             },
           ),
           ElevatedButton(
-            onPressed:
-                post.isNotEmpty && selectedArea.isNotEmpty ? addPost : null,
+            onPressed: post.isNotEmpty && area.isNotEmpty ? addPost : null,
             child: const Text('投稿する'),
           ),
         ],
