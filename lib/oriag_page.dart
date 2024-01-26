@@ -50,15 +50,15 @@ class _OriAgPageState extends State<OriAgPage> {
             ),
             NavigationDestination(
               icon: Icon(Icons.restaurant_menu),
-              label: 'メニュー',
+              label: 'チェックイン',
             ),
             NavigationDestination(
               icon: Icon(Icons.receipt_long),
-              label: '会計',
+              label: 'メニュー',
             ),
             NavigationDestination(
               icon: Icon(Icons.notifications),
-              label: 'お知らせ',
+              label: '会計',
             ),
           ],
         ),
@@ -70,9 +70,9 @@ class _OriAgPageState extends State<OriAgPage> {
   final List<String> _appbarTitle = [
     '特典',
     '店内人数',
+    'チェックイン',
     'メニュー',
     '会計',
-    'お知らせ',
   ];
 
   List<Widget> pages = [
@@ -94,20 +94,6 @@ class _OriAgPageState extends State<OriAgPage> {
     const Center(child: Text('second Page')),
     const Center(child: Text('Third Page')),
     const Center(child: Text('force Page')),
-    const DefaultTabController(
-      length: 3,
-      child: Column(
-        children: <Widget>[
-          TabBar(
-            labelPadding: EdgeInsets.symmetric(vertical: 15.0),
-            tabs: [
-              Text('すべて'),
-              Text('開催中'),
-              Text('終了'),
-            ],
-          ),
-        ],
-      ),
-    ),
+    const Center(child: Text('fifth Page')),
   ];
 }
