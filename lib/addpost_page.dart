@@ -1,17 +1,17 @@
 import 'solotte_page.dart';
-import 'providers.dart';
+import 'provider/provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AddPostPage extends ConsumerWidget {
   const AddPostPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final auth = FirebaseAuth.instance;
-    final firestore = FirebaseFirestore.instance;
+    final auth = ref.watch(authProvider);
+    final firestore = ref.watch(firestoreProvider);
 
     final post = ref.watch(addPostProvider);
     final area = ref.watch(areaProvider);
@@ -24,12 +24,15 @@ class AddPostPage extends ConsumerWidget {
         var nickname = userData['本名'];
 
         if (age == null || nickname == null) {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(const SnackBar(content: Text('プロフィールを完成させてください')));
-          return;
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('プロフィールを完成させてください')));
+            return;
+          }
         }
 
         await firestore.collection('posts').add({
+          'ニックネーム': '',
           'UID': user.uid,
           '生年月日': age,
           '本名': nickname,
@@ -38,9 +41,11 @@ class AddPostPage extends ConsumerWidget {
           'timestamp': FieldValue.serverTimestamp(),
         });
       }
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (context) => const SolottePage(),
-      ));
+      if (context.mounted) {
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) => const SolottePage(),
+        ));
+      }
     }
 
     return Scaffold(

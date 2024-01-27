@@ -1,6 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserProfilePage extends StatelessWidget {
   final _auth = FirebaseAuth.instance;
@@ -15,6 +15,7 @@ class UserProfilePage extends StatelessWidget {
       return const Center(child: Text('ログインしてください'));
     }
     return StreamBuilder<DocumentSnapshot>(
+      //futureビルダーへ変更
       stream: _firestore.collection('users').doc(user.uid).snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {

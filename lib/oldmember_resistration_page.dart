@@ -1,10 +1,10 @@
 import 'login_page.dart';
+import 'resistration_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'resistration_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_picker/flutter_picker.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class OldMemberPage extends StatefulWidget {
   const OldMemberPage({super.key});
@@ -169,7 +169,7 @@ class _OldMemberPageState extends State<OldMemberPage> {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => RegistrationPage()),
+                          builder: (context) => const RegistrationPage()),
                     );
                   },
                   child: const Text('新規会員登録'),

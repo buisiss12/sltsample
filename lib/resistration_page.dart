@@ -1,23 +1,22 @@
 // ignore_for_file: avoid_print
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'providers.dart';
-import 'solotte_page.dart';
 import 'login_page.dart';
 import 'oldmember_resistration_page.dart';
+import 'solotte_page.dart';
+import 'provider/provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 
 class RegistrationPage extends ConsumerWidget {
-  RegistrationPage({super.key});
-
-  final _auth = FirebaseAuth.instance;
+  const RegistrationPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final auth = ref.watch(authProvider);
     final phoneNumber = ref.watch(phoneNumberProvider);
     final passWord = ref.watch(passWordProvider);
     final hidePassword = ref.watch(hidePasswordProvider);
@@ -45,7 +44,7 @@ class RegistrationPage extends ConsumerWidget {
     }
 
     Future<void> verifySms() async {
-      await _auth.verifyPhoneNumber(
+      await auth.verifyPhoneNumber(
         phoneNumber: "+81$phoneNumber",
         verificationCompleted: (PhoneAuthCredential credential) async {},
         verificationFailed: (FirebaseAuthException e) {
@@ -78,10 +77,10 @@ class RegistrationPage extends ConsumerWidget {
           );
           final PhoneAuthCredential credential = PhoneAuthProvider.credential(
               verificationId: verificationId, smsCode: smsCode);
-          await _auth.signInWithCredential(credential); //電話番号として登録
+          await auth.signInWithCredential(credential); //電話番号として登録
           try {
             UserCredential userCredential =
-                await _auth.createUserWithEmailAndPassword(
+                await auth.createUserWithEmailAndPassword(
               //メールアドレスとして登録
               email: "$phoneNumber@test.com",
               password: passWord,

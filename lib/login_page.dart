@@ -1,14 +1,14 @@
 // ignore_for_file: avoid_print
 
-import 'providers.dart';
 import 'resistration_page.dart';
-import 'solotte_page.dart';
 import 'forgetpw_page.dart';
 import 'oldmember_resistration_page.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'solotte_page.dart';
+import 'provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LoginPage extends ConsumerWidget {
   const LoginPage({super.key});
@@ -106,7 +106,8 @@ class LoginPage extends ConsumerWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => RegistrationPage()),
+                    MaterialPageRoute(
+                        builder: (context) => const RegistrationPage()),
                   );
                 },
                 child: const Text('新規会員登録'),
