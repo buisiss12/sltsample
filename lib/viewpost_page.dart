@@ -33,7 +33,7 @@ class ViewPostPage extends ConsumerWidget {
                       ListTile(
                         title: Text(data['ニックネーム']),
                         subtitle: Text(
-                            '希望地域: ${data['希望地域']} 年齢: ${data['年齢']}\n募集内容: ${data['募集内容']}'),
+                            '希望地域: ${data['希望地域']} 年齢: ${data['年齢']}歳\n募集内容: ${data['募集内容']}'),
                       ),
                       const Divider(),
                     ],

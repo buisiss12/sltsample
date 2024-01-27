@@ -2,7 +2,7 @@ import 'provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'calculator.dart/age_calculator.dart';
+import 'calculator/age_calculator.dart';
 
 class UserProfilePage extends ConsumerWidget {
   const UserProfilePage({super.key});
@@ -34,7 +34,7 @@ class UserProfilePage extends ConsumerWidget {
         return ListView(
           children: <Widget>[
             Text('本名: ${userData['本名'] ?? ''}'),
-            Text('年齢: $age'),
+            Text('年齢: $age歳'),
             Text('性別: ${userData['性別'] ?? ''}'),
             Text('勤務地: ${userData['勤務地'] ?? ''}'),
           ],

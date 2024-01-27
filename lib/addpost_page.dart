@@ -1,5 +1,5 @@
 import 'solotte_page.dart';
-import 'calculator.dart/age_calculator.dart';
+import 'calculator/age_calculator.dart';
 import 'provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
