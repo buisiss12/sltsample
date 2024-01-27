@@ -8,9 +8,6 @@ class ForgetPwPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final phoneNumber = ref.watch(phoneNumberProvider);
-    final memberNumber = ref.watch(memberNumberProvider);
-
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();

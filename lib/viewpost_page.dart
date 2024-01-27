@@ -1,16 +1,18 @@
+import 'provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ViewPostPage extends StatelessWidget {
-  final _firestore = FirebaseFirestore.instance;
-
-  ViewPostPage({super.key});
+class ViewPostPage extends ConsumerWidget {
+  const ViewPostPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final firestore = ref.watch(firestoreProvider);
+
     return Scaffold(
       body: StreamBuilder(
-        stream: _firestore
+        stream: firestore
             .collection('posts')
             .orderBy('timestamp', descending: true)
             .snapshots(),
@@ -31,9 +33,9 @@ class ViewPostPage extends StatelessWidget {
                       ListTile(
                         title: Text(data['ニックネーム']),
                         subtitle: Text(
-                            '希望地域: ${data['希望地域']} 生年月日: ${data['生年月日']}\n募集内容: ${data['募集内容']}'),
+                            '希望地域: ${data['希望地域']} 年齢: ${data['年齢']}\n募集内容: ${data['募集内容']}'),
                       ),
-                      const Divider(), // ここに Divider を追加
+                      const Divider(),
                     ],
                   );
                 })

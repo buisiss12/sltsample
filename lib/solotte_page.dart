@@ -93,7 +93,7 @@ class _SolottePageState extends State<SolottePage> {
   ];
 
   List<Widget> pages = [
-    ViewPostPage(),
+    const ViewPostPage(),
     const Center(child: Text('2 Page')),
     const AddPostPage(),
     const DefaultTabController(
@@ -111,6 +111,6 @@ class _SolottePageState extends State<SolottePage> {
         ],
       ),
     ),
-    UserProfilePage(),
+    const UserProfilePage(),
   ];
 }

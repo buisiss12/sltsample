@@ -1,4 +1,5 @@
 import 'solotte_page.dart';
+import 'calculator.dart/age_calculator.dart';
 import 'provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -20,10 +21,11 @@ class AddPostPage extends ConsumerWidget {
       User? user = auth.currentUser;
       if (user != null) {
         var userData = await firestore.collection('users').doc(user.uid).get();
-        var age = userData['生年月日'];
+        var birthday = (userData['生年月日'] as Timestamp).toDate();
+        var age = birthdayToAge(birthday);
         var nickname = userData['本名'];
 
-        if (age == null || nickname == null) {
+        if (nickname == null) {
           if (context.mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('プロフィールを完成させてください')));
@@ -34,7 +36,7 @@ class AddPostPage extends ConsumerWidget {
         await firestore.collection('posts').add({
           'ニックネーム': '',
           'UID': user.uid,
-          '生年月日': age,
+          '年齢': age,
           '本名': nickname,
           '希望地域': area,
           '募集内容': post,

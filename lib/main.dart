@@ -2,8 +2,9 @@
 
 import 'login_page.dart';
 import 'solotte_page.dart';
-import 'package:flutter/material.dart';
+import 'provider/provider.dart';
 import 'firebase_options/firebase_options.dart';
+import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -11,12 +12,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  //プッシュ通知
   final messaging = FirebaseMessaging.instance;
   await messaging.requestPermission(
     alert: true,
@@ -36,17 +35,19 @@ Future<void> main() async {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final auth = ref.watch(authProvider);
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'solotteサンプル',
       theme: ThemeData.dark(),
       home: StreamBuilder<User?>(
-        stream: FirebaseAuth.instance.authStateChanges(),
+        stream: auth.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             User user = snapshot.data!;

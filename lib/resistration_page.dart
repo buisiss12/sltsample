@@ -6,7 +6,6 @@ import 'solotte_page.dart';
 import 'provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
@@ -17,6 +16,7 @@ class RegistrationPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final auth = ref.watch(authProvider);
+    final firestore = ref.watch(firestoreProvider);
     final phoneNumber = ref.watch(phoneNumberProvider);
     final passWord = ref.watch(passWordProvider);
     final hidePassword = ref.watch(hidePasswordProvider);
@@ -85,7 +85,7 @@ class RegistrationPage extends ConsumerWidget {
               email: "$phoneNumber@test.com",
               password: passWord,
             );
-            await FirebaseFirestore.instance
+            await firestore
                 .collection('users')
                 .doc(userCredential.user!.uid)
                 .set({
@@ -93,11 +93,13 @@ class RegistrationPage extends ConsumerWidget {
               '性別': gender,
               '生年月日': birthday,
             });
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => const SolottePage()),
-              (Route<dynamic> route) => false,
-            );
+            if (context.mounted) {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => const SolottePage()),
+                (Route<dynamic> route) => false,
+              );
+            }
           } on FirebaseAuthException catch (e) {
             print('登録失敗: $e');
           }

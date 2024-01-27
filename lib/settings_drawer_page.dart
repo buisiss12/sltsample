@@ -37,10 +37,12 @@ class SettingsDrawer extends StatelessWidget {
               Navigator.of(context).pop();
               try {
                 await FirebaseAuth.instance.signOut();
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoginPage()),
-                );
+                if (context.mounted) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => const LoginPage()),
+                  );
+                }
               } on FirebaseAuthException catch (e) {
                 print('ログアウト失敗: $e');
               }
@@ -93,10 +95,12 @@ class SettingsDrawer extends StatelessWidget {
               Navigator.of(context).pop();
               try {
                 await FirebaseAuth.instance.currentUser?.delete();
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoginPage()),
-                );
+                if (context.mounted) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => const LoginPage()),
+                  );
+                }
               } on FirebaseAuthException catch (e) {
                 print('アカウント削除失敗: $e');
               }

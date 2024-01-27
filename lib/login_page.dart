@@ -15,22 +15,25 @@ class LoginPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final auth = ref.watch(authProvider);
     final phoneNumber = ref.watch(phoneNumberProvider);
     final passWord = ref.watch(passWordProvider);
     final hidePassword = ref.watch(hidePasswordProvider);
 
     void logIn() async {
       try {
-        UserCredential userCredential =
-            await FirebaseAuth.instance.signInWithEmailAndPassword(
+        UserCredential userCredential = await auth.signInWithEmailAndPassword(
           email: "$phoneNumber@test.com",
           password: passWord,
         );
         print('ログイン成功: ${userCredential.user}');
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const SolottePage()),
-        );
+
+        if (context.mounted) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const SolottePage()),
+          );
+        }
       } on FirebaseAuthException catch (e) {
         print('ログイン失敗: $e');
       }
