@@ -32,7 +32,7 @@ class ViewPostPage extends StatelessWidget {
                       ListTile(
                         title: Text(data['ニックネーム']),
                         subtitle: Text(
-                            '希望地域: ${data['希望地域']} 生年月日: ${data['生年月日']}\n募集内容: ${data['募集内容']}\n${_whenPosted(data['timestamp'])}'),
+                            '希望地域: ${data['希望地域']} 生年月日: ${data['生年月日']}\n募集内容: ${data['募集内容']}'),
                       ),
                       const Divider(), // ここに Divider を追加
                     ],
@@ -44,18 +44,5 @@ class ViewPostPage extends StatelessWidget {
         },
       ),
     );
-  }
-
-  String _whenPosted(Timestamp timestamp) {
-    DateTime postTime = timestamp.toDate();
-    Duration difference = DateTime.now().difference(postTime);
-
-    if (difference.inMinutes < 60) {
-      return '${difference.inMinutes}分前';
-    } else if (difference.inHours < 24) {
-      return '${difference.inHours}時間前';
-    } else {
-      return DateFormat('yyyy/MM/dd').format(postTime);
-    }
   }
 }

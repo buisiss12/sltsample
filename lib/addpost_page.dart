@@ -21,14 +21,20 @@ class AddPostPage extends ConsumerWidget {
       if (user != null) {
         var userData = await firestore.collection('users').doc(user.uid).get();
         var age = userData['生年月日'];
-        var nickname = userData['ニックネーム'];
+        var nickname = userData['本名'];
+
+        if (age == null || nickname == null) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(const SnackBar(content: Text('プロフィールを完成させてください')));
+          return;
+        }
 
         await firestore.collection('posts').add({
           'UID': user.uid,
           '生年月日': age,
-          'ニックネーム': nickname,
-          '募集内容': post,
+          '本名': nickname,
           '希望地域': area,
+          '募集内容': post,
           'timestamp': FieldValue.serverTimestamp(),
         });
       }
