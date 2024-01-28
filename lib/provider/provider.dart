@@ -1,13 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sltsampleapp/models/user_model.dart';
 
 final authProvider = Provider((ref) => FirebaseAuth.instance);
 final firestoreProvider = Provider((ref) => FirebaseFirestore.instance);
 
 // used in 'addpost_page.dart'
 final addPostProvider = StateProvider.autoDispose<String>((ref) => '');
-final areaProvider = StateProvider.autoDispose<List<String>>((ref) => []);
+final areaProvider =
+    StateProvider.autoDispose<List<String>>((ref) => Utils.todohuken47);
+final selectedAreaProvider =
+    StateProvider.autoDispose<List<String>>((ref) => []);
 
 // used in 'login_page.dart' 'resistration.dart'
 final phoneNumberProvider = StateProvider.autoDispose<String>((ref) => '');
