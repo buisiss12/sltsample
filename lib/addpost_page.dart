@@ -1,6 +1,6 @@
 import 'solotte_page.dart';
-import 'calculator/age_calculator.dart';
 import 'provider/provider.dart';
+import 'models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -23,7 +23,7 @@ class AddPostPage extends ConsumerWidget {
       if (user != null) {
         var userData = await firestore.collection('users').doc(user.uid).get();
         var birthday = (userData['生年月日'] as Timestamp).toDate();
-        var age = birthdayToAge(birthday);
+        var age = Utils.birthdayToAge(birthday);
         var nickname = userData['ニックネーム'];
 
         await firestore.collection('posts').add({

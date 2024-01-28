@@ -1,8 +1,8 @@
 import 'provider/provider.dart';
+import 'models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'calculator/age_calculator.dart';
 
 class UserProfilePage extends ConsumerWidget {
   const UserProfilePage({super.key});
@@ -30,7 +30,7 @@ class UserProfilePage extends ConsumerWidget {
         }
         var userData = snapshot.data!.data() as Map<String, dynamic>;
         var birthday = userData['生年月日']?.toDate() ?? DateTime.now();
-        var age = birthdayToAge(birthday);
+        var age = Utils.birthdayToAge(birthday);
         return ListView(
           children: <Widget>[
             Text('ニックネーム: ${userData['ニックネーム'] ?? ''}'),
