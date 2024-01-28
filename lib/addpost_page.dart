@@ -26,14 +26,6 @@ class AddPostPage extends ConsumerWidget {
         var age = birthdayToAge(birthday);
         var nickname = userData['ニックネーム'];
 
-        if (nickname == null) {
-          if (context.mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('プロフィールを完成させてください')));
-            return;
-          }
-        }
-
         await firestore.collection('posts').add({
           'ニックネーム': nickname,
           'UID': user.uid,
