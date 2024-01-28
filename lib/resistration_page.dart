@@ -3,12 +3,12 @@
 import 'login_page.dart';
 import 'oldmember_resistration_page.dart';
 import 'solotte_page.dart';
+import 'models/user_model.dart';
 import 'provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 
 class RegistrationPage extends ConsumerWidget {
   const RegistrationPage({super.key});
@@ -25,24 +25,6 @@ class RegistrationPage extends ConsumerWidget {
     final gender = ref.watch(genderProvider);
     final birthday = ref.watch(birthdayProvider);
     final birthdayNotifier = ref.read(birthdayProvider.notifier);
-
-    Future<void> selectBirthday(BuildContext context) async {
-      final DateTime? picked = await DatePicker.showDatePicker(
-        context,
-        showTitleActions: true,
-        minTime: DateTime(1924, 1, 1),
-        maxTime: DateTime.now(),
-        onChanged: (date) {},
-        onConfirm: (date) {
-          birthdayNotifier.state = date;
-        },
-        currentTime: DateTime.now(),
-        locale: LocaleType.jp,
-      );
-      if (picked != null && picked != birthday) {
-        birthdayNotifier.state = picked;
-      }
-    }
 
     Future<void> verifySms() async {
       await auth.verifyPhoneNumber(
@@ -166,7 +148,8 @@ class RegistrationPage extends ConsumerWidget {
                 const Text('生年月日',
                     style: TextStyle(fontWeight: FontWeight.bold)),
                 ElevatedButton(
-                  onPressed: () => selectBirthday(context),
+                  onPressed: () =>
+                      Utils.selectBirthday(context, birthdayNotifier),
                   child: Text(
                     birthday != null
                         ? "${birthday.year}/${birthday.month}/${birthday.day}"

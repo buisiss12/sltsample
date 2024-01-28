@@ -1,11 +1,11 @@
 import 'login_page.dart';
 import 'resistration_page.dart';
+import 'models/user_model.dart';
 import 'provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_picker/flutter_picker.dart';
-import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 
 class OldMemberPage extends ConsumerWidget {
   const OldMemberPage({super.key});
@@ -17,24 +17,6 @@ class OldMemberPage extends ConsumerWidget {
     final birthdayNotifier = ref.read(birthdayProvider.notifier);
 
     final store = ref.watch(storeProvider);
-
-    Future<void> selectBirthday(BuildContext context) async {
-      final DateTime? picked = await DatePicker.showDatePicker(
-        context,
-        showTitleActions: true,
-        minTime: DateTime(1924, 1, 1),
-        maxTime: DateTime.now(),
-        onChanged: (date) {},
-        onConfirm: (date) {
-          birthdayNotifier.state = date;
-        },
-        currentTime: DateTime.now(),
-        locale: LocaleType.jp,
-      );
-      if (picked != null && picked != birthday) {
-        birthdayNotifier.state = picked;
-      }
-    }
 
     return GestureDetector(
       onTap: () {
@@ -93,7 +75,8 @@ class OldMemberPage extends ConsumerWidget {
                 const Text('生年月日',
                     style: TextStyle(fontWeight: FontWeight.bold)),
                 ElevatedButton(
-                  onPressed: () => selectBirthday(context),
+                  onPressed: () =>
+                      Utils.selectBirthday(context, birthdayNotifier),
                   child: Text(
                     birthday != null
                         ? "${birthday.year}/${birthday.month}/${birthday.day}"
