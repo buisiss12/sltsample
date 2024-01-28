@@ -33,13 +33,82 @@ class UserProfilePage extends ConsumerWidget {
         var age = birthdayToAge(birthday);
         return ListView(
           children: <Widget>[
-            Text('本名: ${userData['本名'] ?? ''}'),
+            Text('ニックネーム: ${userData['ニックネーム'] ?? ''}'),
             Text('年齢: $age歳'),
             Text('性別: ${userData['性別'] ?? ''}'),
             Text('勤務地: ${userData['勤務地'] ?? ''}'),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        EditProfilePage(initialData: userData),
+                  ),
+                );
+              },
+              child: const Text('編集する'),
+            ),
           ],
         );
       },
+    );
+  }
+}
+
+class EditProfilePage extends ConsumerWidget {
+  final Map<String, dynamic> initialData;
+
+  const EditProfilePage({super.key, required this.initialData});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final auth = ref.watch(authProvider);
+    final firestore = ref.watch(firestoreProvider);
+    final user = auth.currentUser;
+
+    final nicknameController =
+        TextEditingController(text: initialData['ニックネーム']);
+    final genderController = TextEditingController(text: initialData['性別']);
+    final locationController = TextEditingController(text: initialData['勤務地']);
+
+    return Scaffold(
+      body: ListView(
+        children: <Widget>[
+          TextField(
+              controller: nicknameController,
+              decoration: const InputDecoration(labelText: 'ニックネーム')),
+          TextField(
+              enabled: false,
+              controller: genderController,
+              decoration: const InputDecoration(labelText: '性別')),
+          TextField(
+              controller: locationController,
+              decoration: const InputDecoration(labelText: '勤務地')),
+          ElevatedButton(
+            onPressed: () {
+              Map<String, dynamic> updatedData = {};
+              if (nicknameController.text.isNotEmpty) {
+                updatedData['ニックネーム'] = nicknameController.text;
+              }
+              if (genderController.text.isNotEmpty) {
+                updatedData['性別'] = genderController.text;
+              }
+              if (locationController.text.isNotEmpty) {
+                updatedData['勤務地'] = locationController.text;
+              }
+              firestore.collection('users').doc(user?.uid).update(updatedData);
+              Navigator.pop(context);
+            },
+            child: const Text('更新'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text('キャンセル'),
+          ),
+        ],
+      ),
     );
   }
 }

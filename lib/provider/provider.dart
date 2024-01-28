@@ -21,3 +21,7 @@ final birthdayProvider = StateProvider.autoDispose<DateTime?>((ref) => null);
 
 // used in 'forgetpw_page.dart'
 final memberNumberProvider = StateProvider.autoDispose<String>((ref) => '');
+
+// used id 'oldmember_resistration_page.dart'
+final userIdProvider = StateProvider<String>((ref) => '');
+final storeProvider = StateProvider<String>((ref) => '');

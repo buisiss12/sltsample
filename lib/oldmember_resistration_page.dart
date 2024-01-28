@@ -1,90 +1,44 @@
 import 'login_page.dart';
 import 'resistration_page.dart';
+import 'provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_picker/flutter_picker.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 
-class OldMemberPage extends StatefulWidget {
+class OldMemberPage extends ConsumerWidget {
   const OldMemberPage({super.key});
 
   @override
-  State<OldMemberPage> createState() => _OldMemberPageState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final gender = ref.watch(genderProvider);
+    final birthday = ref.watch(birthdayProvider);
+    final birthdayNotifier = ref.read(birthdayProvider.notifier);
 
-class _OldMemberPageState extends State<OldMemberPage> {
-  final _auth = FirebaseAuth.instance;
-  final _userId = TextEditingController();
-  final _phoneNumber = TextEditingController();
-  bool _isResistrationButton = false;
-  DateTime? _selectedBirthDay;
+    final store = ref.watch(storeProvider);
 
-  String _selectedStore = '会員登録した店舗を選択';
+    Future<void> selectBirthday(BuildContext context) async {
+      final DateTime? picked = await DatePicker.showDatePicker(
+        context,
+        showTitleActions: true,
+        minTime: DateTime(1924, 1, 1),
+        maxTime: DateTime.now(),
+        onChanged: (date) {},
+        onConfirm: (date) {
+          birthdayNotifier.state = date;
+        },
+        currentTime: DateTime.now(),
+        locale: LocaleType.jp,
+      );
+      if (picked != null && picked != birthday) {
+        birthdayNotifier.state = picked;
+      }
+    }
 
-  @override
-  void initState() {
-    super.initState();
-    _userId.addListener(_resistrationButtonState);
-    _phoneNumber.addListener(_resistrationButtonState);
-  }
-
-  void _resistrationButtonState() {
-    setState(() {
-      _isResistrationButton =
-          _userId.text.isNotEmpty && _phoneNumber.text.isNotEmpty;
-    });
-  }
-
-  @override
-  void dispose() {
-    _userId.dispose();
-    _phoneNumber.dispose();
-    super.dispose();
-  }
-
-  Future<void> _verifyPhone() async {
-    await _auth.verifyPhoneNumber(
-      phoneNumber: '+81${_phoneNumber.text}',
-      verificationCompleted: (PhoneAuthCredential credential) async {},
-      verificationFailed: (FirebaseAuthException e) {},
-      codeSent: (String verificationId, int? resendToken) async {
-        String smsCode = '';
-        await showDialog(
-          context: context,
-          builder: (_) {
-            return AlertDialog(
-              title: const Text("認証コード"),
-              content: const Text("SMS宛に届いた認証コードを入力してください"),
-              actions: <Widget>[
-                TextFormField(
-                  onChanged: (value) {
-                    smsCode = value;
-                  },
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                ),
-                ElevatedButton(
-                  child: const Text("認証"),
-                  onPressed: () => Navigator.pop(context),
-                ),
-              ],
-            );
-          },
-        );
-        final PhoneAuthCredential credential = PhoneAuthProvider.credential(
-            verificationId: verificationId, smsCode: smsCode);
-        await _auth.signInWithCredential(credential);
-      },
-      codeAutoRetrievalTimeout: (String verificationId) {},
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        FocusScope.of(context).unfocus(); // キーボードを隠す
+        FocusScope.of(context).unfocus();
       },
       child: Scaffold(
         appBar: AppBar(
@@ -99,25 +53,38 @@ class _OldMemberPageState extends State<OldMemberPage> {
                 const Text('会員ID(数字４桁以上)',
                     style: TextStyle(fontWeight: FontWeight.bold)),
                 TextField(
-                  controller: _phoneNumber,
                   decoration: const InputDecoration(
                     hintText: '会員IDを入力',
                     border: OutlineInputBorder(),
                   ),
                   keyboardType: TextInputType.number,
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  onChanged: (value) {
+                    ref.read(userIdProvider.notifier).state = value;
+                  },
                 ),
                 const SizedBox(height: 16),
                 const Text('性別', style: TextStyle(fontWeight: FontWeight.bold)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
+                  children: [
                     ElevatedButton(
-                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: gender == 'male' ? Colors.blue : null,
+                      ),
+                      onPressed: () {
+                        ref.read(genderProvider.notifier).state = 'male';
+                      },
                       child: const Text('男性'),
                     ),
                     ElevatedButton(
-                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            gender == 'female' ? Colors.pink : null,
+                      ),
+                      onPressed: () {
+                        ref.read(genderProvider.notifier).state = 'female';
+                      },
                       child: const Text('女性'),
                     ),
                   ],
@@ -126,32 +93,26 @@ class _OldMemberPageState extends State<OldMemberPage> {
                 const Text('生年月日',
                     style: TextStyle(fontWeight: FontWeight.bold)),
                 ElevatedButton(
-                    onPressed: () {
-                      DatePicker.showDatePicker(context,
-                          showTitleActions: true,
-                          minTime: DateTime(1924, 1, 1),
-                          maxTime: DateTime.now(), onConfirm: (date) {
-                        setState(() {
-                          _selectedBirthDay = date;
-                        });
-                      }, currentTime: DateTime.now(), locale: LocaleType.jp);
-                    },
-                    child: Text(_selectedBirthDay != null
-                        ? "${_selectedBirthDay!.year}-${_selectedBirthDay!.month}-${_selectedBirthDay!.day}"
-                        : '生年月日を選択')),
+                  onPressed: () => selectBirthday(context),
+                  child: Text(
+                    birthday != null
+                        ? "${birthday.year}/${birthday.month}/${birthday.day}"
+                        : '日付を選択',
+                  ),
+                ),
                 const SizedBox(height: 16),
                 const Text('登録店舗',
                     style: TextStyle(fontWeight: FontWeight.bold)),
                 ElevatedButton(
-                  onPressed: _showPicker,
-                  child: Text(_selectedStore),
+                  onPressed: () => _showPicker(context, ref),
+                  child: Text(store),
                 ),
                 const SizedBox(height: 16),
                 const SizedBox(height: 16),
-                ElevatedButton(
+                /*ElevatedButton(
                   onPressed: _isResistrationButton ? _verifyPhone : null,
                   child: const Text('会員情報を引き継いで登録'),
-                ),
+                ),*/
                 const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () {
@@ -182,48 +143,51 @@ class _OldMemberPageState extends State<OldMemberPage> {
     );
   }
 
-  void _showPicker() {
+  void _showPicker(BuildContext context, WidgetRef ref) {
     Picker(
-        adapter: PickerDataAdapter<String>(pickerData: [
-          "ag札幌",
-          "ag仙台",
-          "ソウル カンナム",
-          "ag金沢",
-          "宇都宮",
-          "大宮",
-          "ag上野",
-          "上野",
-          "新宿",
-          "ag渋谷",
-          "渋谷本店",
-          "渋谷駅前",
-          "恵比寿",
-          "町田",
-          "横浜",
-          "静岡",
-          "浜松",
-          "名古屋 栄",
-          "名古屋 錦",
-          "ag名古屋",
-          "京都",
-          "梅田",
-          "茶屋町",
-          "心斎橋",
-          "難波",
-          "神戸",
-          "岡山",
-          "広島",
-          "福岡",
-          "小倉",
-          "熊本",
-          "宮崎",
-          "鹿児島",
-          "ag沖縄"
-        ]),
+        adapter: PickerDataAdapter<String>(
+          pickerData: [
+            "ag札幌",
+            "ag仙台",
+            "ソウル カンナム",
+            "ag金沢",
+            "宇都宮",
+            "大宮",
+            "ag上野",
+            "上野",
+            "新宿",
+            "ag渋谷",
+            "渋谷本店",
+            "渋谷駅前",
+            "恵比寿",
+            "町田",
+            "横浜",
+            "静岡",
+            "浜松",
+            "名古屋 栄",
+            "名古屋 錦",
+            "ag名古屋",
+            "京都",
+            "梅田",
+            "茶屋町",
+            "心斎橋",
+            "難波",
+            "神戸",
+            "岡山",
+            "広島",
+            "福岡",
+            "小倉",
+            "熊本",
+            "宮崎",
+            "鹿児島",
+            "ag沖縄"
+          ],
+        ),
+        hideHeader: true,
+        title: const Text("店舗を選択"),
         onConfirm: (Picker picker, List value) {
-          setState(() {
-            _selectedStore = picker.getSelectedValues()[0];
-          });
+          ref.read(storeProvider.notifier).state =
+              picker.getSelectedValues()[0];
         }).showModal(context);
   }
 }

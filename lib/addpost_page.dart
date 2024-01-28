@@ -23,7 +23,7 @@ class AddPostPage extends ConsumerWidget {
         var userData = await firestore.collection('users').doc(user.uid).get();
         var birthday = (userData['生年月日'] as Timestamp).toDate();
         var age = birthdayToAge(birthday);
-        var nickname = userData['本名'];
+        var nickname = userData['ニックネーム'];
 
         if (nickname == null) {
           if (context.mounted) {
@@ -34,7 +34,7 @@ class AddPostPage extends ConsumerWidget {
         }
 
         await firestore.collection('posts').add({
-          'ニックネーム': '',
+          'ニックネーム': nickname,
           'UID': user.uid,
           '年齢': age,
           '本名': nickname,
