@@ -22,14 +22,6 @@ class UserProfilePage extends ConsumerWidget {
       return const Center(child: Text('ログインしてください'));
     }
 
-    Widget loadProfileImage(String? imageUrl) {
-      return ClipOval(
-        child: imageUrl != null && imageUrl.isNotEmpty
-            ? Image.network(imageUrl)
-            : Image.asset('assets/images/profilepic.webp'),
-      );
-    }
-
     return FutureBuilder<DocumentSnapshot>(
       future: firestore.collection('users').doc(user.uid).get(),
       builder: (context, snapshot) {
@@ -55,7 +47,7 @@ class UserProfilePage extends ConsumerWidget {
                   child: SizedBox(
                     width: 100.0,
                     height: 100.0,
-                    child: loadProfileImage(userData['profileImageUrl']),
+                    child: Models.loadProfileImage(userData['profileImageUrl']),
                   ),
                 ),
                 Align(
@@ -127,14 +119,6 @@ class EditProfilePage extends ConsumerWidget {
       }
     }
 
-    Widget loadProfileImage(String? imageUrl) {
-      return ClipOval(
-        child: imageUrl != null && imageUrl.isNotEmpty
-            ? Image.network(imageUrl)
-            : Image.asset('assets/images/profilepic.webp'),
-      );
-    }
-
     return Scaffold(
       body: ListView(
         children: <Widget>[
@@ -146,7 +130,8 @@ class EditProfilePage extends ConsumerWidget {
                 child: SizedBox(
                   width: 100.0,
                   height: 100.0,
-                  child: loadProfileImage(initialData['profileImageUrl']),
+                  child:
+                      Models.loadProfileImage(initialData['profileImageUrl']),
                 ),
               ),
               Align(
