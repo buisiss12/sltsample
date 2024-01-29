@@ -1,8 +1,13 @@
+// ignore_for_file: avoid_print
+
 import 'provider/provider.dart';
 import 'models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 
 class UserProfilePage extends ConsumerWidget {
   const UserProfilePage({super.key});
@@ -11,11 +16,20 @@ class UserProfilePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final auth = ref.watch(authProvider);
     final firestore = ref.watch(firestoreProvider);
-
     final user = auth.currentUser;
+
     if (user == null) {
       return const Center(child: Text('ログインしてください'));
     }
+
+    Widget loadProfileImage(String? imageUrl) {
+      return ClipOval(
+        child: imageUrl != null && imageUrl.isNotEmpty
+            ? Image.network(imageUrl)
+            : Image.asset('assets/images/profilepic.webp'),
+      );
+    }
+
     return FutureBuilder<DocumentSnapshot>(
       future: firestore.collection('users').doc(user.uid).get(),
       builder: (context, snapshot) {
@@ -31,24 +45,40 @@ class UserProfilePage extends ConsumerWidget {
         var userData = snapshot.data!.data() as Map<String, dynamic>;
         var birthday = userData['生年月日']?.toDate() ?? DateTime.now();
         var age = Utils.birthdayToAge(birthday);
-        return ListView(
+        return Column(
           children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: SizedBox(
+                    width: 100.0,
+                    height: 100.0,
+                    child: loadProfileImage(userData['profileImageUrl']),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              EditProfilePage(initialData: userData),
+                        ),
+                      );
+                    },
+                    child: const Text('編集する'),
+                  ),
+                ),
+              ],
+            ),
             Text('ニックネーム: ${userData['ニックネーム'] ?? ''}'),
             Text('年齢: $age歳'),
             Text('性別: ${userData['性別'] ?? ''}'),
             Text('居住地: ${userData['居住地'] ?? ''}'),
             Text('勤務地: ${userData['勤務地'] ?? ''}'),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        EditProfilePage(initialData: userData),
-                  ),
-                );
-              },
-              child: const Text('編集する'),
-            ),
           ],
         );
       },
@@ -65,6 +95,7 @@ class EditProfilePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final auth = ref.watch(authProvider);
     final firestore = ref.watch(firestoreProvider);
+    final storage = ref.watch(firebaseStorageProvider);
     final user = auth.currentUser;
 
     final nicknameController =
@@ -75,9 +106,58 @@ class EditProfilePage extends ConsumerWidget {
     final workLocationController =
         TextEditingController(text: initialData['勤務地']);
 
+    Future<void> uploadProfileImage() async {
+      final picker = ImagePicker();
+      final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+      if (pickedFile != null) {
+        File file = File(pickedFile.path);
+        String fileName = 'profile_image_${user?.uid}';
+        try {
+          TaskSnapshot snapshot =
+              await storage.ref('profile_images').child(fileName).putFile(file);
+          String imageUrl = await snapshot.ref.getDownloadURL();
+          await firestore
+              .collection('users')
+              .doc(user?.uid)
+              .update({'profileImageUrl': imageUrl});
+        } catch (e) {
+          print('Error uploading image: $e');
+        }
+      }
+    }
+
+    Widget loadProfileImage(String? imageUrl) {
+      return ClipOval(
+        child: imageUrl != null && imageUrl.isNotEmpty
+            ? Image.network(imageUrl)
+            : Image.asset('assets/images/profilepic.webp'),
+      );
+    }
+
     return Scaffold(
       body: ListView(
         children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Align(
+                alignment: Alignment.topLeft,
+                child: SizedBox(
+                  width: 100.0,
+                  height: 100.0,
+                  child: loadProfileImage(initialData['profileImageUrl']),
+                ),
+              ),
+              Align(
+                alignment: Alignment.topRight,
+                child: ElevatedButton(
+                  onPressed: uploadProfileImage,
+                  child: const Text('プロフィール写真を変更'),
+                ),
+              ),
+            ],
+          ),
           TextField(
               controller: nicknameController,
               decoration: const InputDecoration(labelText: 'ニックネーム')),
