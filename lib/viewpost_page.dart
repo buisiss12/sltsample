@@ -31,9 +31,17 @@ class ViewPostPage extends ConsumerWidget {
                   return Column(
                     children: [
                       ListTile(
+                        leading: data['profileImageUrl'] != null
+                            ? Image.network(data['profileImageUrl'],
+                                width: 50, height: 50)
+                            : null,
                         title: Text(data['ニックネーム']),
                         subtitle: Text(
                             '${data['年齢']}歳 居住地: ${data['居住地']}\n希望地域: ${data['希望地域']}\n募集内容: ${data['募集内容']}'),
+                        trailing: IconButton(
+                          icon: const Icon(Icons.mail),
+                          onPressed: () {},
+                        ),
                       ),
                       const Divider(),
                     ],

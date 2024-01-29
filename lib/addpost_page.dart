@@ -25,6 +25,7 @@ class AddPostPage extends ConsumerWidget {
         var nickname = userData['ニックネーム'];
         var age = Models.birthdayToAge(birthday);
         var livearea = userData['居住地'];
+        var profileImageUrl = userData['profileImageUrl'];
 
         await firestore.collection('posts').add({
           'UID': user.uid,
@@ -33,6 +34,7 @@ class AddPostPage extends ConsumerWidget {
           '居住地': livearea,
           '希望地域': selectedArea,
           '募集内容': post,
+          'profileImageUrl': profileImageUrl,
           'timestamp': FieldValue.serverTimestamp(),
         });
       }
