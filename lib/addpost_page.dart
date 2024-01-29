@@ -15,7 +15,6 @@ class AddPostPage extends ConsumerWidget {
     final firestore = ref.watch(firestoreProvider);
 
     final post = ref.watch(addPostProvider);
-    final area = ref.watch(areaProvider);
     final selectedArea = ref.watch(selectedAreaProvider);
 
     void addPost() async {
@@ -45,39 +44,17 @@ class AddPostPage extends ConsumerWidget {
     return Scaffold(
       body: Column(
         children: <Widget>[
-          DropdownButton<String>(
-            hint: const Text("地域を選択"),
-            value: null,
-            onChanged: (String? newValue) {
-              if (newValue != null && !selectedArea.contains(newValue)) {
-                ref.read(selectedAreaProvider.notifier).state = [
-                  ...selectedArea,
-                  newValue
-                ];
-              }
-            },
-            items: area.map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
+          const Text('募集条件'),
+          TextFormField(
+            decoration: const InputDecoration(labelText: '希望地域'),
+            onTap: () => Utils.showDialogtest(context, ref),
+            controller: TextEditingController(text: selectedArea.join(', ')),
+            readOnly: true,
           ),
-          Wrap(
-            children: selectedArea
-                .map((e) => Chip(
-                      label: Text(e),
-                      onDeleted: () {
-                        ref.read(selectedAreaProvider.notifier).state =
-                            selectedArea
-                                .where((element) => element != e)
-                                .toList();
-                      },
-                    ))
-                .toList(),
-          ),
+          const Text('募集内容'),
           TextField(
-            decoration: const InputDecoration(labelText: '募集内容'),
+            decoration:
+                const InputDecoration(labelText: '26日 19時くらいからオリラジ新宿か渋谷いきましょう'),
             onChanged: (value) {
               ref.read(addPostProvider.notifier).state = value;
             },

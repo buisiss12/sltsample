@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
+import 'package:sltsampleapp/provider/provider.dart';
 
 class Utils {
   static const List<String> todohuken47 = [
@@ -81,5 +82,54 @@ class Utils {
       age--;
     }
     return age;
+  }
+
+//47都道府県表示のダイアログ
+  static void showDialogtest(BuildContext context, WidgetRef ref) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            final selectedArea = ref.read(selectedAreaProvider.notifier);
+
+            return AlertDialog(
+              title: const Text("希望地域"),
+              content: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: todohuken47.map((area) {
+                    return CheckboxListTile(
+                      title: Text(area),
+                      value: selectedArea.state.contains(area),
+                      onChanged: (bool? value) {
+                        if (value == true) {
+                          selectedArea.state = [...selectedArea.state, area];
+                        } else {
+                          selectedArea.state = selectedArea.state
+                              .where((p) => p != area)
+                              .toList();
+                        }
+                        setState(() {});
+                      },
+                    );
+                  }).toList(),
+                ),
+              ),
+              actions: [
+                TextButton(
+                  child: const Text("キャンセル"),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+                TextButton(
+                  child: const Text("OK"),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
   }
 }
