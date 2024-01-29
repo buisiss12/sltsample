@@ -76,7 +76,7 @@ class OldMemberPage extends ConsumerWidget {
                     style: TextStyle(fontWeight: FontWeight.bold)),
                 ElevatedButton(
                   onPressed: () =>
-                      Utils.selectBirthday(context, birthdayNotifier),
+                      Models.selectBirthday(context, birthdayNotifier),
                   child: Text(
                     birthday != null
                         ? "${birthday.year}/${birthday.month}/${birthday.day}"

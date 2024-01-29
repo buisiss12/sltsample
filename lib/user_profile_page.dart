@@ -44,7 +44,7 @@ class UserProfilePage extends ConsumerWidget {
         }
         var userData = snapshot.data!.data() as Map<String, dynamic>;
         var birthday = userData['生年月日']?.toDate() ?? DateTime.now();
-        var age = Utils.birthdayToAge(birthday);
+        var age = Models.birthdayToAge(birthday);
         return Column(
           children: <Widget>[
             Row(

@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:sltsampleapp/provider/provider.dart';
 
-class Utils {
+class Models {
   static const List<String> todohuken47 = [
     '北海道',
     '青森県',

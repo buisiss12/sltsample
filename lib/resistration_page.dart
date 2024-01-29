@@ -72,9 +72,12 @@ class RegistrationPage extends ConsumerWidget {
                 .collection('users')
                 .doc(userCredential.user!.uid)
                 .set({
+              'ニックネーム': '',
               '本名': realName,
               '性別': gender,
               '生年月日': birthday,
+              '居住地': '',
+              '希望地域': '',
             });
             if (context.mounted) {
               Navigator.pushAndRemoveUntil(
@@ -149,7 +152,7 @@ class RegistrationPage extends ConsumerWidget {
                     style: TextStyle(fontWeight: FontWeight.bold)),
                 ElevatedButton(
                   onPressed: () =>
-                      Utils.selectBirthday(context, birthdayNotifier),
+                      Models.selectBirthday(context, birthdayNotifier),
                   child: Text(
                     birthday != null
                         ? "${birthday.year}/${birthday.month}/${birthday.day}"

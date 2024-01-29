@@ -23,7 +23,7 @@ class AddPostPage extends ConsumerWidget {
         var userData = await firestore.collection('users').doc(user.uid).get();
         var birthday = (userData['生年月日'] as Timestamp).toDate();
         var nickname = userData['ニックネーム'];
-        var age = Utils.birthdayToAge(birthday);
+        var age = Models.birthdayToAge(birthday);
         var livearea = userData['居住地'];
 
         await firestore.collection('posts').add({
@@ -49,7 +49,7 @@ class AddPostPage extends ConsumerWidget {
           const Text('募集条件'),
           TextFormField(
             decoration: const InputDecoration(labelText: '希望地域'),
-            onTap: () => Utils.showDialogtest(context, ref),
+            onTap: () => Models.showDialogtest(context, ref),
             controller: TextEditingController(text: selectedArea.join(', ')),
             readOnly: true,
           ),
