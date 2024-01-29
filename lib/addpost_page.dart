@@ -14,21 +14,23 @@ class AddPostPage extends ConsumerWidget {
     final auth = ref.watch(authProvider);
     final firestore = ref.watch(firestoreProvider);
 
-    final post = ref.watch(addPostProvider);
     final selectedArea = ref.watch(selectedAreaProvider);
+    final post = ref.watch(addPostProvider);
 
     void addPost() async {
       User? user = auth.currentUser;
       if (user != null) {
         var userData = await firestore.collection('users').doc(user.uid).get();
         var birthday = (userData['生年月日'] as Timestamp).toDate();
-        var age = Utils.birthdayToAge(birthday);
         var nickname = userData['ニックネーム'];
+        var age = Utils.birthdayToAge(birthday);
+        var livearea = userData['居住地'];
 
         await firestore.collection('posts').add({
-          'ニックネーム': nickname,
           'UID': user.uid,
+          'ニックネーム': nickname,
           '年齢': age,
+          '居住地': livearea,
           '希望地域': selectedArea,
           '募集内容': post,
           'timestamp': FieldValue.serverTimestamp(),

@@ -96,21 +96,7 @@ class _SolottePageState extends State<SolottePage> {
     const ViewPostPage(),
     const Center(child: Text('2 Page')),
     const AddPostPage(),
-    const DefaultTabController(
-      length: 3,
-      child: Column(
-        children: <Widget>[
-          TabBar(
-            labelPadding: EdgeInsets.symmetric(vertical: 15.0),
-            tabs: [
-              Text('すべて'),
-              Text('開催中'),
-              Text('終了'),
-            ],
-          ),
-        ],
-      ),
-    ),
+    const Center(child: Text('お知らせ Page')),
     const UserProfilePage(),
   ];
 }

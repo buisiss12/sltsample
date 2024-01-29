@@ -36,6 +36,7 @@ class UserProfilePage extends ConsumerWidget {
             Text('ニックネーム: ${userData['ニックネーム'] ?? ''}'),
             Text('年齢: $age歳'),
             Text('性別: ${userData['性別'] ?? ''}'),
+            Text('居住地: ${userData['居住地'] ?? ''}'),
             Text('勤務地: ${userData['勤務地'] ?? ''}'),
             ElevatedButton(
               onPressed: () {
@@ -69,7 +70,10 @@ class EditProfilePage extends ConsumerWidget {
     final nicknameController =
         TextEditingController(text: initialData['ニックネーム']);
     final genderController = TextEditingController(text: initialData['性別']);
-    final locationController = TextEditingController(text: initialData['勤務地']);
+    final liveLocationController =
+        TextEditingController(text: initialData['居住地']);
+    final workLocationController =
+        TextEditingController(text: initialData['勤務地']);
 
     return Scaffold(
       body: ListView(
@@ -82,7 +86,10 @@ class EditProfilePage extends ConsumerWidget {
               controller: genderController,
               decoration: const InputDecoration(labelText: '性別')),
           TextField(
-              controller: locationController,
+              controller: liveLocationController,
+              decoration: const InputDecoration(labelText: '居住地')),
+          TextField(
+              controller: workLocationController,
               decoration: const InputDecoration(labelText: '勤務地')),
           ElevatedButton(
             onPressed: () {
@@ -93,8 +100,11 @@ class EditProfilePage extends ConsumerWidget {
               if (genderController.text.isNotEmpty) {
                 updatedData['性別'] = genderController.text;
               }
-              if (locationController.text.isNotEmpty) {
-                updatedData['勤務地'] = locationController.text;
+              if (liveLocationController.text.isNotEmpty) {
+                updatedData['居住地'] = liveLocationController.text;
+              }
+              if (workLocationController.text.isNotEmpty) {
+                updatedData['勤務地'] = workLocationController.text;
               }
               firestore.collection('users').doc(user?.uid).update(updatedData);
               Navigator.pop(context);

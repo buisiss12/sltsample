@@ -14,7 +14,7 @@ class ViewPostPage extends ConsumerWidget {
       body: StreamBuilder(
         stream: firestore
             .collection('posts')
-            .orderBy('timestamp', descending: true)
+            .orderBy('timestamp', descending: true) //降順で並べ替え
             .snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
@@ -33,7 +33,7 @@ class ViewPostPage extends ConsumerWidget {
                       ListTile(
                         title: Text(data['ニックネーム']),
                         subtitle: Text(
-                            '${data['年齢']}歳\n希望地域: ${data['希望地域']}\n募集内容: ${data['募集内容']}'),
+                            '${data['年齢']}歳 居住地: ${data['居住地']}\n希望地域: ${data['希望地域']}\n募集内容: ${data['募集内容']}'),
                       ),
                       const Divider(),
                     ],
