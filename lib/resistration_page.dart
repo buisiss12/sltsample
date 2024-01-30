@@ -78,6 +78,7 @@ class RegistrationPage extends ConsumerWidget {
               '生年月日': birthday,
               '居住地': '',
               '希望地域': '',
+              'profileImageUrl': '',
             });
             if (context.mounted) {
               Navigator.pushAndRemoveUntil(

@@ -8,7 +8,9 @@ class ViewPostPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final auth = ref.watch(authProvider);
     final firestore = ref.watch(firestoreProvider);
+    final currentUserUid = auth.currentUser?.uid;
 
     return Scaffold(
       body: StreamBuilder(
@@ -31,17 +33,31 @@ class ViewPostPage extends ConsumerWidget {
                   return Column(
                     children: [
                       ListTile(
-                        leading: data['profileImageUrl'] != null
+                        leading: data['profileImageUrl'] != null &&
+                                data['profileImageUrl'].isNotEmpty
                             ? Image.network(data['profileImageUrl'],
                                 width: 50, height: 50)
-                            : null,
+                            : Image.asset('assets/images/profilepic.webp',
+                                width: 50, height: 50),
                         title: Text(data['ニックネーム']),
                         subtitle: Text(
                             '${data['年齢']}歳 居住地: ${data['居住地']}\n希望地域: ${data['希望地域']}\n募集内容: ${data['募集内容']}'),
-                        trailing: IconButton(
-                          icon: const Icon(Icons.mail),
-                          onPressed: () {},
-                        ),
+                        trailing: currentUserUid != data['UID']
+                            ? IconButton(
+                                icon: const Icon(Icons.mail),
+                                onPressed: () {
+                                  /*Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ChatPage(
+                                        userUid: data['UID'],
+                                        userNickName: data['ニックネーム'],
+                                      ),
+                                    ),
+                                  );*/
+                                },
+                              )
+                            : null,
                       ),
                       const Divider(),
                     ],
