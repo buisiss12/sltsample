@@ -1,7 +1,7 @@
 import 'provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ViewPostPage extends ConsumerWidget {
   const ViewPostPage({super.key});

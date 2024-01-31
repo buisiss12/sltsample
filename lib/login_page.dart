@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_print
 
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
 import 'resistration_page.dart';
 import 'forgetpw_page.dart';
 import 'oldmember_resistration_page.dart';
@@ -8,7 +10,6 @@ import 'provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LoginPage extends ConsumerWidget {
   const LoginPage({super.key});
@@ -19,25 +20,6 @@ class LoginPage extends ConsumerWidget {
     final phoneNumber = ref.watch(phoneNumberProvider);
     final passWord = ref.watch(passWordProvider);
     final hidePassword = ref.watch(hidePasswordProvider);
-
-    void logIn() async {
-      try {
-        UserCredential userCredential = await auth.signInWithEmailAndPassword(
-          email: "$phoneNumber@test.com",
-          password: passWord,
-        );
-        print('ログイン成功: ${userCredential.user}');
-
-        if (context.mounted) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => const SolottePage()),
-          );
-        }
-      } on FirebaseAuthException catch (e) {
-        print('ログイン失敗: $e');
-      }
-    }
 
     return GestureDetector(
       onTap: () {
@@ -91,7 +73,25 @@ class LoginPage extends ConsumerWidget {
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: phoneNumber.isNotEmpty && passWord.isNotEmpty
-                    ? logIn
+                    ? () async {
+                        try {
+                          await auth.signInWithEmailAndPassword(
+                            email: '$phoneNumber@test.com',
+                            password: passWord,
+                          );
+                          print('ログイン成功');
+
+                          if (context.mounted) {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const SolottePage()),
+                            );
+                          }
+                        } on FirebaseAuthException catch (e) {
+                          print('ログイン失敗: $e');
+                        }
+                      }
                     : null,
                 child: const Text('ログイン'),
               ),

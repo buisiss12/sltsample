@@ -7,7 +7,7 @@ import 'models/user_model.dart';
 import 'provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/services.dart';
 
 class RegistrationPage extends ConsumerWidget {
@@ -19,7 +19,7 @@ class RegistrationPage extends ConsumerWidget {
     final firestore = ref.watch(firebaseFirestoreProvider);
 
     final phoneNumber = ref.watch(phoneNumberProvider);
-    final passWord = ref.watch(passWordProvider);
+    final password = ref.watch(passWordProvider);
     final hidePassword = ref.watch(hidePasswordProvider);
     final realName = ref.watch(realNameProvider);
     final gender = ref.watch(genderProvider);
@@ -58,15 +58,11 @@ class RegistrationPage extends ConsumerWidget {
               );
             },
           );
-          final PhoneAuthCredential credential = PhoneAuthProvider.credential(
-              verificationId: verificationId, smsCode: smsCode);
-          await auth.signInWithCredential(credential); //電話番号として登録
           try {
             UserCredential userCredential =
                 await auth.createUserWithEmailAndPassword(
-              //メールアドレスとして登録
               email: "$phoneNumber@test.com",
-              password: passWord,
+              password: password,
             );
             await firestore
                 .collection('users')
@@ -208,7 +204,7 @@ class RegistrationPage extends ConsumerWidget {
                           gender.isNotEmpty &&
                           birthday != null &&
                           phoneNumber.isNotEmpty &&
-                          passWord.isNotEmpty
+                          password.isNotEmpty
                       ? verifySms
                       : null,
                   child: const Text('会員登録'),
