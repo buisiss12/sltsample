@@ -58,6 +58,9 @@ class RegistrationPage extends ConsumerWidget {
               );
             },
           );
+          final PhoneAuthCredential credential = PhoneAuthProvider.credential(
+              verificationId: verificationId, smsCode: smsCode);
+          await auth.signInWithCredential(credential);
           try {
             UserCredential userCredential =
                 await auth.createUserWithEmailAndPassword(
