@@ -34,3 +34,18 @@ StreamBuilder は、 stream に設定したものに値が入ってくるたび�
 
 モデルクラス作る
 次にfreezed使う
+
+final String id;
+  final String userImageUrl;
+  final String gender;
+  final String nickname;
+  final String realname;
+  final int age;
+  final int height;
+  final String job;
+  final String favoritearea;
+  final String livearea;
+  final String workarea;
+  final String bodyshape;
+  final String holiday;
+  final DateTime birthday;
