@@ -15,8 +15,8 @@ class RegistrationPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final auth = ref.watch(authProvider);
-    final firestore = ref.watch(firestoreProvider);
+    final auth = ref.watch(firebaseAuthProvider);
+    final firestore = ref.watch(firebaseFirestoreProvider);
 
     final phoneNumber = ref.watch(phoneNumberProvider);
     final passWord = ref.watch(passWordProvider);

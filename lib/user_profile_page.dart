@@ -14,8 +14,8 @@ class UserProfilePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final auth = ref.watch(authProvider);
-    final firestore = ref.watch(firestoreProvider);
+    final auth = ref.watch(firebaseAuthProvider);
+    final firestore = ref.watch(firebaseFirestoreProvider);
     final user = auth.currentUser;
 
     if (user == null) {
@@ -85,8 +85,8 @@ class EditProfilePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final auth = ref.watch(authProvider);
-    final firestore = ref.watch(firestoreProvider);
+    final auth = ref.watch(firebaseAuthProvider);
+    final firestore = ref.watch(firebaseFirestoreProvider);
     final storage = ref.watch(firebaseStorageProvider);
     final user = auth.currentUser;
 

@@ -8,8 +8,8 @@ class ViewPostPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final auth = ref.watch(authProvider);
-    final firestore = ref.watch(firestoreProvider);
+    final auth = ref.watch(firebaseAuthProvider);
+    final firestore = ref.watch(firebaseFirestoreProvider);
     final currentUserUid = auth.currentUser?.uid;
 
     return Scaffold(

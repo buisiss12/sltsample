@@ -11,8 +11,8 @@ class AddPostPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final auth = ref.watch(authProvider);
-    final firestore = ref.watch(firestoreProvider);
+    final auth = ref.watch(firebaseAuthProvider);
+    final firestore = ref.watch(firebaseFirestoreProvider);
 
     final selectedArea = ref.watch(selectedAreaProvider);
     final post = ref.watch(addPostProvider);

@@ -15,7 +15,7 @@ class LoginPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final auth = ref.watch(authProvider);
+    final auth = ref.watch(firebaseAuthProvider);
     final phoneNumber = ref.watch(phoneNumberProvider);
     final passWord = ref.watch(passWordProvider);
     final hidePassword = ref.watch(hidePasswordProvider);

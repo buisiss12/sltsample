@@ -40,7 +40,7 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final auth = ref.watch(authProvider);
+    final auth = ref.watch(firebaseAuthProvider);
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -49,9 +49,8 @@ class MyApp extends ConsumerWidget {
       home: StreamBuilder<User?>(
         stream: auth.authStateChanges(),
         builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            User user = snapshot.data!;
-            print("ユーザーがログインしました: ${user.uid}, ${user.email}");
+          if (snapshot.hasData && snapshot.data != null) {
+            print("ユーザーがログインしました");
             return const SolottePage();
           }
           print("ユーザーはログアウト状態です");
