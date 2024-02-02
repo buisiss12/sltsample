@@ -14,16 +14,15 @@ class UserProfilePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final auth = ref.watch(firebaseAuthProvider);
     final firestore = ref.watch(firebaseFirestoreProvider);
-    final user = auth.currentUser;
+    final currentUser = ref.watch(currentUserProvider);
 
-    if (user == null) {
+    if (currentUser == null) {
       return const Center(child: Text('ログインしてください'));
     }
 
     return FutureBuilder<DocumentSnapshot>(
-      future: firestore.collection('users').doc(user.uid).get(),
+      future: firestore.collection('users').doc(currentUser.uid).get(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
@@ -88,7 +87,7 @@ class EditProfilePage extends ConsumerWidget {
     final auth = ref.watch(firebaseAuthProvider);
     final firestore = ref.watch(firebaseFirestoreProvider);
     final storage = ref.watch(firebaseStorageProvider);
-    final user = auth.currentUser;
+    final currentUser = auth.currentUser;
 
     final nicknameController =
         TextEditingController(text: initialData['ニックネーム']);
@@ -104,14 +103,14 @@ class EditProfilePage extends ConsumerWidget {
 
       if (pickedFile != null) {
         File file = File(pickedFile.path);
-        String fileName = 'profile_image_${user?.uid}';
+        String fileName = 'profile_image_${currentUser?.uid}';
         try {
           TaskSnapshot snapshot =
               await storage.ref('profile_images').child(fileName).putFile(file);
           String imageUrl = await snapshot.ref.getDownloadURL();
           await firestore
               .collection('users')
-              .doc(user?.uid)
+              .doc(currentUser?.uid)
               .update({'profileImageUrl': imageUrl});
         } catch (e) {
           print('Error uploading image: $e');
@@ -158,20 +157,23 @@ class EditProfilePage extends ConsumerWidget {
               decoration: const InputDecoration(labelText: '勤務地')),
           ElevatedButton(
             onPressed: () {
-              Map<String, dynamic> updatedData = {};
+              Map<String, dynamic> updatedUserData = {};
               if (nicknameController.text.isNotEmpty) {
-                updatedData['ニックネーム'] = nicknameController.text;
+                updatedUserData['ニックネーム'] = nicknameController.text;
               }
               if (genderController.text.isNotEmpty) {
-                updatedData['性別'] = genderController.text;
+                updatedUserData['性別'] = genderController.text;
               }
               if (liveLocationController.text.isNotEmpty) {
-                updatedData['居住地'] = liveLocationController.text;
+                updatedUserData['居住地'] = liveLocationController.text;
               }
               if (workLocationController.text.isNotEmpty) {
-                updatedData['勤務地'] = workLocationController.text;
+                updatedUserData['勤務地'] = workLocationController.text;
               }
-              firestore.collection('users').doc(user?.uid).update(updatedData);
+              firestore
+                  .collection('users')
+                  .doc(currentUser?.uid)
+                  .update(updatedUserData);
               Navigator.pop(context);
             },
             child: const Text('更新'),

@@ -2,7 +2,6 @@ import 'solotte_page.dart';
 import 'provider/provider.dart';
 import 'models/user_model.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -11,16 +10,16 @@ class AddPostPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final auth = ref.watch(firebaseAuthProvider);
     final firestore = ref.watch(firebaseFirestoreProvider);
 
     final selectedArea = ref.watch(selectedAreaProvider);
     final post = ref.watch(addPostProvider);
 
     void addPost() async {
-      User? user = auth.currentUser;
-      if (user != null) {
-        var userData = await firestore.collection('users').doc(user.uid).get();
+      final currentUser = ref.watch(currentUserProvider);
+      if (currentUser != null) {
+        var userData =
+            await firestore.collection('users').doc(currentUser.uid).get();
         var birthday = (userData['生年月日'] as Timestamp).toDate();
         var nickname = userData['ニックネーム'];
         var age = Models.birthdayToAge(birthday);
@@ -28,7 +27,7 @@ class AddPostPage extends ConsumerWidget {
         var profileImageUrl = userData['profileImageUrl'];
 
         await firestore.collection('posts').add({
-          'UID': user.uid,
+          'UID': currentUser.uid,
           'ニックネーム': nickname,
           '年齢': age,
           '居住地': livearea,

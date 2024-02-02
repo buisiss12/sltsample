@@ -8,16 +8,18 @@ class ViewPostPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final auth = ref.watch(firebaseAuthProvider);
     final firestore = ref.watch(firebaseFirestoreProvider);
-    final currentUserUid = auth.currentUser?.uid;
+    final currentUser = ref.watch(currentUserProvider);
+    final currentUserUid = currentUser?.uid;
+
+    final viewPosts = firestore
+        .collection('posts')
+        .orderBy('timestamp', descending: true) //降順で並べ替え
+        .snapshots();
 
     return Scaffold(
       body: StreamBuilder(
-        stream: firestore
-            .collection('posts')
-            .orderBy('timestamp', descending: true) //降順で並べ替え
-            .snapshots(),
+        stream: viewPosts,
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             return const Text('viewpostpageエラーが発生しました');
@@ -28,21 +30,21 @@ class ViewPostPage extends ConsumerWidget {
           return ListView(
             children: snapshot.data!.docs
                 .map((DocumentSnapshot document) {
-                  Map<String, dynamic> data =
+                  Map<String, dynamic> userData =
                       document.data()! as Map<String, dynamic>;
                   return Column(
                     children: [
                       ListTile(
-                        leading: data['profileImageUrl'] != null &&
-                                data['profileImageUrl'].isNotEmpty
-                            ? Image.network(data['profileImageUrl'],
+                        leading: userData['profileImageUrl'] != null &&
+                                userData['profileImageUrl'].isNotEmpty
+                            ? Image.network(userData['profileImageUrl'],
                                 width: 50, height: 50)
                             : Image.asset('assets/images/profilepic.webp',
                                 width: 50, height: 50),
-                        title: Text(data['ニックネーム']),
+                        title: Text(userData['ニックネーム']),
                         subtitle: Text(
-                            '${data['年齢']}歳 居住地: ${data['居住地']}\n希望地域: ${data['希望地域']}\n募集内容: ${data['募集内容']}'),
-                        trailing: currentUserUid != data['UID']
+                            '${userData['年齢']}歳 居住地: ${userData['居住地']}\n希望地域: ${userData['希望地域']}\n募集内容: ${userData['募集内容']}'),
+                        trailing: currentUserUid != userData['UID']
                             ? IconButton(
                                 icon: const Icon(Icons.mail),
                                 onPressed: () {

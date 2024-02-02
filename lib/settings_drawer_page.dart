@@ -1,14 +1,19 @@
 // ignore_for_file: avoid_print
 
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sltsampleapp/provider/provider.dart';
+
 import 'login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class SettingsDrawer extends StatelessWidget {
+class SettingsDrawer extends ConsumerWidget {
   const SettingsDrawer({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final currentUser = ref.watch(currentUserProvider);
+
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -94,7 +99,7 @@ class SettingsDrawer extends StatelessWidget {
             onTap: () async {
               Navigator.of(context).pop();
               try {
-                await FirebaseAuth.instance.currentUser?.delete();
+                await currentUser?.delete();
                 if (context.mounted) {
                   Navigator.pushReplacement(
                     context,

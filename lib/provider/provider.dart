@@ -7,6 +7,11 @@ final firebaseAuthProvider = Provider((ref) => FirebaseAuth.instance);
 final firebaseFirestoreProvider = Provider((ref) => FirebaseFirestore.instance);
 final firebaseStorageProvider = Provider((ref) => FirebaseStorage.instance);
 
+final currentUserProvider = Provider((ref) {
+  final auth = ref.watch(firebaseAuthProvider);
+  return auth.currentUser;
+});
+
 // used in 'addpost_page.dart'
 final addPostProvider = StateProvider.autoDispose<String>((ref) => '');
 final selectedAreaProvider =
