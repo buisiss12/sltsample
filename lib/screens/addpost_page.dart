@@ -1,7 +1,7 @@
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'solotte_page.dart';
-import 'provider/provider.dart';
-import 'models/user_model.dart';
+import '../provider/provider.dart';
+import '../models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';

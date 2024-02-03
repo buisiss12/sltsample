@@ -1,7 +1,7 @@
 // ignore_for_file: avoid_print
 
-import 'login_page.dart';
-import 'solotte_page.dart';
+import 'screens/login_page.dart';
+import 'screens/solotte_page.dart';
 import 'provider/provider.dart';
 import 'firebase_options/firebase_options.dart';
 import 'package:flutter/material.dart';
