@@ -13,7 +13,7 @@ final currentUserProvider = Provider((ref) {
 });
 
 // used in 'addpost_page.dart'
-final selectedAreaProvider =
+final selectedTodohukenProvider =
     StateProvider.autoDispose<List<String>>((ref) => []);
 
 // used in 'login_page.dart' 'resistration.dart'

@@ -1,7 +1,7 @@
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'solotte_page.dart';
-import '../provider/provider.dart';
-import '../models/user_model.dart';
+import '../../provider/provider.dart';
+import '../../models/model.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -13,7 +13,7 @@ class AddPostPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final firestore = ref.watch(firebaseFirestoreProvider);
 
-    final selectedArea = ref.watch(selectedAreaProvider);
+    final selectedTodohuken = ref.watch(selectedTodohukenProvider);
 
     final post = useState('');
 
@@ -33,7 +33,7 @@ class AddPostPage extends HookConsumerWidget {
           'ニックネーム': nickname,
           '年齢': age,
           '居住地': livearea,
-          '希望地域': selectedArea,
+          '希望地域': selectedTodohuken,
           '募集内容': post.value,
           'profileImageUrl': profileImageUrl,
           'timestamp': FieldValue.serverTimestamp(),
@@ -53,7 +53,8 @@ class AddPostPage extends HookConsumerWidget {
           TextFormField(
             decoration: const InputDecoration(labelText: '希望地域'),
             onTap: () => Models.showDialogtest(context, ref),
-            controller: TextEditingController(text: selectedArea.join(', ')),
+            controller:
+                TextEditingController(text: selectedTodohuken.join(', ')),
             readOnly: true,
           ),
           const Text('募集内容'),
@@ -65,7 +66,7 @@ class AddPostPage extends HookConsumerWidget {
             },
           ),
           ElevatedButton(
-            onPressed: post.value.isNotEmpty && selectedArea.isNotEmpty
+            onPressed: post.value.isNotEmpty && selectedTodohuken.isNotEmpty
                 ? addPost
                 : null,
             child: const Text('投稿する'),

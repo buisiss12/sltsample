@@ -20,32 +20,21 @@ StreamBuilder は、 stream に設定したものに値が入ってくるたび�
 
 
 ログイン用テスト電話番号とSMS確認コード
-08011112222
-123456
+
+電話番号	確認コード	
++81 80-1111-2222	123456	
++81 80-1111-3333	123456	
++81 80-1111-4444	123456	
++81 80-1111-5555	123456	
++81 80-1111-6666	123456	
++81 80-1111-0000	123456
+
+
 
 
 疑問点
 ・根本的にコードの書き方は正しいか
-・インスタンスの宣言は各メソッドで行うべきか、一箇所でどこからでも呼び出せる様にするべきか
+・モデルクラス/freezedの使い方
 ・riverpodの使い方
 ・転職/ポートフォリオのポイント
-・シミュレータを使わず実機のみでビルド
-
-
-モデルクラス作る
-次にfreezed使う
-
-final String id;
-  final String userImageUrl;
-  final String gender;
-  final String nickname;
-  final String realname;
-  final int age;
-  final int height;
-  final String job;
-  final String favoritearea;
-  final String livearea;
-  final String workarea;
-  final String bodyshape;
-  final String holiday;
-  final DateTime birthday;
+・Widget buildの中にメソッドを足している

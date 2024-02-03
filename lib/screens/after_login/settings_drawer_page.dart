@@ -2,8 +2,7 @@
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sltsampleapp/provider/provider.dart';
-
-import 'login_page.dart';
+import '../before_login/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 

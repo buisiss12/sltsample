@@ -1,12 +1,11 @@
 // ignore_for_file: avoid_print
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
 import 'resistration_page.dart';
 import 'forgetpw_page.dart';
 import 'oldmember_resistration_page.dart';
-import 'solotte_page.dart';
-import '../provider/provider.dart';
+import '../after_login/solotte_page.dart';
+import '../../provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
