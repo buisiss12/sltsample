@@ -13,7 +13,6 @@ final currentUserProvider = Provider((ref) {
 });
 
 // used in 'addpost_page.dart'
-final addPostProvider = StateProvider.autoDispose<String>((ref) => '');
 final selectedAreaProvider =
     StateProvider.autoDispose<List<String>>((ref) => []);
 

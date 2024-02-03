@@ -1,3 +1,4 @@
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'solotte_page.dart';
 import 'provider/provider.dart';
 import 'models/user_model.dart';
@@ -5,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class AddPostPage extends ConsumerWidget {
+class AddPostPage extends HookConsumerWidget {
   const AddPostPage({super.key});
 
   @override
@@ -13,7 +14,8 @@ class AddPostPage extends ConsumerWidget {
     final firestore = ref.watch(firebaseFirestoreProvider);
 
     final selectedArea = ref.watch(selectedAreaProvider);
-    final post = ref.watch(addPostProvider);
+
+    final post = useState('');
 
     void addPost() async {
       final currentUser = ref.watch(currentUserProvider);
@@ -21,8 +23,8 @@ class AddPostPage extends ConsumerWidget {
         var userData =
             await firestore.collection('users').doc(currentUser.uid).get();
         var birthday = (userData['生年月日'] as Timestamp).toDate();
-        var nickname = userData['ニックネーム'];
         var age = Models.birthdayToAge(birthday);
+        var nickname = userData['ニックネーム'];
         var livearea = userData['居住地'];
         var profileImageUrl = userData['profileImageUrl'];
 
@@ -32,7 +34,7 @@ class AddPostPage extends ConsumerWidget {
           '年齢': age,
           '居住地': livearea,
           '希望地域': selectedArea,
-          '募集内容': post,
+          '募集内容': post.value,
           'profileImageUrl': profileImageUrl,
           'timestamp': FieldValue.serverTimestamp(),
         });
@@ -59,12 +61,13 @@ class AddPostPage extends ConsumerWidget {
             decoration:
                 const InputDecoration(labelText: '26日 19時くらいからオリラジ新宿か渋谷いきましょう'),
             onChanged: (value) {
-              ref.read(addPostProvider.notifier).state = value;
+              post.value = value;
             },
           ),
           ElevatedButton(
-            onPressed:
-                post.isNotEmpty && selectedArea.isNotEmpty ? addPost : null,
+            onPressed: post.value.isNotEmpty && selectedArea.isNotEmpty
+                ? addPost
+                : null,
             child: const Text('投稿する'),
           ),
         ],
