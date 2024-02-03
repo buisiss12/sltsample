@@ -55,7 +55,7 @@ class Models {
   ];
 
   //47都道府県表示のダイアログ
-  static void showDialogtest(BuildContext context, WidgetRef ref) {
+  static void showDialogTodohuken(BuildContext context, WidgetRef ref) {
     showDialog(
       context: context,
       builder: (BuildContext context) {

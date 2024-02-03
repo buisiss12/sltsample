@@ -52,7 +52,7 @@ class AddPostPage extends HookConsumerWidget {
           const Text('募集条件'),
           TextFormField(
             decoration: const InputDecoration(labelText: '希望地域'),
-            onTap: () => Models.showDialogtest(context, ref),
+            onTap: () => Models.showDialogTodohuken(context, ref),
             controller:
                 TextEditingController(text: selectedTodohuken.join(', ')),
             readOnly: true,
