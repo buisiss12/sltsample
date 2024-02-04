@@ -91,7 +91,6 @@ class OldMemberPage extends ConsumerWidget {
                   child: Text(store),
                 ),
                 const SizedBox(height: 16),
-                const SizedBox(height: 16),
                 /*ElevatedButton(
                   onPressed: _isResistrationButton ? _verifyPhone : null,
                   child: const Text('会員情報を引き継いで登録'),

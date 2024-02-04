@@ -77,7 +77,7 @@ class UserProfilePage extends ConsumerWidget {
   }
 }
 
-class EditProfilePage extends ConsumerWidget {
+class EditProfilePage extends HookConsumerWidget {
   final Map<String, dynamic> initialData;
 
   const EditProfilePage({super.key, required this.initialData});
