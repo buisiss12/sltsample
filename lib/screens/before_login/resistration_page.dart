@@ -128,20 +128,19 @@ class RegistrationPage extends ConsumerWidget {
                   children: [
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: gender == 'male' ? Colors.blue : null,
+                        backgroundColor: gender == '男性' ? Colors.blue : null,
                       ),
                       onPressed: () {
-                        ref.read(genderProvider.notifier).state = 'male';
+                        ref.read(genderProvider.notifier).state = '男性';
                       },
                       child: const Text('男性'),
                     ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            gender == 'female' ? Colors.pink : null,
+                        backgroundColor: gender == '女性' ? Colors.pink : null,
                       ),
                       onPressed: () {
-                        ref.read(genderProvider.notifier).state = 'female';
+                        ref.read(genderProvider.notifier).state = '女性';
                       },
                       child: const Text('女性'),
                     ),

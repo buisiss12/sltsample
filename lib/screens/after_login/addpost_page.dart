@@ -18,7 +18,8 @@ class AddPostPage extends HookConsumerWidget {
     final post = useState('');
 
     void addPost() async {
-      final currentUser = ref.watch(currentUserProvider);
+      final auth = ref.watch(firebaseAuthProvider);
+      final currentUser = auth.currentUser;
       if (currentUser != null) {
         var userData =
             await firestore.collection('users').doc(currentUser.uid).get();

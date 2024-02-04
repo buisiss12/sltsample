@@ -11,7 +11,8 @@ class SettingsDrawer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentUser = ref.watch(currentUserProvider);
+    final auth = ref.watch(firebaseAuthProvider);
+    final currentUser = auth.currentUser;
 
     return Drawer(
       child: ListView(

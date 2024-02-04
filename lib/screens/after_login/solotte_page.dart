@@ -16,28 +16,27 @@ class SolottePage extends HookWidget {
     final selectedIndex = useState(0);
     final pageController = usePageController();
 
-    final List<Widget> pages = [
-      const ViewPostPage(),
-      const Center(child: Text('2 Page')),
-      const AddPostPage(),
-      const Center(child: Text('お知らせ Page')),
-      const UserProfilePage(),
-    ];
-
-    final List<String> labels = [
+    final labels = [
       'ホーム',
       'メッセージ',
       '投稿',
       'お知らせ',
       'プロフィール',
     ];
-
-    final List<IconData> icons = [
+    final icons = [
       Icons.home,
       Icons.email,
       Icons.edit_note,
       Icons.notifications,
       Icons.person,
+    ];
+
+    final pages = [
+      const ViewPostPage(),
+      const Center(child: Text('メッセージ Page')),
+      const AddPostPage(),
+      const Center(child: Text('お知らせ Page')),
+      const UserProfilePage(),
     ];
 
     return Scaffold(
@@ -65,11 +64,7 @@ class SolottePage extends HookWidget {
         selectedIndex: selectedIndex.value,
         onDestinationSelected: (index) {
           selectedIndex.value = index;
-          pageController.animateToPage(
-            index,
-            duration: const Duration(milliseconds: 200),
-            curve: Curves.easeInOut,
-          );
+          pageController.jumpToPage(index);
         },
         destinations: List.generate(labels.length, (index) {
           return NavigationDestination(

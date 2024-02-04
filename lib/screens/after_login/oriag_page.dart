@@ -10,7 +10,22 @@ class OriAgPage extends HookWidget {
     final selectedIndex = useState(0);
     final pageController = usePageController();
 
-    final List<Widget> pages = [
+    final labels = [
+      '特典',
+      '店内人数',
+      'チェックイン',
+      'メニュー',
+      '会計',
+    ];
+    final icons = [
+      Icons.emoji_events,
+      Icons.store,
+      Icons.qr_code_scanner,
+      Icons.restaurant_menu,
+      Icons.receipt_long,
+    ];
+
+    final pages = [
       const DefaultTabController(
         length: 3,
         child: Column(
@@ -26,26 +41,10 @@ class OriAgPage extends HookWidget {
           ],
         ),
       ),
-      const Center(child: Text('second Page')),
-      const Center(child: Text('Third Page')),
-      const Center(child: Text('force Page')),
-      const Center(child: Text('fifth Page')),
-    ];
-
-    final List<String> labels = [
-      '特典',
-      '店内人数',
-      'チェックイン',
-      'メニュー',
-      '会計',
-    ];
-
-    final List<IconData> icons = [
-      Icons.emoji_events,
-      Icons.store,
-      Icons.qr_code_scanner,
-      Icons.restaurant_menu,
-      Icons.receipt_long,
+      const Center(child: Text('店内人数 Page')),
+      const Center(child: Text('チェックイン Page')),
+      const Center(child: Text('メニュー Page')),
+      const Center(child: Text('会計 Page')),
     ];
 
     return Scaffold(
@@ -72,11 +71,7 @@ class OriAgPage extends HookWidget {
         selectedIndex: selectedIndex.value,
         onDestinationSelected: (index) {
           selectedIndex.value = index;
-          pageController.animateToPage(
-            index,
-            duration: const Duration(milliseconds: 200),
-            curve: Curves.easeInOut,
-          );
+          pageController.jumpToPage(index);
         },
         destinations: List.generate(labels.length, (index) {
           return NavigationDestination(

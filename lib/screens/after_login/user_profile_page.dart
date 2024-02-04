@@ -15,7 +15,8 @@ class UserProfilePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final firestore = ref.watch(firebaseFirestoreProvider);
-    final currentUser = ref.watch(currentUserProvider);
+    final auth = ref.watch(firebaseAuthProvider);
+    final currentUser = auth.currentUser;
 
     if (currentUser == null) {
       return const Center(child: Text('ログインしてください'));
