@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_print
 
+import 'package:sltsampleapp/models/user_state.dart';
+
 import 'login_page.dart';
 import 'oldmember_resistration_page.dart';
 import '../after_login/solotte_page.dart';
@@ -16,7 +18,6 @@ class RegistrationPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final auth = ref.watch(firebaseAuthProvider);
-    final firestore = ref.watch(firebaseFirestoreProvider);
 
     final phoneNumber = ref.watch(phoneNumberProvider);
     final password = ref.watch(passWordProvider);
@@ -62,23 +63,15 @@ class RegistrationPage extends ConsumerWidget {
               verificationId: verificationId, smsCode: smsCode);
           await auth.signInWithCredential(credential);
           try {
-            UserCredential userCredential =
-                await auth.createUserWithEmailAndPassword(
+            await auth.createUserWithEmailAndPassword(
               email: "$phoneNumber@test.com",
               password: password,
             );
-            await firestore
-                .collection('users')
-                .doc(userCredential.user!.uid)
-                .set({
-              'ニックネーム': '',
-              '本名': realName,
-              '性別': gender,
-              '生年月日': birthday,
-              '居住地': '',
-              '希望地域': '',
-              'profileImageUrl': '',
-            });
+            final userState = UserState(realname: realName, gender: gender);
+            await ref.read(userStateAPIProvider).createUser(userState);
+            //userStateFutureProviderをinvalidateすることで、再度データを取得&状態更新を行う。
+            ref.invalidate(userStateFutureProvider);
+
             if (context.mounted) {
               Navigator.pushAndRemoveUntil(
                 context,

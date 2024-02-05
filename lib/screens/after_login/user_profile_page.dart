@@ -3,7 +3,6 @@
 import '../../provider/provider.dart';
 import '../../models/model.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'dart:io';
@@ -14,66 +13,35 @@ class UserProfilePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final firestore = ref.watch(firebaseFirestoreProvider);
     final auth = ref.watch(firebaseAuthProvider);
     final currentUser = auth.currentUser;
+
+    final userStateFuture = ref.watch(userStateFutureProvider);
 
     if (currentUser == null) {
       return const Center(child: Text('ログインしてください'));
     }
-
-    return FutureBuilder<DocumentSnapshot>(
-      future: firestore.collection('users').doc(currentUser.uid).get(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        }
-        if (snapshot.hasError) {
-          return const Center(child: Text('エラーが発生しました'));
-        }
-        if (!snapshot.hasData || snapshot.data!.data() == null) {
-          return const Center(child: Text('ユーザーデータが見つかりません'));
-        }
-        var userData = snapshot.data!.data() as Map<String, dynamic>;
-        var birthday = userData['生年月日']?.toDate() ?? DateTime.now();
-        var age = Models.birthdayToAge(birthday);
-        return Column(
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: SizedBox(
-                    width: 100.0,
-                    height: 100.0,
-                    child: Models.loadProfileImage(userData['profileImageUrl']),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.topRight,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              EditProfilePage(initialData: userData),
-                        ),
-                      );
-                    },
-                    child: const Text('編集する'),
-                  ),
-                ),
-              ],
-            ),
-            Text('ニックネーム: ${userData['ニックネーム'] ?? ''}'),
-            Text('年齢: $age歳'),
-            Text('性別: ${userData['性別'] ?? ''}'),
-            Text('居住地: ${userData['居住地'] ?? ''}'),
-            Text('勤務地: ${userData['勤務地'] ?? ''}'),
-          ],
-        );
-      },
+    return Scaffold(
+      body: userStateFuture.when(
+        data: (userList) {
+          return ListView.builder(
+            itemCount: userList.length,
+            itemBuilder: (context, index) {
+              final user = userList[index];
+              return ListTile(
+                title: Text(user.realname),
+                subtitle: Text(user.gender),
+              );
+            },
+          );
+        },
+        loading: () => const CircularProgressIndicator(),
+        error: (error, stackTrace) {
+          return Center(
+            child: Text('Error: $error'),
+          );
+        },
+      ),
     );
   }
 }
