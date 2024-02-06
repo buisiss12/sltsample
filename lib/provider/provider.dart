@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sltsampleapp/models/post_model.dart';
 import 'package:sltsampleapp/models/user_state.dart';
 
 final firebaseAuthProvider = Provider((ref) => FirebaseAuth.instance);
@@ -67,3 +68,14 @@ class UserStateAPI {
     }
   }
 }
+
+final postsStreamProvider = StreamProvider.autoDispose<List<PostModel>>((ref) {
+  final firestore = ref.watch(firebaseFirestoreProvider);
+  return firestore
+      .collection('posts')
+      .orderBy('timestamp', descending: true)
+      .snapshots()
+      .map((snapshot) {
+    return snapshot.docs.map((doc) => PostModel.fromJson(doc.data())).toList();
+  });
+});

@@ -67,7 +67,10 @@ class RegistrationPage extends ConsumerWidget {
               email: "$phoneNumber@test.com",
               password: password,
             );
-            final userState = UserState(realname: realName, gender: gender);
+            final userState = UserState(
+              realname: realName,
+              gender: gender,
+            );
             await ref.read(userStateAPIProvider).createUser(userState);
             //userStateFutureProviderをinvalidateすることで、再度データを取得&状態更新を行う。
             ref.invalidate(userStateFutureProvider);

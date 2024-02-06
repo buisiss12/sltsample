@@ -23,24 +23,20 @@ class UserProfilePage extends ConsumerWidget {
     }
     return Scaffold(
       body: userStateFuture.when(
-        data: (userList) {
-          return ListView.builder(
-            itemCount: userList.length,
-            itemBuilder: (context, index) {
-              final user = userList[index];
-              return ListTile(
-                title: Text(user.realname),
-                subtitle: Text(user.gender),
-              );
-            },
-          );
-        },
+        data: (userList) => ListView.builder(
+          itemCount: userList.length,
+          itemBuilder: (context, index) {
+            final user = userList[index];
+            return ListTile(
+              title: Text(user.realname),
+              subtitle: Text(user.gender),
+            );
+          },
+        ),
         loading: () => const CircularProgressIndicator(),
-        error: (error, stackTrace) {
-          return Center(
-            child: Text('Error: $error'),
-          );
-        },
+        error: (error, stackTrace) => Center(
+          child: Text('Error: $error'),
+        ),
       ),
     );
   }
