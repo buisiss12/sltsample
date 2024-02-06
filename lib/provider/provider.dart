@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -79,3 +81,5 @@ final postsStreamProvider = StreamProvider.autoDispose<List<PostModel>>((ref) {
     return snapshot.docs.map((doc) => PostModel.fromJson(doc.data())).toList();
   });
 });
+
+final selectedProfileImageProvider = StateProvider<File?>((ref) => null);

@@ -68,6 +68,8 @@ class RegistrationPage extends ConsumerWidget {
               password: password,
             );
             final userState = UserState(
+              useruid: '',
+              profileImageUrl: '',
               realname: realName,
               gender: gender,
             );

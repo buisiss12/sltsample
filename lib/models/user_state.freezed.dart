@@ -20,6 +20,8 @@ UserState _$UserStateFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$UserState {
+  String get useruid => throw _privateConstructorUsedError;
+  String get profileImageUrl => throw _privateConstructorUsedError;
   String get realname => throw _privateConstructorUsedError;
   String get gender => throw _privateConstructorUsedError;
 
@@ -34,7 +36,8 @@ abstract class $UserStateCopyWith<$Res> {
   factory $UserStateCopyWith(UserState value, $Res Function(UserState) then) =
       _$UserStateCopyWithImpl<$Res, UserState>;
   @useResult
-  $Res call({String realname, String gender});
+  $Res call(
+      {String useruid, String profileImageUrl, String realname, String gender});
 }
 
 /// @nodoc
@@ -50,10 +53,20 @@ class _$UserStateCopyWithImpl<$Res, $Val extends UserState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? useruid = null,
+    Object? profileImageUrl = null,
     Object? realname = null,
     Object? gender = null,
   }) {
     return _then(_value.copyWith(
+      useruid: null == useruid
+          ? _value.useruid
+          : useruid // ignore: cast_nullable_to_non_nullable
+              as String,
+      profileImageUrl: null == profileImageUrl
+          ? _value.profileImageUrl
+          : profileImageUrl // ignore: cast_nullable_to_non_nullable
+              as String,
       realname: null == realname
           ? _value.realname
           : realname // ignore: cast_nullable_to_non_nullable
@@ -74,7 +87,8 @@ abstract class _$$UserStateImplCopyWith<$Res>
       __$$UserStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String realname, String gender});
+  $Res call(
+      {String useruid, String profileImageUrl, String realname, String gender});
 }
 
 /// @nodoc
@@ -88,10 +102,20 @@ class __$$UserStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? useruid = null,
+    Object? profileImageUrl = null,
     Object? realname = null,
     Object? gender = null,
   }) {
     return _then(_$UserStateImpl(
+      useruid: null == useruid
+          ? _value.useruid
+          : useruid // ignore: cast_nullable_to_non_nullable
+              as String,
+      profileImageUrl: null == profileImageUrl
+          ? _value.profileImageUrl
+          : profileImageUrl // ignore: cast_nullable_to_non_nullable
+              as String,
       realname: null == realname
           ? _value.realname
           : realname // ignore: cast_nullable_to_non_nullable
@@ -107,11 +131,19 @@ class __$$UserStateImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$UserStateImpl with DiagnosticableTreeMixin implements _UserState {
-  const _$UserStateImpl({required this.realname, required this.gender});
+  const _$UserStateImpl(
+      {required this.useruid,
+      required this.profileImageUrl,
+      required this.realname,
+      required this.gender});
 
   factory _$UserStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserStateImplFromJson(json);
 
+  @override
+  final String useruid;
+  @override
+  final String profileImageUrl;
   @override
   final String realname;
   @override
@@ -119,7 +151,7 @@ class _$UserStateImpl with DiagnosticableTreeMixin implements _UserState {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'UserState(realname: $realname, gender: $gender)';
+    return 'UserState(useruid: $useruid, profileImageUrl: $profileImageUrl, realname: $realname, gender: $gender)';
   }
 
   @override
@@ -127,6 +159,8 @@ class _$UserStateImpl with DiagnosticableTreeMixin implements _UserState {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'UserState'))
+      ..add(DiagnosticsProperty('useruid', useruid))
+      ..add(DiagnosticsProperty('profileImageUrl', profileImageUrl))
       ..add(DiagnosticsProperty('realname', realname))
       ..add(DiagnosticsProperty('gender', gender));
   }
@@ -136,6 +170,9 @@ class _$UserStateImpl with DiagnosticableTreeMixin implements _UserState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UserStateImpl &&
+            (identical(other.useruid, useruid) || other.useruid == useruid) &&
+            (identical(other.profileImageUrl, profileImageUrl) ||
+                other.profileImageUrl == profileImageUrl) &&
             (identical(other.realname, realname) ||
                 other.realname == realname) &&
             (identical(other.gender, gender) || other.gender == gender));
@@ -143,7 +180,8 @@ class _$UserStateImpl with DiagnosticableTreeMixin implements _UserState {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, realname, gender);
+  int get hashCode =>
+      Object.hash(runtimeType, useruid, profileImageUrl, realname, gender);
 
   @JsonKey(ignore: true)
   @override
@@ -161,12 +199,18 @@ class _$UserStateImpl with DiagnosticableTreeMixin implements _UserState {
 
 abstract class _UserState implements UserState {
   const factory _UserState(
-      {required final String realname,
+      {required final String useruid,
+      required final String profileImageUrl,
+      required final String realname,
       required final String gender}) = _$UserStateImpl;
 
   factory _UserState.fromJson(Map<String, dynamic> json) =
       _$UserStateImpl.fromJson;
 
+  @override
+  String get useruid;
+  @override
+  String get profileImageUrl;
   @override
   String get realname;
   @override

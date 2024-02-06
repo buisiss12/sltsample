@@ -1,9 +1,7 @@
 // ignore_for_file: avoid_print
-
+import 'package:sltsampleapp/models/user_state.dart';
 import '../../provider/provider.dart';
-import '../../models/model.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
@@ -27,13 +25,38 @@ class UserProfilePage extends ConsumerWidget {
           itemCount: userList.length,
           itemBuilder: (context, index) {
             final user = userList[index];
-            return ListTile(
-              title: Text(user.realname),
-              subtitle: Text(user.gender),
+            return Card(
+              child: Column(
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => EditUserProfilePage(user: user),
+                        ),
+                      );
+                    },
+                    child: const Text('プロフィールを編集'),
+                  ),
+                  CircleAvatar(
+                    radius: 40,
+                    backgroundImage: user.profileImageUrl.isNotEmpty
+                        ? NetworkImage(user.profileImageUrl)
+                        : null,
+                    child: user.profileImageUrl.isEmpty
+                        ? Image.asset('assets/images/profiledefault.png')
+                        : null,
+                  ),
+                  Text('本名:${user.realname}'),
+                  Text('性別:${user.gender}'),
+                ],
+              ),
             );
           },
         ),
-        loading: () => const CircularProgressIndicator(),
+        loading: () => const Center(
+          child: CircularProgressIndicator(),
+        ),
         error: (error, stackTrace) => Center(
           child: Text('Error: $error'),
         ),
@@ -42,114 +65,87 @@ class UserProfilePage extends ConsumerWidget {
   }
 }
 
-class EditProfilePage extends HookConsumerWidget {
-  final Map<String, dynamic> initialData;
+class EditUserProfilePage extends ConsumerWidget {
+  final UserState user;
 
-  const EditProfilePage({super.key, required this.initialData});
+  const EditUserProfilePage({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final auth = ref.watch(firebaseAuthProvider);
-    final firestore = ref.watch(firebaseFirestoreProvider);
-    final storage = ref.watch(firebaseStorageProvider);
-    final currentUser = auth.currentUser;
+    final realnameController = TextEditingController(text: user.realname);
+    final genderController = TextEditingController(text: user.gender);
 
-    final nicknameController =
-        TextEditingController(text: initialData['ニックネーム']);
-    final genderController = TextEditingController(text: initialData['性別']);
-    final liveLocationController =
-        TextEditingController(text: initialData['居住地']);
-    final workLocationController =
-        TextEditingController(text: initialData['勤務地']);
-
-    Future<void> uploadProfileImage() async {
-      final picker = ImagePicker();
-      final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-
-      if (pickedFile != null) {
-        File file = File(pickedFile.path);
-        String fileName = 'profile_image_${currentUser?.uid}';
-        try {
-          TaskSnapshot snapshot =
-              await storage.ref('profile_images').child(fileName).putFile(file);
-          String imageUrl = await snapshot.ref.getDownloadURL();
-          await firestore
-              .collection('users')
-              .doc(currentUser?.uid)
-              .update({'profileImageUrl': imageUrl});
-        } catch (e) {
-          print('Error uploading image: $e');
-        }
-      }
-    }
+    final imagePicker = ImagePicker();
+    final selectedImage = ref.watch(selectedProfileImageProvider);
 
     return Scaffold(
-      body: ListView(
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Align(
-                alignment: Alignment.topLeft,
-                child: SizedBox(
-                  width: 100.0,
-                  height: 100.0,
-                  child:
-                      Models.loadProfileImage(initialData['profileImageUrl']),
-                ),
-              ),
-              Align(
-                alignment: Alignment.topRight,
-                child: ElevatedButton(
-                  onPressed: uploadProfileImage,
-                  child: const Text('プロフィール写真を変更'),
-                ),
-              ),
-            ],
-          ),
-          TextField(
-              controller: nicknameController,
-              decoration: const InputDecoration(labelText: 'ニックネーム')),
-          TextField(
-              enabled: false,
+      appBar: AppBar(
+        title: const Text('プロフィール編集'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            Consumer(
+              builder: (context, ref, child) {
+                final selectedImage = ref.watch(selectedProfileImageProvider);
+                return InkWell(
+                  onTap: () async {
+                    final pickedFile = await imagePicker.pickImage(
+                        source: ImageSource.gallery);
+                    if (pickedFile != null) {
+                      ref.read(selectedProfileImageProvider.notifier).state =
+                          File(pickedFile.path);
+                    }
+                  },
+                  child: CircleAvatar(
+                    radius: 40,
+                    backgroundImage: selectedImage != null
+                        ? FileImage(selectedImage)
+                        : (user.profileImageUrl.isNotEmpty
+                                ? NetworkImage(user.profileImageUrl)
+                                : const AssetImage(
+                                    'assets/images/profiledefault.png'))
+                            as ImageProvider,
+                  ),
+                );
+              },
+            ),
+            TextField(
+              controller: realnameController,
+              decoration: const InputDecoration(labelText: '本名'),
+            ),
+            TextField(
               controller: genderController,
-              decoration: const InputDecoration(labelText: '性別')),
-          TextField(
-              controller: liveLocationController,
-              decoration: const InputDecoration(labelText: '居住地')),
-          TextField(
-              controller: workLocationController,
-              decoration: const InputDecoration(labelText: '勤務地')),
-          ElevatedButton(
-            onPressed: () {
-              Map<String, dynamic> updatedUserData = {};
-              if (nicknameController.text.isNotEmpty) {
-                updatedUserData['ニックネーム'] = nicknameController.text;
-              }
-              if (genderController.text.isNotEmpty) {
-                updatedUserData['性別'] = genderController.text;
-              }
-              if (liveLocationController.text.isNotEmpty) {
-                updatedUserData['居住地'] = liveLocationController.text;
-              }
-              if (workLocationController.text.isNotEmpty) {
-                updatedUserData['勤務地'] = workLocationController.text;
-              }
-              firestore
-                  .collection('users')
-                  .doc(currentUser?.uid)
-                  .update(updatedUserData);
-              Navigator.pop(context);
-            },
-            child: const Text('更新'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: const Text('キャンセル'),
-          ),
-        ],
+              decoration: const InputDecoration(labelText: '性別'),
+              readOnly: true,
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                if (selectedImage != null) {
+                  String fileName = 'profileImage_${user.useruid}.jpg';
+                  final fireStorage = ref.watch(firebaseStorageProvider);
+                  final storageRef =
+                      fireStorage.ref().child('profileImages').child(fileName);
+                  await storageRef.putFile(selectedImage);
+                  final imageUrl = await storageRef.getDownloadURL();
+
+                  final updatedUser = user.copyWith(
+                    realname: realnameController.text,
+                    profileImageUrl: imageUrl,
+                  );
+                  await ref.read(userStateAPIProvider).createUser(updatedUser);
+                  ref.invalidate(userStateFutureProvider);
+
+                  if (context.mounted) {
+                    Navigator.pop(context);
+                  }
+                }
+              },
+              child: const Text('保存'),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -32,12 +32,4 @@ class Models {
     }
     return age;
   }
-
-  static Widget loadProfileImage(String? imageUrl) {
-    return ClipOval(
-      child: imageUrl != null && imageUrl.isNotEmpty
-          ? Image.network(imageUrl)
-          : Image.asset('assets/images/profilepic.webp'),
-    );
-  }
 }
