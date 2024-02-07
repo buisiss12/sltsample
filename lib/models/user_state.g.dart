@@ -8,7 +8,7 @@ part of 'user_state.dart';
 
 _$UserStateImpl _$$UserStateImplFromJson(Map<String, dynamic> json) =>
     _$UserStateImpl(
-      useruid: json['useruid'] as String,
+      userUID: json['userUID'] as String,
       profileImageUrl: json['profileImageUrl'] as String,
       realname: json['realname'] as String,
       gender: json['gender'] as String,
@@ -17,7 +17,7 @@ _$UserStateImpl _$$UserStateImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$UserStateImplToJson(_$UserStateImpl instance) =>
     <String, dynamic>{
-      'useruid': instance.useruid,
+      'userUID': instance.userUID,
       'profileImageUrl': instance.profileImageUrl,
       'realname': instance.realname,
       'gender': instance.gender,

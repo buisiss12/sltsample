@@ -8,7 +8,7 @@ part of 'post_model.dart';
 
 _$PostModelImpl _$$PostModelImplFromJson(Map<String, dynamic> json) =>
     _$PostModelImpl(
-      useruid: json['useruid'] as String,
+      postedUserUID: json['postedUserUID'] as String,
       posttitle: json['posttitle'] as String,
       todohuken:
           (json['todohuken'] as List<dynamic>).map((e) => e as String).toList(),
@@ -19,7 +19,7 @@ _$PostModelImpl _$$PostModelImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$PostModelImplToJson(_$PostModelImpl instance) =>
     <String, dynamic>{
-      'useruid': instance.useruid,
+      'postedUserUID': instance.postedUserUID,
       'posttitle': instance.posttitle,
       'todohuken': instance.todohuken,
       'timestamp': instance.timestamp?.toIso8601String(),

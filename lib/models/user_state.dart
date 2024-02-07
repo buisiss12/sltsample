@@ -7,7 +7,7 @@ part 'user_state.g.dart';
 @freezed
 class UserState with _$UserState {
   const factory UserState({
-    required String useruid,
+    required String userUID,
     required String profileImageUrl,
     required String realname,
     required String gender,

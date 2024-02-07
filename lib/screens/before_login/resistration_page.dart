@@ -73,7 +73,7 @@ class RegistrationPage extends HookConsumerWidget {
             );
             if (birthday != null) {
               final userState = UserState(
-                useruid: auth.currentUser!.uid,
+                userUID: auth.currentUser!.uid,
                 profileImageUrl: '',
                 realname: realName,
                 gender: gender,

@@ -24,7 +24,7 @@ class AddPostPage extends HookConsumerWidget {
           postTitle.value.isNotEmpty &&
           selectedTodohuken.value.isNotEmpty) {
         final post = PostModel(
-          useruid: user.uid,
+          postedUserUID: user.uid,
           todohuken: selectedTodohuken.value,
           posttitle: postTitle.value,
           timestamp: DateTime.now(),

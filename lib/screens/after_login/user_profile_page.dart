@@ -120,7 +120,7 @@ class EditUserProfilePage extends ConsumerWidget {
             ElevatedButton(
               onPressed: () async {
                 if (selectedImage != null) {
-                  String fileName = 'profileImage_${user.useruid}.jpg';
+                  String fileName = 'profileImage_${user.userUID}.jpg';
                   final fireStorage = ref.watch(firebaseStorageProvider);
                   final storageRef =
                       fireStorage.ref().child('profileImages').child(fileName);
