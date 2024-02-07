@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 
-class Models {
+class Logics {
   static Future<void> selectBirthday(
       BuildContext context, StateController<DateTime?> birthdayNotifier) async {
     final DateTime? picked = await DatePicker.showDatePicker(

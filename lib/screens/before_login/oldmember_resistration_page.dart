@@ -19,9 +19,7 @@ class OldMemberPage extends ConsumerWidget {
     final store = ref.watch(storeProvider);
 
     return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-      },
+      onTap: () => primaryFocus?.unfocus(),
       child: Scaffold(
         appBar: AppBar(
           title: const Text('以前会員登録した方'),
@@ -75,7 +73,7 @@ class OldMemberPage extends ConsumerWidget {
                     style: TextStyle(fontWeight: FontWeight.bold)),
                 ElevatedButton(
                   onPressed: () =>
-                      Models.selectBirthday(context, birthdayNotifier),
+                      Logics.selectBirthday(context, birthdayNotifier),
                   child: Text(
                     birthday != null
                         ? "${birthday.year}/${birthday.month}/${birthday.day}"

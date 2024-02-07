@@ -1,4 +1,5 @@
 // ignore_for_file: avoid_print
+import 'package:sltsampleapp/models/model.dart';
 import 'package:sltsampleapp/models/user_state.dart';
 import '../../provider/provider.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,7 @@ class UserProfilePage extends ConsumerWidget {
           itemCount: userList.length,
           itemBuilder: (context, index) {
             final user = userList[index];
+            final age = Logics.birthdayToAge(user.birthday);
             return Card(
               child: Column(
                 children: [
@@ -47,8 +49,9 @@ class UserProfilePage extends ConsumerWidget {
                         ? Image.asset('assets/images/profiledefault.png')
                         : null,
                   ),
-                  Text('本名:${user.realname}'),
-                  Text('性別:${user.gender}'),
+                  Text('本名: ${user.realname}'),
+                  Text('性別: ${user.gender}'),
+                  Text('年齢: $age'),
                 ],
               ),
             );
@@ -73,7 +76,6 @@ class EditUserProfilePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final realnameController = TextEditingController(text: user.realname);
-    final genderController = TextEditingController(text: user.gender);
 
     final imagePicker = ImagePicker();
     final selectedImage = ref.watch(selectedProfileImageProvider);
@@ -114,11 +116,6 @@ class EditUserProfilePage extends ConsumerWidget {
             TextField(
               controller: realnameController,
               decoration: const InputDecoration(labelText: '本名'),
-            ),
-            TextField(
-              controller: genderController,
-              decoration: const InputDecoration(labelText: '性別'),
-              readOnly: true,
             ),
             ElevatedButton(
               onPressed: () async {

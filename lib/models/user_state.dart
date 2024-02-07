@@ -11,6 +11,7 @@ class UserState with _$UserState {
     required String profileImageUrl,
     required String realname,
     required String gender,
+    required DateTime birthday,
   }) = _UserState;
 
   factory UserState.fromJson(Map<String, Object?> json) =>

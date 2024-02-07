@@ -24,6 +24,7 @@ mixin _$UserState {
   String get profileImageUrl => throw _privateConstructorUsedError;
   String get realname => throw _privateConstructorUsedError;
   String get gender => throw _privateConstructorUsedError;
+  DateTime get birthday => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -37,7 +38,11 @@ abstract class $UserStateCopyWith<$Res> {
       _$UserStateCopyWithImpl<$Res, UserState>;
   @useResult
   $Res call(
-      {String useruid, String profileImageUrl, String realname, String gender});
+      {String useruid,
+      String profileImageUrl,
+      String realname,
+      String gender,
+      DateTime birthday});
 }
 
 /// @nodoc
@@ -57,6 +62,7 @@ class _$UserStateCopyWithImpl<$Res, $Val extends UserState>
     Object? profileImageUrl = null,
     Object? realname = null,
     Object? gender = null,
+    Object? birthday = null,
   }) {
     return _then(_value.copyWith(
       useruid: null == useruid
@@ -75,6 +81,10 @@ class _$UserStateCopyWithImpl<$Res, $Val extends UserState>
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
               as String,
+      birthday: null == birthday
+          ? _value.birthday
+          : birthday // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ) as $Val);
   }
 }
@@ -88,7 +98,11 @@ abstract class _$$UserStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String useruid, String profileImageUrl, String realname, String gender});
+      {String useruid,
+      String profileImageUrl,
+      String realname,
+      String gender,
+      DateTime birthday});
 }
 
 /// @nodoc
@@ -106,6 +120,7 @@ class __$$UserStateImplCopyWithImpl<$Res>
     Object? profileImageUrl = null,
     Object? realname = null,
     Object? gender = null,
+    Object? birthday = null,
   }) {
     return _then(_$UserStateImpl(
       useruid: null == useruid
@@ -124,6 +139,10 @@ class __$$UserStateImplCopyWithImpl<$Res>
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
               as String,
+      birthday: null == birthday
+          ? _value.birthday
+          : birthday // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
@@ -135,7 +154,8 @@ class _$UserStateImpl with DiagnosticableTreeMixin implements _UserState {
       {required this.useruid,
       required this.profileImageUrl,
       required this.realname,
-      required this.gender});
+      required this.gender,
+      required this.birthday});
 
   factory _$UserStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserStateImplFromJson(json);
@@ -148,10 +168,12 @@ class _$UserStateImpl with DiagnosticableTreeMixin implements _UserState {
   final String realname;
   @override
   final String gender;
+  @override
+  final DateTime birthday;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'UserState(useruid: $useruid, profileImageUrl: $profileImageUrl, realname: $realname, gender: $gender)';
+    return 'UserState(useruid: $useruid, profileImageUrl: $profileImageUrl, realname: $realname, gender: $gender, birthday: $birthday)';
   }
 
   @override
@@ -162,7 +184,8 @@ class _$UserStateImpl with DiagnosticableTreeMixin implements _UserState {
       ..add(DiagnosticsProperty('useruid', useruid))
       ..add(DiagnosticsProperty('profileImageUrl', profileImageUrl))
       ..add(DiagnosticsProperty('realname', realname))
-      ..add(DiagnosticsProperty('gender', gender));
+      ..add(DiagnosticsProperty('gender', gender))
+      ..add(DiagnosticsProperty('birthday', birthday));
   }
 
   @override
@@ -175,13 +198,15 @@ class _$UserStateImpl with DiagnosticableTreeMixin implements _UserState {
                 other.profileImageUrl == profileImageUrl) &&
             (identical(other.realname, realname) ||
                 other.realname == realname) &&
-            (identical(other.gender, gender) || other.gender == gender));
+            (identical(other.gender, gender) || other.gender == gender) &&
+            (identical(other.birthday, birthday) ||
+                other.birthday == birthday));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, useruid, profileImageUrl, realname, gender);
+  int get hashCode => Object.hash(
+      runtimeType, useruid, profileImageUrl, realname, gender, birthday);
 
   @JsonKey(ignore: true)
   @override
@@ -202,7 +227,8 @@ abstract class _UserState implements UserState {
       {required final String useruid,
       required final String profileImageUrl,
       required final String realname,
-      required final String gender}) = _$UserStateImpl;
+      required final String gender,
+      required final DateTime birthday}) = _$UserStateImpl;
 
   factory _UserState.fromJson(Map<String, dynamic> json) =
       _$UserStateImpl.fromJson;
@@ -215,6 +241,8 @@ abstract class _UserState implements UserState {
   String get realname;
   @override
   String get gender;
+  @override
+  DateTime get birthday;
   @override
   @JsonKey(ignore: true)
   _$$UserStateImplCopyWith<_$UserStateImpl> get copyWith =>

@@ -1,10 +1,10 @@
 // ignore_for_file: avoid_print
 
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:sltsampleapp/models/user_state.dart';
-
+import 'package:sltsampleapp/screens/after_login/solotte_page.dart';
 import 'login_page.dart';
 import 'oldmember_resistration_page.dart';
-import '../after_login/solotte_page.dart';
 import '../../models/model.dart';
 import '../../provider/provider.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +12,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/services.dart';
 
-class RegistrationPage extends ConsumerWidget {
+class RegistrationPage extends HookConsumerWidget {
   const RegistrationPage({super.key});
 
   @override
@@ -21,20 +21,24 @@ class RegistrationPage extends ConsumerWidget {
 
     final phoneNumber = ref.watch(phoneNumberProvider);
     final password = ref.watch(passWordProvider);
-    final hidePassword = ref.watch(hidePasswordProvider);
+    final hidePassword = useState<bool>(true);
     final realName = ref.watch(realNameProvider);
     final gender = ref.watch(genderProvider);
     final birthday = ref.watch(birthdayProvider);
     final birthdayNotifier = ref.read(birthdayProvider.notifier);
 
-    Future<void> verifySms() async {
+    Future<void> resistRation() async {
+      final phoneNumber = ref.read(phoneNumberProvider);
+      final password = ref.read(passWordProvider);
+      final realName = ref.read(realNameProvider);
+
       await auth.verifyPhoneNumber(
         phoneNumber: "+81$phoneNumber",
         verificationCompleted: (PhoneAuthCredential credential) async {},
         verificationFailed: (FirebaseAuthException e) {
           print(e.message);
         },
-        //iOSの場合resendTokenは常にnull
+//iOSの場合resendTokenは常にnull
         codeSent: (String verificationId, int? resendToken) async {
           String smsCode = '';
           await showDialog(
@@ -67,16 +71,16 @@ class RegistrationPage extends ConsumerWidget {
               email: "$phoneNumber@test.com",
               password: password,
             );
-            final userState = UserState(
-              useruid: '',
-              profileImageUrl: '',
-              realname: realName,
-              gender: gender,
-            );
-            await ref.read(userStateAPIProvider).createUser(userState);
-            //userStateFutureProviderをinvalidateすることで、再度データを取得&状態更新を行う。
-            ref.invalidate(userStateFutureProvider);
-
+            if (birthday != null) {
+              final userState = UserState(
+                useruid: auth.currentUser!.uid,
+                profileImageUrl: '',
+                realname: realName,
+                gender: gender,
+                birthday: birthday,
+              );
+              await ref.read(userStateAPIProvider).createUser(userState);
+            }
             if (context.mounted) {
               Navigator.pushAndRemoveUntil(
                 context,
@@ -93,9 +97,7 @@ class RegistrationPage extends ConsumerWidget {
     }
 
     return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus(); // キーボードを隠す
-      },
+      onTap: () => primaryFocus?.unfocus(),
       child: Scaffold(
         appBar: AppBar(
           title: const Text('新規会員登録'),
@@ -149,7 +151,7 @@ class RegistrationPage extends ConsumerWidget {
                     style: TextStyle(fontWeight: FontWeight.bold)),
                 ElevatedButton(
                   onPressed: () =>
-                      Models.selectBirthday(context, birthdayNotifier),
+                      Logics.selectBirthday(context, birthdayNotifier),
                   child: Text(
                     birthday != null
                         ? "${birthday.year}/${birthday.month}/${birthday.day}"
@@ -179,17 +181,18 @@ class RegistrationPage extends ConsumerWidget {
                     border: const OutlineInputBorder(),
                     suffixIcon: IconButton(
                       icon: Icon(
-                        hidePassword ? Icons.visibility : Icons.visibility_off,
+                        hidePassword.value
+                            ? Icons.visibility_off
+                            : Icons.visibility,
                       ),
                       onPressed: () {
-                        ref.read(hidePasswordProvider.notifier).state =
-                            !hidePassword;
+                        hidePassword.value = !hidePassword.value;
                       },
                     ),
                   ),
-                  obscureText: hidePassword,
                   keyboardType: TextInputType.number,
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  obscureText: hidePassword.value,
                   onChanged: (value) {
                     ref.read(passWordProvider.notifier).state = value;
                   },
@@ -205,7 +208,7 @@ class RegistrationPage extends ConsumerWidget {
                           birthday != null &&
                           phoneNumber.isNotEmpty &&
                           password.isNotEmpty
-                      ? verifySms
+                      ? resistRation
                       : null,
                   child: const Text('会員登録'),
                 ),

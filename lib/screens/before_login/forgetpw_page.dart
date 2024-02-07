@@ -9,9 +9,7 @@ class ForgetPwPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-      },
+      onTap: () => primaryFocus?.unfocus(),
       child: Scaffold(
         appBar: AppBar(
           title: const Text('パスワード再設定'),

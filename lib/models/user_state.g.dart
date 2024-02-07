@@ -12,6 +12,7 @@ _$UserStateImpl _$$UserStateImplFromJson(Map<String, dynamic> json) =>
       profileImageUrl: json['profileImageUrl'] as String,
       realname: json['realname'] as String,
       gender: json['gender'] as String,
+      birthday: DateTime.parse(json['birthday'] as String),
     );
 
 Map<String, dynamic> _$$UserStateImplToJson(_$UserStateImpl instance) =>
@@ -20,4 +21,5 @@ Map<String, dynamic> _$$UserStateImplToJson(_$UserStateImpl instance) =>
       'profileImageUrl': instance.profileImageUrl,
       'realname': instance.realname,
       'gender': instance.gender,
+      'birthday': instance.birthday.toIso8601String(),
     };

@@ -11,14 +11,9 @@ final firebaseAuthProvider = Provider((ref) => FirebaseAuth.instance);
 final firebaseFirestoreProvider = Provider((ref) => FirebaseFirestore.instance);
 final firebaseStorageProvider = Provider((ref) => FirebaseStorage.instance);
 
-// used in 'addpost_page.dart'
-final selectedTodohukenProvider =
-    StateProvider.autoDispose<List<String>>((ref) => []);
-
 // used in 'login_page.dart' 'resistration.dart'
 final phoneNumberProvider = StateProvider.autoDispose<String>((ref) => '');
 final passWordProvider = StateProvider.autoDispose<String>((ref) => '');
-final hidePasswordProvider = StateProvider.autoDispose<bool>((ref) => true);
 
 // used in 'resistration.dart'
 final realNameProvider = StateProvider.autoDispose<String>((ref) => '');
