@@ -10,6 +10,7 @@ class UserState with _$UserState {
     required String userUID,
     required String profileImageUrl,
     required String realname,
+    required String nickname,
     required String gender,
     required DateTime birthday,
   }) = _UserState;

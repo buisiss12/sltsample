@@ -49,7 +49,7 @@ class UserProfilePage extends ConsumerWidget {
                         ? Image.asset('assets/images/profiledefault.png')
                         : null,
                   ),
-                  Text('本名: ${user.realname}'),
+                  Text('ニックネーム: ${user.nickname}'),
                   Text('性別: ${user.gender}'),
                   Text('年齢: $age'),
                 ],
@@ -75,7 +75,7 @@ class EditUserProfilePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final realnameController = TextEditingController(text: user.realname);
+    final nicknameController = TextEditingController(text: user.nickname);
 
     final imagePicker = ImagePicker();
     final selectedImage = ref.watch(selectedProfileImageProvider);
@@ -114,29 +114,32 @@ class EditUserProfilePage extends ConsumerWidget {
               },
             ),
             TextField(
-              controller: realnameController,
-              decoration: const InputDecoration(labelText: '本名'),
+              controller: nicknameController,
+              decoration: const InputDecoration(labelText: 'ニックネーム'),
             ),
             ElevatedButton(
               onPressed: () async {
+                String? imageUrl;
                 if (selectedImage != null) {
                   String fileName = 'profileImage_${user.userUID}.jpg';
                   final fireStorage = ref.watch(firebaseStorageProvider);
                   final storageRef =
                       fireStorage.ref().child('profileImages').child(fileName);
                   await storageRef.putFile(selectedImage);
-                  final imageUrl = await storageRef.getDownloadURL();
+                  imageUrl = await storageRef.getDownloadURL();
+                } else {
+                  imageUrl = user.profileImageUrl;
+                }
 
-                  final updatedUser = user.copyWith(
-                    realname: realnameController.text,
-                    profileImageUrl: imageUrl,
-                  );
-                  await ref.read(userStateAPIProvider).createUser(updatedUser);
-                  ref.invalidate(userStateFutureProvider);
+                final updatedUser = user.copyWith(
+                  nickname: nicknameController.text,
+                  profileImageUrl: imageUrl,
+                );
+                await ref.read(userStateAPIProvider).createUser(updatedUser);
+                ref.invalidate(userStateFutureProvider);
 
-                  if (context.mounted) {
-                    Navigator.pop(context);
-                  }
+                if (context.mounted) {
+                  Navigator.pop(context);
                 }
               },
               child: const Text('保存'),

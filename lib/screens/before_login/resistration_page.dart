@@ -76,6 +76,7 @@ class RegistrationPage extends HookConsumerWidget {
                 userUID: auth.currentUser!.uid,
                 profileImageUrl: '',
                 realname: realName,
+                nickname: '',
                 gender: gender,
                 birthday: birthday,
               );

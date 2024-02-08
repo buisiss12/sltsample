@@ -23,6 +23,7 @@ mixin _$UserState {
   String get userUID => throw _privateConstructorUsedError;
   String get profileImageUrl => throw _privateConstructorUsedError;
   String get realname => throw _privateConstructorUsedError;
+  String get nickname => throw _privateConstructorUsedError;
   String get gender => throw _privateConstructorUsedError;
   DateTime get birthday => throw _privateConstructorUsedError;
 
@@ -41,6 +42,7 @@ abstract class $UserStateCopyWith<$Res> {
       {String userUID,
       String profileImageUrl,
       String realname,
+      String nickname,
       String gender,
       DateTime birthday});
 }
@@ -61,6 +63,7 @@ class _$UserStateCopyWithImpl<$Res, $Val extends UserState>
     Object? userUID = null,
     Object? profileImageUrl = null,
     Object? realname = null,
+    Object? nickname = null,
     Object? gender = null,
     Object? birthday = null,
   }) {
@@ -76,6 +79,10 @@ class _$UserStateCopyWithImpl<$Res, $Val extends UserState>
       realname: null == realname
           ? _value.realname
           : realname // ignore: cast_nullable_to_non_nullable
+              as String,
+      nickname: null == nickname
+          ? _value.nickname
+          : nickname // ignore: cast_nullable_to_non_nullable
               as String,
       gender: null == gender
           ? _value.gender
@@ -101,6 +108,7 @@ abstract class _$$UserStateImplCopyWith<$Res>
       {String userUID,
       String profileImageUrl,
       String realname,
+      String nickname,
       String gender,
       DateTime birthday});
 }
@@ -119,6 +127,7 @@ class __$$UserStateImplCopyWithImpl<$Res>
     Object? userUID = null,
     Object? profileImageUrl = null,
     Object? realname = null,
+    Object? nickname = null,
     Object? gender = null,
     Object? birthday = null,
   }) {
@@ -134,6 +143,10 @@ class __$$UserStateImplCopyWithImpl<$Res>
       realname: null == realname
           ? _value.realname
           : realname // ignore: cast_nullable_to_non_nullable
+              as String,
+      nickname: null == nickname
+          ? _value.nickname
+          : nickname // ignore: cast_nullable_to_non_nullable
               as String,
       gender: null == gender
           ? _value.gender
@@ -154,6 +167,7 @@ class _$UserStateImpl with DiagnosticableTreeMixin implements _UserState {
       {required this.userUID,
       required this.profileImageUrl,
       required this.realname,
+      required this.nickname,
       required this.gender,
       required this.birthday});
 
@@ -167,13 +181,15 @@ class _$UserStateImpl with DiagnosticableTreeMixin implements _UserState {
   @override
   final String realname;
   @override
+  final String nickname;
+  @override
   final String gender;
   @override
   final DateTime birthday;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'UserState(userUID: $userUID, profileImageUrl: $profileImageUrl, realname: $realname, gender: $gender, birthday: $birthday)';
+    return 'UserState(userUID: $userUID, profileImageUrl: $profileImageUrl, realname: $realname, nickname: $nickname, gender: $gender, birthday: $birthday)';
   }
 
   @override
@@ -184,6 +200,7 @@ class _$UserStateImpl with DiagnosticableTreeMixin implements _UserState {
       ..add(DiagnosticsProperty('userUID', userUID))
       ..add(DiagnosticsProperty('profileImageUrl', profileImageUrl))
       ..add(DiagnosticsProperty('realname', realname))
+      ..add(DiagnosticsProperty('nickname', nickname))
       ..add(DiagnosticsProperty('gender', gender))
       ..add(DiagnosticsProperty('birthday', birthday));
   }
@@ -198,6 +215,8 @@ class _$UserStateImpl with DiagnosticableTreeMixin implements _UserState {
                 other.profileImageUrl == profileImageUrl) &&
             (identical(other.realname, realname) ||
                 other.realname == realname) &&
+            (identical(other.nickname, nickname) ||
+                other.nickname == nickname) &&
             (identical(other.gender, gender) || other.gender == gender) &&
             (identical(other.birthday, birthday) ||
                 other.birthday == birthday));
@@ -205,8 +224,8 @@ class _$UserStateImpl with DiagnosticableTreeMixin implements _UserState {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, userUID, profileImageUrl, realname, gender, birthday);
+  int get hashCode => Object.hash(runtimeType, userUID, profileImageUrl,
+      realname, nickname, gender, birthday);
 
   @JsonKey(ignore: true)
   @override
@@ -227,6 +246,7 @@ abstract class _UserState implements UserState {
       {required final String userUID,
       required final String profileImageUrl,
       required final String realname,
+      required final String nickname,
       required final String gender,
       required final DateTime birthday}) = _$UserStateImpl;
 
@@ -239,6 +259,8 @@ abstract class _UserState implements UserState {
   String get profileImageUrl;
   @override
   String get realname;
+  @override
+  String get nickname;
   @override
   String get gender;
   @override
