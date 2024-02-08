@@ -1,4 +1,5 @@
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:intl/intl.dart';
 import 'package:sltsampleapp/models/chat_model.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -20,8 +21,10 @@ class ChatPage extends HookConsumerWidget {
     final firestore = ref.watch(firebaseFirestoreProvider);
     final chatService = ChatService(firestore);
     final chatText = useTextEditingController();
+    final scrollController = useScrollController();
 
     void sendMessage() async {
+      if (chatText.text.isEmpty) return;
       List<String> ids = [currentUserUID, receiverUID]..sort();
       String chatId = ids.join("_");
 
@@ -34,10 +37,19 @@ class ChatPage extends HookConsumerWidget {
       );
       await chatService.sendMessage(chatMessage);
       chatText.clear();
+
+      // メッセージ送信後に最下部にスクロール
+      scrollController.animateTo(
+        scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
     }
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Chat")),
+      appBar: AppBar(
+        title: const Text("Chat"),
+      ),
       body: Column(
         children: [
           Expanded(
@@ -47,15 +59,53 @@ class ChatPage extends HookConsumerWidget {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
                 }
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  if (snapshot.hasData) {
+                    // メッセージが来たとき、最下部にスクロール
+                    if (scrollController.hasClients) {
+                      scrollController.animateTo(
+                        scrollController.position.maxScrollExtent,
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeOut,
+                      );
+                    }
+                  }
+                });
                 final messages = snapshot.data ?? [];
                 return ListView.builder(
-                  reverse: true,
+                  controller: scrollController,
                   itemCount: messages.length,
                   itemBuilder: (context, index) {
                     final message = messages[index];
-                    return ListTile(
-                      title: Text(message.text),
-                      subtitle: Text(message.timestamp.toString()),
+                    final bool isMe = message.senderUID == currentUserUID;
+                    return Container(
+                      alignment:
+                          isMe ? Alignment.centerRight : Alignment.centerLeft,
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 4, horizontal: 8),
+                        decoration: BoxDecoration(
+                          color: isMe ? Colors.blue : Colors.grey[300],
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              message.text,
+                              style: TextStyle(
+                                  color: isMe ? Colors.white : Colors.black),
+                            ),
+                            Text(
+                              DateFormat('HH:mm').format(message.timestamp!),
+                              style: TextStyle(
+                                  color: isMe ? Colors.white70 : Colors.black54,
+                                  fontSize: 10),
+                            ),
+                          ],
+                        ),
+                      ),
                     );
                   },
                 );
@@ -67,12 +117,14 @@ class ChatPage extends HookConsumerWidget {
             child: TextField(
               controller: chatText,
               decoration: InputDecoration(
+                hintText: "メッセージを入力",
                 suffixIcon: IconButton(
                   icon: const Icon(Icons.send),
                   onPressed: sendMessage,
                 ),
                 border: const OutlineInputBorder(),
               ),
+              onSubmitted: (_) => sendMessage(),
             ),
           ),
         ],
@@ -96,6 +148,7 @@ class ChatService {
     return firestore
         .collection('chats')
         .where('chatId', isEqualTo: chatId)
+        .orderBy('timestamp') //時間順にソートする*インデックス作成必須ログのURLから自動的に作成できる
         .snapshots()
         .map((snapshot) {
       return snapshot.docs

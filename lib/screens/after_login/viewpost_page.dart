@@ -22,20 +22,22 @@ class ViewPostPage extends HookConsumerWidget {
             return ListTile(
               title: Text(post.posttitle),
               subtitle: Text('希望エリア${post.todohuken} 投稿時間: ${post.timestamp}'),
-              trailing: IconButton(
-                icon: const Icon(Icons.email),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ChatPage(
-                        currentUserUID: currentUser!.uid,
-                        receiverUID: post.postedUserUID,
-                      ),
-                    ),
-                  );
-                },
-              ),
+              trailing: currentUser?.uid != post.postedUserUID
+                  ? IconButton(
+                      icon: const Icon(Icons.email),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ChatPage(
+                              currentUserUID: currentUser!.uid,
+                              receiverUID: post.postedUserUID,
+                            ),
+                          ),
+                        );
+                      },
+                    )
+                  : null,
             );
           },
         ),
