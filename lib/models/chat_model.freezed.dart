@@ -23,7 +23,7 @@ mixin _$ChatModel {
   String get senderUID => throw _privateConstructorUsedError;
   String get receiverUID => throw _privateConstructorUsedError;
   String get text => throw _privateConstructorUsedError;
-  String get chatId => throw _privateConstructorUsedError;
+  String get userUIDs => throw _privateConstructorUsedError;
   DateTime? get timestamp => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -41,7 +41,7 @@ abstract class $ChatModelCopyWith<$Res> {
       {String senderUID,
       String receiverUID,
       String text,
-      String chatId,
+      String userUIDs,
       DateTime? timestamp});
 }
 
@@ -61,7 +61,7 @@ class _$ChatModelCopyWithImpl<$Res, $Val extends ChatModel>
     Object? senderUID = null,
     Object? receiverUID = null,
     Object? text = null,
-    Object? chatId = null,
+    Object? userUIDs = null,
     Object? timestamp = freezed,
   }) {
     return _then(_value.copyWith(
@@ -77,9 +77,9 @@ class _$ChatModelCopyWithImpl<$Res, $Val extends ChatModel>
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
-      chatId: null == chatId
-          ? _value.chatId
-          : chatId // ignore: cast_nullable_to_non_nullable
+      userUIDs: null == userUIDs
+          ? _value.userUIDs
+          : userUIDs // ignore: cast_nullable_to_non_nullable
               as String,
       timestamp: freezed == timestamp
           ? _value.timestamp
@@ -101,7 +101,7 @@ abstract class _$$ChatModelImplCopyWith<$Res>
       {String senderUID,
       String receiverUID,
       String text,
-      String chatId,
+      String userUIDs,
       DateTime? timestamp});
 }
 
@@ -119,7 +119,7 @@ class __$$ChatModelImplCopyWithImpl<$Res>
     Object? senderUID = null,
     Object? receiverUID = null,
     Object? text = null,
-    Object? chatId = null,
+    Object? userUIDs = null,
     Object? timestamp = freezed,
   }) {
     return _then(_$ChatModelImpl(
@@ -135,9 +135,9 @@ class __$$ChatModelImplCopyWithImpl<$Res>
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
-      chatId: null == chatId
-          ? _value.chatId
-          : chatId // ignore: cast_nullable_to_non_nullable
+      userUIDs: null == userUIDs
+          ? _value.userUIDs
+          : userUIDs // ignore: cast_nullable_to_non_nullable
               as String,
       timestamp: freezed == timestamp
           ? _value.timestamp
@@ -154,7 +154,7 @@ class _$ChatModelImpl with DiagnosticableTreeMixin implements _ChatModel {
       {required this.senderUID,
       required this.receiverUID,
       required this.text,
-      required this.chatId,
+      required this.userUIDs,
       this.timestamp});
 
   factory _$ChatModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -167,13 +167,13 @@ class _$ChatModelImpl with DiagnosticableTreeMixin implements _ChatModel {
   @override
   final String text;
   @override
-  final String chatId;
+  final String userUIDs;
   @override
   final DateTime? timestamp;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ChatModel(senderUID: $senderUID, receiverUID: $receiverUID, text: $text, chatId: $chatId, timestamp: $timestamp)';
+    return 'ChatModel(senderUID: $senderUID, receiverUID: $receiverUID, text: $text, userUIDs: $userUIDs, timestamp: $timestamp)';
   }
 
   @override
@@ -184,7 +184,7 @@ class _$ChatModelImpl with DiagnosticableTreeMixin implements _ChatModel {
       ..add(DiagnosticsProperty('senderUID', senderUID))
       ..add(DiagnosticsProperty('receiverUID', receiverUID))
       ..add(DiagnosticsProperty('text', text))
-      ..add(DiagnosticsProperty('chatId', chatId))
+      ..add(DiagnosticsProperty('userUIDs', userUIDs))
       ..add(DiagnosticsProperty('timestamp', timestamp));
   }
 
@@ -198,15 +198,16 @@ class _$ChatModelImpl with DiagnosticableTreeMixin implements _ChatModel {
             (identical(other.receiverUID, receiverUID) ||
                 other.receiverUID == receiverUID) &&
             (identical(other.text, text) || other.text == text) &&
-            (identical(other.chatId, chatId) || other.chatId == chatId) &&
+            (identical(other.userUIDs, userUIDs) ||
+                other.userUIDs == userUIDs) &&
             (identical(other.timestamp, timestamp) ||
                 other.timestamp == timestamp));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, senderUID, receiverUID, text, chatId, timestamp);
+  int get hashCode => Object.hash(
+      runtimeType, senderUID, receiverUID, text, userUIDs, timestamp);
 
   @JsonKey(ignore: true)
   @override
@@ -227,7 +228,7 @@ abstract class _ChatModel implements ChatModel {
       {required final String senderUID,
       required final String receiverUID,
       required final String text,
-      required final String chatId,
+      required final String userUIDs,
       final DateTime? timestamp}) = _$ChatModelImpl;
 
   factory _ChatModel.fromJson(Map<String, dynamic> json) =
@@ -240,7 +241,7 @@ abstract class _ChatModel implements ChatModel {
   @override
   String get text;
   @override
-  String get chatId;
+  String get userUIDs;
   @override
   DateTime? get timestamp;
   @override

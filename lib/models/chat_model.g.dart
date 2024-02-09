@@ -11,7 +11,7 @@ _$ChatModelImpl _$$ChatModelImplFromJson(Map<String, dynamic> json) =>
       senderUID: json['senderUID'] as String,
       receiverUID: json['receiverUID'] as String,
       text: json['text'] as String,
-      chatId: json['chatId'] as String,
+      userUIDs: json['userUIDs'] as String,
       timestamp: json['timestamp'] == null
           ? null
           : DateTime.parse(json['timestamp'] as String),
@@ -22,6 +22,6 @@ Map<String, dynamic> _$$ChatModelImplToJson(_$ChatModelImpl instance) =>
       'senderUID': instance.senderUID,
       'receiverUID': instance.receiverUID,
       'text': instance.text,
-      'chatId': instance.chatId,
+      'userUIDs': instance.userUIDs,
       'timestamp': instance.timestamp?.toIso8601String(),
     };

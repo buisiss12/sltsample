@@ -1,7 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:sltsampleapp/models/user_state.dart';
+import 'package:sltsampleapp/models/user_model.dart';
 import 'package:sltsampleapp/screens/after_login/solotte_page.dart';
 import 'login_page.dart';
 import 'oldmember_resistration_page.dart';
@@ -72,7 +72,7 @@ class RegistrationPage extends HookConsumerWidget {
               password: password,
             );
             if (birthday != null) {
-              final userState = UserState(
+              final userState = UserModel(
                 userUID: auth.currentUser!.uid,
                 profileImageUrl: '',
                 realname: realName,

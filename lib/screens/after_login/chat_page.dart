@@ -32,7 +32,7 @@ class ChatPage extends HookConsumerWidget {
         senderUID: currentUserUID,
         receiverUID: receiverUID,
         text: chatText.text,
-        chatId: chatId,
+        userUIDs: chatId,
         timestamp: DateTime.now(),
       );
       await chatService.sendMessage(chatMessage);
@@ -147,7 +147,7 @@ class ChatService {
     String chatId = ids.join("_");
     return firestore
         .collection('chats')
-        .where('chatId', isEqualTo: chatId)
+        .where('userUIDs', isEqualTo: chatId)
         .orderBy('timestamp') //時間順にソートする*インデックス作成必須ログのURLから自動的に作成できる
         .snapshots()
         .map((snapshot) {

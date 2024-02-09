@@ -1,22 +1,22 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 
-part 'user_state.freezed.dart';
-part 'user_state.g.dart';
+part 'user_model.freezed.dart';
+part 'user_model.g.dart';
 
 @freezed
-class UserState with _$UserState {
-  const factory UserState({
+class UserModel with _$UserModel {
+  const factory UserModel({
     required String userUID,
     required String profileImageUrl,
     required String realname,
     required String nickname,
     required String gender,
     required DateTime birthday,
-  }) = _UserState;
+  }) = _UserModel;
 
-  factory UserState.fromJson(Map<String, Object?> json) =>
-      _$UserStateFromJson(json);
+  factory UserModel.fromJson(Map<String, Object?> json) =>
+      _$UserModelFromJson(json);
 }
 
 //flutter pub run build_runner build --delete-conflicting-outputs

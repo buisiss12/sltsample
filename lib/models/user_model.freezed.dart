@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'user_state.dart';
+part of 'user_model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,12 +14,12 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-UserState _$UserStateFromJson(Map<String, dynamic> json) {
-  return _UserState.fromJson(json);
+UserModel _$UserModelFromJson(Map<String, dynamic> json) {
+  return _UserModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$UserState {
+mixin _$UserModel {
   String get userUID => throw _privateConstructorUsedError;
   String get profileImageUrl => throw _privateConstructorUsedError;
   String get realname => throw _privateConstructorUsedError;
@@ -29,14 +29,14 @@ mixin _$UserState {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $UserStateCopyWith<UserState> get copyWith =>
+  $UserModelCopyWith<UserModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $UserStateCopyWith<$Res> {
-  factory $UserStateCopyWith(UserState value, $Res Function(UserState) then) =
-      _$UserStateCopyWithImpl<$Res, UserState>;
+abstract class $UserModelCopyWith<$Res> {
+  factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) then) =
+      _$UserModelCopyWithImpl<$Res, UserModel>;
   @useResult
   $Res call(
       {String userUID,
@@ -48,9 +48,9 @@ abstract class $UserStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$UserStateCopyWithImpl<$Res, $Val extends UserState>
-    implements $UserStateCopyWith<$Res> {
-  _$UserStateCopyWithImpl(this._value, this._then);
+class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
+    implements $UserModelCopyWith<$Res> {
+  _$UserModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -97,11 +97,11 @@ class _$UserStateCopyWithImpl<$Res, $Val extends UserState>
 }
 
 /// @nodoc
-abstract class _$$UserStateImplCopyWith<$Res>
-    implements $UserStateCopyWith<$Res> {
-  factory _$$UserStateImplCopyWith(
-          _$UserStateImpl value, $Res Function(_$UserStateImpl) then) =
-      __$$UserStateImplCopyWithImpl<$Res>;
+abstract class _$$UserModelImplCopyWith<$Res>
+    implements $UserModelCopyWith<$Res> {
+  factory _$$UserModelImplCopyWith(
+          _$UserModelImpl value, $Res Function(_$UserModelImpl) then) =
+      __$$UserModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -114,11 +114,11 @@ abstract class _$$UserStateImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$UserStateImplCopyWithImpl<$Res>
-    extends _$UserStateCopyWithImpl<$Res, _$UserStateImpl>
-    implements _$$UserStateImplCopyWith<$Res> {
-  __$$UserStateImplCopyWithImpl(
-      _$UserStateImpl _value, $Res Function(_$UserStateImpl) _then)
+class __$$UserModelImplCopyWithImpl<$Res>
+    extends _$UserModelCopyWithImpl<$Res, _$UserModelImpl>
+    implements _$$UserModelImplCopyWith<$Res> {
+  __$$UserModelImplCopyWithImpl(
+      _$UserModelImpl _value, $Res Function(_$UserModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -131,7 +131,7 @@ class __$$UserStateImplCopyWithImpl<$Res>
     Object? gender = null,
     Object? birthday = null,
   }) {
-    return _then(_$UserStateImpl(
+    return _then(_$UserModelImpl(
       userUID: null == userUID
           ? _value.userUID
           : userUID // ignore: cast_nullable_to_non_nullable
@@ -162,8 +162,8 @@ class __$$UserStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$UserStateImpl with DiagnosticableTreeMixin implements _UserState {
-  const _$UserStateImpl(
+class _$UserModelImpl with DiagnosticableTreeMixin implements _UserModel {
+  const _$UserModelImpl(
       {required this.userUID,
       required this.profileImageUrl,
       required this.realname,
@@ -171,8 +171,8 @@ class _$UserStateImpl with DiagnosticableTreeMixin implements _UserState {
       required this.gender,
       required this.birthday});
 
-  factory _$UserStateImpl.fromJson(Map<String, dynamic> json) =>
-      _$$UserStateImplFromJson(json);
+  factory _$UserModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$UserModelImplFromJson(json);
 
   @override
   final String userUID;
@@ -189,14 +189,14 @@ class _$UserStateImpl with DiagnosticableTreeMixin implements _UserState {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'UserState(userUID: $userUID, profileImageUrl: $profileImageUrl, realname: $realname, nickname: $nickname, gender: $gender, birthday: $birthday)';
+    return 'UserModel(userUID: $userUID, profileImageUrl: $profileImageUrl, realname: $realname, nickname: $nickname, gender: $gender, birthday: $birthday)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'UserState'))
+      ..add(DiagnosticsProperty('type', 'UserModel'))
       ..add(DiagnosticsProperty('userUID', userUID))
       ..add(DiagnosticsProperty('profileImageUrl', profileImageUrl))
       ..add(DiagnosticsProperty('realname', realname))
@@ -209,7 +209,7 @@ class _$UserStateImpl with DiagnosticableTreeMixin implements _UserState {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UserStateImpl &&
+            other is _$UserModelImpl &&
             (identical(other.userUID, userUID) || other.userUID == userUID) &&
             (identical(other.profileImageUrl, profileImageUrl) ||
                 other.profileImageUrl == profileImageUrl) &&
@@ -230,28 +230,28 @@ class _$UserStateImpl with DiagnosticableTreeMixin implements _UserState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$UserStateImplCopyWith<_$UserStateImpl> get copyWith =>
-      __$$UserStateImplCopyWithImpl<_$UserStateImpl>(this, _$identity);
+  _$$UserModelImplCopyWith<_$UserModelImpl> get copyWith =>
+      __$$UserModelImplCopyWithImpl<_$UserModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$UserStateImplToJson(
+    return _$$UserModelImplToJson(
       this,
     );
   }
 }
 
-abstract class _UserState implements UserState {
-  const factory _UserState(
+abstract class _UserModel implements UserModel {
+  const factory _UserModel(
       {required final String userUID,
       required final String profileImageUrl,
       required final String realname,
       required final String nickname,
       required final String gender,
-      required final DateTime birthday}) = _$UserStateImpl;
+      required final DateTime birthday}) = _$UserModelImpl;
 
-  factory _UserState.fromJson(Map<String, dynamic> json) =
-      _$UserStateImpl.fromJson;
+  factory _UserModel.fromJson(Map<String, dynamic> json) =
+      _$UserModelImpl.fromJson;
 
   @override
   String get userUID;
@@ -267,6 +267,6 @@ abstract class _UserState implements UserState {
   DateTime get birthday;
   @override
   @JsonKey(ignore: true)
-  _$$UserStateImplCopyWith<_$UserStateImpl> get copyWith =>
+  _$$UserModelImplCopyWith<_$UserModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

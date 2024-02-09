@@ -10,7 +10,7 @@ class ChatModel with _$ChatModel {
     required String senderUID,
     required String receiverUID,
     required String text,
-    required String chatId,
+    required String userUIDs,
     DateTime? timestamp,
   }) = _ChatModel;
 

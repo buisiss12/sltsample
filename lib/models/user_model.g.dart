@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user_state.dart';
+part of 'user_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$UserStateImpl _$$UserStateImplFromJson(Map<String, dynamic> json) =>
-    _$UserStateImpl(
+_$UserModelImpl _$$UserModelImplFromJson(Map<String, dynamic> json) =>
+    _$UserModelImpl(
       userUID: json['userUID'] as String,
       profileImageUrl: json['profileImageUrl'] as String,
       realname: json['realname'] as String,
@@ -16,7 +16,7 @@ _$UserStateImpl _$$UserStateImplFromJson(Map<String, dynamic> json) =>
       birthday: DateTime.parse(json['birthday'] as String),
     );
 
-Map<String, dynamic> _$$UserStateImplToJson(_$UserStateImpl instance) =>
+Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
     <String, dynamic>{
       'userUID': instance.userUID,
       'profileImageUrl': instance.profileImageUrl,

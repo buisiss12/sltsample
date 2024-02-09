@@ -1,6 +1,6 @@
 // ignore_for_file: avoid_print
 import 'package:sltsampleapp/models/model.dart';
-import 'package:sltsampleapp/models/user_state.dart';
+import 'package:sltsampleapp/models/user_model.dart';
 import '../../provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -69,7 +69,7 @@ class UserProfilePage extends ConsumerWidget {
 }
 
 class EditUserProfilePage extends ConsumerWidget {
-  final UserState user;
+  final UserModel user;
 
   const EditUserProfilePage({Key? key, required this.user}) : super(key: key);
 

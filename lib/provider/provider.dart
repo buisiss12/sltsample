@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sltsampleapp/models/post_model.dart';
-import 'package:sltsampleapp/models/user_state.dart';
+import 'package:sltsampleapp/models/user_model.dart';
 
 final firebaseAuthProvider = Provider((ref) => FirebaseAuth.instance);
 final firebaseFirestoreProvider = Provider((ref) => FirebaseFirestore.instance);
@@ -27,7 +27,7 @@ final memberNumberProvider = StateProvider.autoDispose<String>((ref) => '');
 final userIdProvider = StateProvider<String>((ref) => '');
 final storeProvider = StateProvider<String>((ref) => '');
 
-final userStateFutureProvider = FutureProvider<List<UserState>>((ref) async {
+final userStateFutureProvider = FutureProvider<List<UserModel>>((ref) async {
   final userStateAPI = UserStateAPI(ref);
   return userStateAPI.fetchUsers();
 });
@@ -38,7 +38,7 @@ class UserStateAPI {
   UserStateAPI(this.ref);
   final Ref ref;
 
-  Future<void> createUser(UserState userState) async {
+  Future<void> createUser(UserModel userState) async {
     final user = ref.read(firebaseAuthProvider).currentUser;
     if (user != null) {
       await ref
@@ -50,7 +50,7 @@ class UserStateAPI {
     }
   }
 
-  Future<List<UserState>> fetchUsers() async {
+  Future<List<UserModel>> fetchUsers() async {
     final user = ref.read(firebaseAuthProvider).currentUser;
     if (user != null) {
       // 現在のユーザーのデータのみを取得
@@ -59,7 +59,7 @@ class UserStateAPI {
           .collection('users')
           .doc(user.uid)
           .get();
-      return [UserState.fromJson(snapshot.data()!)];
+      return [UserModel.fromJson(snapshot.data()!)];
     } else {
       return [];
     }
