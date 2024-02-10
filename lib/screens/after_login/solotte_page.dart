@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 
+import 'package:sltsampleapp/screens/after_login/message_users_page.dart';
 import 'oriag_page.dart';
 import 'user_profile_page.dart';
 import 'viewpost_page.dart';
@@ -33,7 +34,7 @@ class SolottePage extends HookWidget {
 
     final pages = [
       const ViewPostPage(),
-      const Center(child: Text('メッセージ Page')),
+      const MessageUsersPage(),
       const AddPostPage(),
       const Center(child: Text('お知らせ Page')),
       const UserProfilePage(),

@@ -139,16 +139,35 @@ class ChatService {
   ChatService(this.firestore);
 
   Future<void> sendMessage(ChatModel chatMessage) async {
-    await firestore.collection('chats').add(chatMessage.toJson());
+    List<String> ids = [chatMessage.senderUID, chatMessage.receiverUID]..sort();
+    String chatId = ids.join("_");
+    final conversationRef = firestore.collection('conversations').doc(chatId);
+
+    final conversationSnapshot = await conversationRef.get();
+    if (!conversationSnapshot.exists) {
+      await conversationRef.set({
+        'userUIDs': [chatMessage.senderUID, chatMessage.receiverUID],
+        'lastMessage': chatMessage.text,
+        'lastMessageTimestamp': chatMessage.timestamp.toString(),
+      });
+    } else {
+      await conversationRef.update({
+        'lastMessage': chatMessage.text,
+        'lastMessageTimestamp': chatMessage.timestamp.toString(),
+      });
+    }
+    await conversationRef.collection('messages').add(chatMessage.toJson());
   }
 
   Stream<List<ChatModel>> getMessages(String senderUID, String receiverUID) {
     List<String> ids = [senderUID, receiverUID]..sort();
     String chatId = ids.join("_");
+
     return firestore
-        .collection('chats')
-        .where('userUIDs', isEqualTo: chatId)
-        .orderBy('timestamp') //時間順にソートする*インデックス作成必須ログのURLから自動的に作成できる
+        .collection('conversations')
+        .doc(chatId)
+        .collection('messages')
+        .orderBy('timestamp')
         .snapshots()
         .map((snapshot) {
       return snapshot.docs
