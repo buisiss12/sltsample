@@ -28,14 +28,14 @@ class ChatPage extends HookConsumerWidget {
       List<String> ids = [currentUserUID, receiverUID]..sort();
       String chatId = ids.join("_");
 
-      final chatMessage = ChatModel(
+      final chatModel = ChatModel(
         senderUID: currentUserUID,
         receiverUID: receiverUID,
         text: chatText.text,
         userUIDs: chatId,
         timestamp: DateTime.now(),
       );
-      await chatService.sendMessage(chatMessage);
+      await chatService.sendMessage(chatModel);
       chatText.clear();
 
       // メッセージ送信後に最下部にスクロール

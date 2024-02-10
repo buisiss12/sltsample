@@ -18,7 +18,7 @@ class MessageUsersPage extends HookConsumerWidget {
           itemBuilder: (context, index) {
             final conversation = conversations[index];
             return ListTile(
-              title: Text('メッセージが来ました ${conversation.userUIDs.join(", ")}'),
+              title: Text(conversation.userUIDs.join(", ")),
               subtitle: Text(conversation.lastMessage),
               onTap: () {},
             );

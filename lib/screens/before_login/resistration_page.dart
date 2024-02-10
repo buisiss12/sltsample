@@ -72,7 +72,7 @@ class RegistrationPage extends HookConsumerWidget {
               password: password,
             );
             if (birthday != null) {
-              final userState = UserModel(
+              final userModel = UserModel(
                 userUID: auth.currentUser!.uid,
                 profileImageUrl: '',
                 realname: realName,
@@ -80,7 +80,7 @@ class RegistrationPage extends HookConsumerWidget {
                 gender: gender,
                 birthday: birthday,
               );
-              await ref.read(userStateAPIProvider).createUser(userState);
+              await ref.read(userStateAPIProvider).createUser(userModel);
             }
             if (context.mounted) {
               Navigator.pushAndRemoveUntil(

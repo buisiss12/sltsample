@@ -11,8 +11,6 @@ class AddPostPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final firestore = ref.watch(firebaseFirestoreProvider);
-
     final postTitle = useState('');
 
     final selectedTodohuken = useState<List<String>>([]);
@@ -20,17 +18,18 @@ class AddPostPage extends HookConsumerWidget {
     Future<void> addPost() async {
       final auth = ref.watch(firebaseAuthProvider);
       final user = auth.currentUser;
+      final firestore = ref.watch(firebaseFirestoreProvider);
       if (user != null &&
           postTitle.value.isNotEmpty &&
           selectedTodohuken.value.isNotEmpty) {
-        final post = PostModel(
+        final postModel = PostModel(
           postedUserUID: user.uid,
           todohuken: selectedTodohuken.value,
           posttitle: postTitle.value,
           timestamp: DateTime.now(),
         );
 
-        await firestore.collection('posts').add(post.toJson());
+        await firestore.collection('posts').add(postModel.toJson());
 
         if (context.mounted) {
           Navigator.of(context).pushReplacement(MaterialPageRoute(
