@@ -128,3 +128,20 @@ class Logics {
     return age;
   }
 }
+
+String datetimeConverter(DateTime postTime) {
+  final currentTime = DateTime.now();
+  final difference = currentTime.difference(postTime);
+
+  if (difference.inMinutes < 1) {
+    return 'ちょうど今';
+  } else if (difference.inMinutes < 60) {
+    return '${difference.inMinutes}分前';
+  } else if (difference.inHours < 24) {
+    return '${difference.inHours}時間前';
+  } else if (difference.inDays < 7) {
+    return '${difference.inDays}日前';
+  } else {
+    return '${postTime.year}/${postTime.month}/${postTime.day}';
+  }
+}

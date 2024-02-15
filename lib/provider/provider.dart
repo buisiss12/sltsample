@@ -91,3 +91,13 @@ final messageStreamProvider =
           .map((doc) => ConversationModel.fromJson(doc.data()))
           .toList());
 });
+
+final userDetailProvider =
+    FutureProvider.family<UserModel, String>((ref, userUID) async {
+  final firestore = ref.read(firebaseFirestoreProvider);
+  final docSnapshot = await firestore.collection('users').doc(userUID).get();
+  if (docSnapshot.exists) {
+    return UserModel.fromJson(docSnapshot.data()!);
+  }
+  throw Exception("User not found");
+});
