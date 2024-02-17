@@ -13,57 +13,61 @@ class MessageUsersPage extends HookConsumerWidget {
     final currentUser = auth.currentUser;
     final messageStream = ref.watch(messageStreamProvider(currentUser!.uid));
 
-    return Scaffold(
-      body: messageStream.when(
-        data: (conversations) => ListView.builder(
-          itemCount: conversations.length,
-          itemBuilder: (context, index) {
-            final conversation = conversations[index];
-            final userUID = conversation.userUIDs.firstWhere(
-                (uid) => uid != currentUser.uid,
-                orElse: () => currentUser.uid);
-            final userDetailAsyncValue = ref.watch(userDetailProvider(userUID));
+    return GestureDetector(
+      onTap: () => primaryFocus?.unfocus(),
+      child: Scaffold(
+        body: messageStream.when(
+          data: (conversations) => ListView.builder(
+            itemCount: conversations.length,
+            itemBuilder: (context, index) {
+              final conversation = conversations[index];
+              final userUID = conversation.userUIDs.firstWhere(
+                  (uid) => uid != currentUser.uid,
+                  orElse: () => currentUser.uid);
+              final userDetailAsyncValue =
+                  ref.watch(userDetailProvider(userUID));
 
-            final elapsedTime = datetimeConverter(
-                conversation.lastMessageTimestamp ?? DateTime.now());
+              final elapsedTime = datetimeConverter(
+                  conversation.lastMessageTimestamp ?? DateTime.now());
 
-            return ListTile(
-              leading: userDetailAsyncValue.when(
-                data: (user) => CircleAvatar(
-                  radius: 40,
-                  backgroundImage: user.profileImageUrl.isNotEmpty
-                      ? NetworkImage(user.profileImageUrl)
-                      : null,
-                  child: user.profileImageUrl.isEmpty
-                      ? Image.asset('assets/images/profiledefault.png')
-                      : null,
-                ),
-                loading: () => const CircularProgressIndicator(),
-                error: (_, __) => const Icon(Icons.error),
-              ),
-              title: userDetailAsyncValue.when(
-                data: (user) => Text(user.nickname),
-                loading: () => const Text("Loading..."),
-                error: (_, __) => const Text("Error"),
-              ),
-              subtitle: Text(conversation.lastMessage),
-              trailing: Text(elapsedTime),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ChatPage(
-                      currentUserUID: currentUser.uid,
-                      receiverUID: userUID,
-                    ),
+              return ListTile(
+                leading: userDetailAsyncValue.when(
+                  data: (user) => CircleAvatar(
+                    radius: 40,
+                    backgroundImage: user.profileImageUrl.isNotEmpty
+                        ? NetworkImage(user.profileImageUrl)
+                        : null,
+                    child: user.profileImageUrl.isEmpty
+                        ? Image.asset('assets/images/profiledefault.png')
+                        : null,
                   ),
-                );
-              },
-            );
-          },
+                  loading: () => const CircularProgressIndicator(),
+                  error: (_, __) => const Icon(Icons.error),
+                ),
+                title: userDetailAsyncValue.when(
+                  data: (user) => Text(user.nickname),
+                  loading: () => const Text("Loading..."),
+                  error: (_, __) => const Text("Error"),
+                ),
+                subtitle: Text(conversation.lastMessage),
+                trailing: Text(elapsedTime),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ChatPage(
+                        currentUserUID: currentUser.uid,
+                        receiverUID: userUID,
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
+          ),
+          loading: () => const CircularProgressIndicator(),
+          error: (error, stack) => Text('Error: $error'),
         ),
-        loading: () => const CircularProgressIndicator(),
-        error: (error, stack) => Text('Error: $error'),
       ),
     );
   }

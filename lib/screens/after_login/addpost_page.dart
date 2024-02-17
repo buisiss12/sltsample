@@ -49,30 +49,33 @@ class AddPostPage extends HookConsumerWidget {
       }
     }
 
-    return Scaffold(
-      body: Column(
-        children: <Widget>[
-          const Text('希望地域'),
-          TextField(
-            onTap: () => Logics.show(context, selectedTodohuken),
-            controller:
-                TextEditingController(text: selectedTodohuken.value.join(', ')),
-            readOnly: true,
-          ),
-          const Text('募集内容'),
-          TextField(
-            onChanged: (value) {
-              postTitle.value = value;
-            },
-          ),
-          ElevatedButton(
-            onPressed:
-                postTitle.value.isNotEmpty && selectedTodohuken.value.isNotEmpty
-                    ? addPost
-                    : null,
-            child: const Text('投稿する'),
-          ),
-        ],
+    return GestureDetector(
+      onTap: () => primaryFocus?.unfocus(),
+      child: Scaffold(
+        body: Column(
+          children: <Widget>[
+            const Text('希望地域'),
+            TextField(
+              onTap: () => Logics.show(context, selectedTodohuken),
+              controller: TextEditingController(
+                  text: selectedTodohuken.value.join(', ')),
+              readOnly: true,
+            ),
+            const Text('募集内容'),
+            TextField(
+              onChanged: (value) {
+                postTitle.value = value;
+              },
+            ),
+            ElevatedButton(
+              onPressed: postTitle.value.isNotEmpty &&
+                      selectedTodohuken.value.isNotEmpty
+                  ? addPost
+                  : null,
+              child: const Text('投稿する'),
+            ),
+          ],
+        ),
       ),
     );
   }

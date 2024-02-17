@@ -42,23 +42,20 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final auth = ref.watch(firebaseAuthProvider);
 
-    return GestureDetector(
-      onTap: () => primaryFocus?.unfocus(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'solotteサンプル',
-        theme: ThemeData.dark(),
-        home: StreamBuilder<User?>(
-          stream: auth.authStateChanges(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData && snapshot.data != null) {
-              print("ユーザーがログインしました");
-              return const SolottePage();
-            }
-            print("ユーザーはログアウト状態です");
-            return const LoginPage();
-          },
-        ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'solotteサンプル',
+      theme: ThemeData.dark(),
+      home: StreamBuilder<User?>(
+        stream: auth.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData && snapshot.data != null) {
+            print("ユーザーがログインしました");
+            return const SolottePage();
+          }
+          print("ユーザーはログアウト状態です");
+          return const LoginPage();
+        },
       ),
     );
   }

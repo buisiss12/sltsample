@@ -46,88 +46,92 @@ class ChatPage extends HookConsumerWidget {
       );
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Chat"),
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: StreamBuilder<List<ChatModel>>(
-              stream: chatService.getMessages(currentUserUID, receiverUID),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  if (snapshot.hasData) {
-                    // メッセージが来たとき、最下部にスクロール
-                    if (scrollController.hasClients) {
-                      scrollController.animateTo(
-                        scrollController.position.maxScrollExtent,
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeOut,
-                      );
-                    }
+    return GestureDetector(
+      onTap: () => primaryFocus?.unfocus(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text("Chat"),
+        ),
+        body: Column(
+          children: [
+            Expanded(
+              child: StreamBuilder<List<ChatModel>>(
+                stream: chatService.getMessages(currentUserUID, receiverUID),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
                   }
-                });
-                final messages = snapshot.data ?? [];
-                return ListView.builder(
-                  controller: scrollController,
-                  itemCount: messages.length,
-                  itemBuilder: (context, index) {
-                    final message = messages[index];
-                    final bool isMe = message.senderUID == currentUserUID;
-                    return Container(
-                      alignment:
-                          isMe ? Alignment.centerRight : Alignment.centerLeft,
-                      child: Container(
-                        padding: const EdgeInsets.all(8),
-                        margin: const EdgeInsets.symmetric(
-                            vertical: 4, horizontal: 8),
-                        decoration: BoxDecoration(
-                          color: isMe ? Colors.blue : Colors.grey[300],
-                          borderRadius: BorderRadius.circular(10),
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    if (snapshot.hasData) {
+                      // メッセージが来たとき、最下部にスクロール
+                      if (scrollController.hasClients) {
+                        scrollController.animateTo(
+                          scrollController.position.maxScrollExtent,
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeOut,
+                        );
+                      }
+                    }
+                  });
+                  final messages = snapshot.data ?? [];
+                  return ListView.builder(
+                    controller: scrollController,
+                    itemCount: messages.length,
+                    itemBuilder: (context, index) {
+                      final message = messages[index];
+                      final bool isMe = message.senderUID == currentUserUID;
+                      return Container(
+                        alignment:
+                            isMe ? Alignment.centerRight : Alignment.centerLeft,
+                        child: Container(
+                          padding: const EdgeInsets.all(8),
+                          margin: const EdgeInsets.symmetric(
+                              vertical: 4, horizontal: 8),
+                          decoration: BoxDecoration(
+                            color: isMe ? Colors.blue : Colors.grey[300],
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                message.text,
+                                style: TextStyle(
+                                    color: isMe ? Colors.white : Colors.black),
+                              ),
+                              Text(
+                                DateFormat('HH:mm').format(message.timestamp!),
+                                style: TextStyle(
+                                    color:
+                                        isMe ? Colors.white70 : Colors.black54,
+                                    fontSize: 10),
+                              ),
+                            ],
+                          ),
                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              message.text,
-                              style: TextStyle(
-                                  color: isMe ? Colors.white : Colors.black),
-                            ),
-                            Text(
-                              DateFormat('HH:mm').format(message.timestamp!),
-                              style: TextStyle(
-                                  color: isMe ? Colors.white70 : Colors.black54,
-                                  fontSize: 10),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                );
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              controller: chatText,
-              decoration: InputDecoration(
-                hintText: "メッセージを入力",
-                suffixIcon: IconButton(
-                  icon: const Icon(Icons.send),
-                  onPressed: sendMessage,
-                ),
-                border: const OutlineInputBorder(),
+                      );
+                    },
+                  );
+                },
               ),
-              onSubmitted: (_) => sendMessage(),
             ),
-          ),
-        ],
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                controller: chatText,
+                decoration: InputDecoration(
+                  hintText: "メッセージを入力",
+                  suffixIcon: IconButton(
+                    icon: const Icon(Icons.send),
+                    onPressed: sendMessage,
+                  ),
+                  border: const OutlineInputBorder(),
+                ),
+                onSubmitted: (_) => sendMessage(),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -18,98 +18,104 @@ class OldMemberPage extends ConsumerWidget {
 
     final store = ref.watch(storeProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('以前会員登録した方'),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const Text('会員ID(数字４桁以上)',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-              TextField(
-                decoration: const InputDecoration(
-                  hintText: '会員IDを入力',
-                  border: OutlineInputBorder(),
-                ),
-                keyboardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                onChanged: (value) {
-                  ref.read(userIdProvider.notifier).state = value;
-                },
-              ),
-              const SizedBox(height: 16),
-              const Text('性別', style: TextStyle(fontWeight: FontWeight.bold)),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: gender == '男性' ? Colors.blue : null,
-                    ),
-                    onPressed: () {
-                      ref.read(genderProvider.notifier).state = '男性';
-                    },
-                    child: const Text('男性'),
+    return GestureDetector(
+      onTap: () => primaryFocus?.unfocus(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('以前会員登録した方'),
+        ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                const Text('会員ID(数字４桁以上)',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+                TextField(
+                  decoration: const InputDecoration(
+                    hintText: '会員IDを入力',
+                    border: OutlineInputBorder(),
                   ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: gender == '女性' ? Colors.pink : null,
-                    ),
-                    onPressed: () {
-                      ref.read(genderProvider.notifier).state = '女性';
-                    },
-                    child: const Text('女性'),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              const Text('生年月日', style: TextStyle(fontWeight: FontWeight.bold)),
-              ElevatedButton(
-                onPressed: () =>
-                    Logics.selectBirthday(context, birthdayNotifier),
-                child: Text(
-                  birthday != null
-                      ? "${birthday.year}/${birthday.month}/${birthday.day}"
-                      : '日付を選択',
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  onChanged: (value) {
+                    ref.read(userIdProvider.notifier).state = value;
+                  },
                 ),
-              ),
-              const SizedBox(height: 16),
-              const Text('登録店舗', style: TextStyle(fontWeight: FontWeight.bold)),
-              ElevatedButton(
-                onPressed: () => _showPicker(context, ref),
-                child: Text(store),
-              ),
-              const SizedBox(height: 16),
-              /*ElevatedButton(
+                const SizedBox(height: 16),
+                const Text('性別', style: TextStyle(fontWeight: FontWeight.bold)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: gender == '男性' ? Colors.blue : null,
+                      ),
+                      onPressed: () {
+                        ref.read(genderProvider.notifier).state = '男性';
+                      },
+                      child: const Text('男性'),
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: gender == '女性' ? Colors.pink : null,
+                      ),
+                      onPressed: () {
+                        ref.read(genderProvider.notifier).state = '女性';
+                      },
+                      child: const Text('女性'),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                const Text('生年月日',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+                ElevatedButton(
+                  onPressed: () =>
+                      Logics.selectBirthday(context, birthdayNotifier),
+                  child: Text(
+                    birthday != null
+                        ? "${birthday.year}/${birthday.month}/${birthday.day}"
+                        : '日付を選択',
+                  ),
+                ),
+                const SizedBox(height: 16),
+                const Text('登録店舗',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+                ElevatedButton(
+                  onPressed: () => _showPicker(context, ref),
+                  child: Text(store),
+                ),
+                const SizedBox(height: 16),
+                /*ElevatedButton(
                   onPressed: _isResistrationButton ? _verifyPhone : null,
                   child: const Text('会員情報を引き継いで登録'),
                 ),*/
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(
-                    context,
-                    MaterialPageRoute(builder: (context) => const LoginPage()),
-                  );
-                },
-                child: const Text('ログイン'),
-              ),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const RegistrationPage()),
-                  );
-                },
-                child: const Text('新規会員登録'),
-              ),
-            ],
+                const SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginPage()),
+                    );
+                  },
+                  child: const Text('ログイン'),
+                ),
+                const SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const RegistrationPage()),
+                    );
+                  },
+                  child: const Text('新規会員登録'),
+                ),
+              ],
+            ),
           ),
         ),
       ),
