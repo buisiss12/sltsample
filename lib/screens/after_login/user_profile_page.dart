@@ -80,76 +80,71 @@ class EditUserProfilePage extends ConsumerWidget {
     final imagePicker = ImagePicker();
     final selectedImage = ref.watch(selectedProfileImageProvider);
 
-    return GestureDetector(
-      onTap: () => primaryFocus?.unfocus(),
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('プロフィール編集'),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            children: [
-              Consumer(
-                builder: (context, ref, child) {
-                  final selectedImage = ref.watch(selectedProfileImageProvider);
-                  return InkWell(
-                    onTap: () async {
-                      final pickedFile = await imagePicker.pickImage(
-                          source: ImageSource.gallery);
-                      if (pickedFile != null) {
-                        ref.read(selectedProfileImageProvider.notifier).state =
-                            File(pickedFile.path);
-                      }
-                    },
-                    child: CircleAvatar(
-                      radius: 40,
-                      backgroundImage: selectedImage != null
-                          ? FileImage(selectedImage)
-                          : (user.profileImageUrl.isNotEmpty
-                                  ? NetworkImage(user.profileImageUrl)
-                                  : const AssetImage(
-                                      'assets/images/profiledefault.png'))
-                              as ImageProvider,
-                    ),
-                  );
-                },
-              ),
-              TextField(
-                controller: nicknameController,
-                decoration: const InputDecoration(labelText: 'ニックネーム'),
-              ),
-              ElevatedButton(
-                onPressed: () async {
-                  String? imageUrl;
-                  if (selectedImage != null) {
-                    String fileName = 'profileImage_${user.userUID}.jpg';
-                    final fireStorage = ref.watch(firebaseStorageProvider);
-                    final storageRef = fireStorage
-                        .ref()
-                        .child('profileImages')
-                        .child(fileName);
-                    await storageRef.putFile(selectedImage);
-                    imageUrl = await storageRef.getDownloadURL();
-                  } else {
-                    imageUrl = user.profileImageUrl;
-                  }
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('プロフィール編集'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            Consumer(
+              builder: (context, ref, child) {
+                final selectedImage = ref.watch(selectedProfileImageProvider);
+                return InkWell(
+                  onTap: () async {
+                    final pickedFile = await imagePicker.pickImage(
+                        source: ImageSource.gallery);
+                    if (pickedFile != null) {
+                      ref.read(selectedProfileImageProvider.notifier).state =
+                          File(pickedFile.path);
+                    }
+                  },
+                  child: CircleAvatar(
+                    radius: 40,
+                    backgroundImage: selectedImage != null
+                        ? FileImage(selectedImage)
+                        : (user.profileImageUrl.isNotEmpty
+                                ? NetworkImage(user.profileImageUrl)
+                                : const AssetImage(
+                                    'assets/images/profiledefault.png'))
+                            as ImageProvider,
+                  ),
+                );
+              },
+            ),
+            TextField(
+              controller: nicknameController,
+              decoration: const InputDecoration(labelText: 'ニックネーム'),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                String? imageUrl;
+                if (selectedImage != null) {
+                  String fileName = 'profileImage_${user.userUID}.jpg';
+                  final fireStorage = ref.watch(firebaseStorageProvider);
+                  final storageRef =
+                      fireStorage.ref().child('profileImages').child(fileName);
+                  await storageRef.putFile(selectedImage);
+                  imageUrl = await storageRef.getDownloadURL();
+                } else {
+                  imageUrl = user.profileImageUrl;
+                }
 
-                  final updatedUser = user.copyWith(
-                    nickname: nicknameController.text,
-                    profileImageUrl: imageUrl,
-                  );
-                  await ref.read(userStateAPIProvider).createUser(updatedUser);
-                  ref.invalidate(userStateFutureProvider);
+                final updatedUser = user.copyWith(
+                  nickname: nicknameController.text,
+                  profileImageUrl: imageUrl,
+                );
+                await ref.read(userStateAPIProvider).createUser(updatedUser);
+                ref.invalidate(userStateFutureProvider);
 
-                  if (context.mounted) {
-                    Navigator.pop(context);
-                  }
-                },
-                child: const Text('保存'),
-              ),
-            ],
-          ),
+                if (context.mounted) {
+                  Navigator.pop(context);
+                }
+              },
+              child: const Text('保存'),
+            ),
+          ],
         ),
       ),
     );
