@@ -28,7 +28,7 @@ Future<void> main() async {
   );
 
   final token = await messaging.getToken();
-  print('🐯 FCM TOKEN: $token');
+  print('FCM TOKEN: $token');
 
   runApp(
     const ProviderScope(child: MyApp()),
