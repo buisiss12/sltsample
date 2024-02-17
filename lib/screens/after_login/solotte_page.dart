@@ -18,14 +18,14 @@ class SolottePage extends HookWidget {
     final pageController = usePageController();
 
     final labels = [
-      'ホーム',
+      '掲示板',
       'メッセージ',
       '投稿',
       'お知らせ',
       'プロフィール',
     ];
     final icons = [
-      Icons.home,
+      Icons.assignment,
       Icons.email,
       Icons.edit_note,
       Icons.notifications,

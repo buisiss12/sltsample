@@ -22,113 +22,109 @@ class LoginPage extends HookConsumerWidget {
     final passWord = ref.watch(passWordProvider);
     final hidePassword = useState<bool>(true);
 
-    return GestureDetector(
-      onTap: () => primaryFocus?.unfocus(),
-      child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const SizedBox(height: 70),
-                Image.asset('assets/images/1080x384solotte.png'),
-                const Text('ログイン',
-                    style:
-                        TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
-                const SizedBox(height: 16),
-                const Text('電話番号 または 会員ID',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-                TextField(
-                  decoration: const InputDecoration(
-                      labelText: '電話番号または会員IDを入力(ハイフンなし)'),
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  onChanged: (value) {
-                    ref.read(phoneNumberProvider.notifier).state = value;
-                  },
-                ),
-                const SizedBox(height: 16),
-                const Text('パスワード (数字6桁以上)',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-                TextField(
-                  decoration: InputDecoration(
-                    labelText: 'パスワードを入力',
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        hidePassword.value
-                            ? Icons.visibility_off
-                            : Icons.visibility,
-                      ),
-                      onPressed: () {
-                        hidePassword.value = !hidePassword.value;
-                      },
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              const SizedBox(height: 70),
+              Image.asset('assets/images/1080x384solotte.png'),
+              const Text('ログイン',
+                  style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 16),
+              const Text('電話番号 または 会員ID',
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+              TextField(
+                decoration:
+                    const InputDecoration(labelText: '電話番号または会員IDを入力(ハイフンなし)'),
+                keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                onChanged: (value) {
+                  ref.read(phoneNumberProvider.notifier).state = value;
+                },
+              ),
+              const SizedBox(height: 16),
+              const Text('パスワード (数字6桁以上)',
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+              TextField(
+                decoration: InputDecoration(
+                  labelText: 'パスワードを入力',
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      hidePassword.value
+                          ? Icons.visibility_off
+                          : Icons.visibility,
                     ),
+                    onPressed: () {
+                      hidePassword.value = !hidePassword.value;
+                    },
                   ),
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  obscureText: hidePassword.value,
-                  onChanged: (value) {
-                    ref.read(passWordProvider.notifier).state = value;
-                  },
                 ),
-                const SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: phoneNumber.isNotEmpty && passWord.isNotEmpty
-                      ? () async {
-                          try {
-                            await auth.signInWithEmailAndPassword(
-                              email: '$phoneNumber@test.com',
-                              password: passWord,
-                            );
-                            print('ログイン成功');
+                keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                obscureText: hidePassword.value,
+                onChanged: (value) {
+                  ref.read(passWordProvider.notifier).state = value;
+                },
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: phoneNumber.isNotEmpty && passWord.isNotEmpty
+                    ? () async {
+                        try {
+                          await auth.signInWithEmailAndPassword(
+                            email: '$phoneNumber@test.com',
+                            password: passWord,
+                          );
+                          print('ログイン成功');
 
-                            if (context.mounted) {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const SolottePage()),
-                              );
-                            }
-                          } on FirebaseAuthException catch (e) {
-                            print('ログイン失敗: $e');
+                          if (context.mounted) {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const SolottePage()),
+                            );
                           }
+                        } on FirebaseAuthException catch (e) {
+                          print('ログイン失敗: $e');
                         }
-                      : null,
-                  child: const Text('ログイン'),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ForgetPwPage()),
-                    );
-                  },
-                  child: const Text('パスワードを忘れてしまった場合'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const RegistrationPage()),
-                    );
-                  },
-                  child: const Text('新規会員登録'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const OldMemberPage()),
-                    );
-                  },
-                  child: const Text('以前会員登録した方はこちら'),
-                ),
-              ],
-            ),
+                      }
+                    : null,
+                child: const Text('ログイン'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ForgetPwPage()),
+                  );
+                },
+                child: const Text('パスワードを忘れてしまった場合'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const RegistrationPage()),
+                  );
+                },
+                child: const Text('新規会員登録'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const OldMemberPage()),
+                  );
+                },
+                child: const Text('以前会員登録した方はこちら'),
+              ),
+            ],
           ),
         ),
       ),
