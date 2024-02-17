@@ -66,6 +66,13 @@ class UserStateAPI {
   }
 }
 
+final getPostedUserUIDProvider =
+    FutureProvider.family<UserModel, String>((ref, postedUserUID) async {
+  final firestore = ref.watch(firebaseFirestoreProvider);
+  final snapshot = await firestore.collection('users').doc(postedUserUID).get();
+  return UserModel.fromJson(snapshot.data()!);
+});
+
 final postsStreamProvider = StreamProvider.autoDispose<List<PostModel>>((ref) {
   final firestore = ref.watch(firebaseFirestoreProvider);
   return firestore

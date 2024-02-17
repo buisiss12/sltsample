@@ -1,9 +1,9 @@
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:intl/intl.dart';
 import 'package:sltsampleapp/models/chat_model.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:sltsampleapp/models/model.dart';
 import 'package:sltsampleapp/provider/provider.dart';
 
 class ChatPage extends HookConsumerWidget {
@@ -100,7 +100,7 @@ class ChatPage extends HookConsumerWidget {
                                     color: isMe ? Colors.white : Colors.black),
                               ),
                               Text(
-                                DateFormat('HH:mm').format(message.timestamp!),
+                                datetimeConverter(message.timestamp!),
                                 style: TextStyle(
                                     color:
                                         isMe ? Colors.white70 : Colors.black54,

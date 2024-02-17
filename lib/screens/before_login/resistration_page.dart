@@ -18,6 +18,7 @@ class RegistrationPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final auth = ref.watch(firebaseAuthProvider);
+    final currentUser = auth.currentUser;
 
     final phoneNumber = ref.watch(phoneNumberProvider);
     final password = ref.watch(passWordProvider);
@@ -73,7 +74,7 @@ class RegistrationPage extends HookConsumerWidget {
             );
             if (birthday != null) {
               final userModel = UserModel(
-                userUID: auth.currentUser!.uid,
+                userUID: currentUser!.uid,
                 profileImageUrl: '',
                 realname: realName,
                 nickname: '',

@@ -1,16 +1,8 @@
 import 'package:sltsampleapp/models/model.dart';
-import 'package:sltsampleapp/models/user_model.dart';
 import 'package:sltsampleapp/screens/after_login/chat_page.dart';
 import '../../provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-final getPostedUserUIDProvider =
-    FutureProvider.family<UserModel, String>((ref, postedUserUID) async {
-  final firestore = ref.watch(firebaseFirestoreProvider);
-  final snapshot = await firestore.collection('users').doc(postedUserUID).get();
-  return UserModel.fromJson(snapshot.data()!);
-});
 
 class ViewPostPage extends HookConsumerWidget {
   const ViewPostPage({super.key});

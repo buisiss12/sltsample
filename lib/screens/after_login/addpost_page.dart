@@ -17,12 +17,13 @@ class AddPostPage extends HookConsumerWidget {
 
     Future<void> addPost() async {
       final auth = ref.watch(firebaseAuthProvider);
-      final user = auth.currentUser;
+      final currentUser = auth.currentUser;
       final firestore = ref.watch(firebaseFirestoreProvider);
-      if (user != null &&
+      if (currentUser != null &&
           postTitle.value.isNotEmpty &&
           selectedTodohuken.value.isNotEmpty) {
-        final userDoc = await firestore.collection('users').doc(user.uid).get();
+        final userDoc =
+            await firestore.collection('users').doc(currentUser.uid).get();
         final userNickname = userDoc.data()?['nickname'];
         if (userNickname == null || userNickname.isEmpty) {
           if (context.mounted) {
@@ -33,7 +34,7 @@ class AddPostPage extends HookConsumerWidget {
           return;
         }
         final postModel = PostModel(
-          postedUserUID: user.uid,
+          postedUserUID: currentUser.uid,
           todohuken: selectedTodohuken.value,
           posttitle: postTitle.value,
           timestamp: DateTime.now(),
