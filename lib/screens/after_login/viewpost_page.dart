@@ -41,8 +41,8 @@ class ViewPostPage extends HookConsumerWidget {
                       ? Image.asset('assets/images/profiledefault.png')
                       : null,
                 ),
-                loading: () => const CircularProgressIndicator(),
-                error: (e, st) => const Icon(Icons.error),
+                loading: () => const Center(child: CircularProgressIndicator()),
+                error: (e, st) => const Center(child: Icon(Icons.error)),
               ),
               title: getPostedUser.when(
                 data: (user) => Text(user.nickname),

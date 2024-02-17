@@ -24,9 +24,9 @@ class OldMemberPage extends ConsumerWidget {
         appBar: AppBar(
           title: const Text('以前会員登録した方'),
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[

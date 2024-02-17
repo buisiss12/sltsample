@@ -41,8 +41,9 @@ class MessageUsersPage extends HookConsumerWidget {
                         ? Image.asset('assets/images/profiledefault.png')
                         : null,
                   ),
-                  loading: () => const CircularProgressIndicator(),
-                  error: (_, __) => const Icon(Icons.error),
+                  loading: () =>
+                      const Center(child: CircularProgressIndicator()),
+                  error: (_, __) => const Center(child: Icon(Icons.error)),
                 ),
                 title: userDetailAsyncValue.when(
                   data: (user) => Text(user.nickname),
@@ -65,8 +66,8 @@ class MessageUsersPage extends HookConsumerWidget {
               );
             },
           ),
-          loading: () => const CircularProgressIndicator(),
-          error: (error, stack) => Text('Error: $error'),
+          loading: () => const Center(child: CircularProgressIndicator()),
+          error: (error, stack) => Center(child: Text('Error: $error')),
         ),
       ),
     );

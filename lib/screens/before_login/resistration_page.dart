@@ -103,9 +103,9 @@ class RegistrationPage extends HookConsumerWidget {
         appBar: AppBar(
           title: const Text('新規会員登録'),
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
