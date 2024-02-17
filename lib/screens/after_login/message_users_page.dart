@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sltsampleapp/models/model.dart';
 import 'package:sltsampleapp/provider/provider.dart';
+import 'package:sltsampleapp/screens/after_login/chat_page.dart';
 
 class MessageUsersPage extends HookConsumerWidget {
   const MessageUsersPage({Key? key}) : super(key: key);
@@ -47,7 +48,17 @@ class MessageUsersPage extends HookConsumerWidget {
               ),
               subtitle: Text(conversation.lastMessage),
               trailing: Text(elapsedTime),
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ChatPage(
+                      currentUserUID: currentUser.uid,
+                      receiverUID: userUID,
+                    ),
+                  ),
+                );
+              },
             );
           },
         ),

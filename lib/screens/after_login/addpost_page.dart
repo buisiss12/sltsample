@@ -22,6 +22,16 @@ class AddPostPage extends HookConsumerWidget {
       if (user != null &&
           postTitle.value.isNotEmpty &&
           selectedTodohuken.value.isNotEmpty) {
+        final userDoc = await firestore.collection('users').doc(user.uid).get();
+        final userNickname = userDoc.data()?['nickname'];
+        if (userNickname == null || userNickname.isEmpty) {
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('ニックネームを編集してください')),
+            );
+          }
+          return;
+        }
         final postModel = PostModel(
           postedUserUID: user.uid,
           todohuken: selectedTodohuken.value,
