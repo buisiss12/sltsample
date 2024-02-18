@@ -1,5 +1,5 @@
 import 'login_page.dart';
-import 'resistration_page.dart';
+import 'registration_page.dart';
 import '../../utils/utility.dart';
 import '../../provider/provider.dart';
 import 'package:flutter/material.dart';
@@ -87,11 +87,6 @@ class OldMemberPage extends ConsumerWidget {
                   onPressed: () => _showPicker(context, ref),
                   child: Text(store),
                 ),
-                const SizedBox(height: 16),
-                /*ElevatedButton(
-                  onPressed: _isResistrationButton ? _verifyPhone : null,
-                  child: const Text('会員情報を引き継いで登録'),
-                ),*/
                 const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () {

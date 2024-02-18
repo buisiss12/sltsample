@@ -18,7 +18,6 @@ class RegistrationPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final auth = ref.watch(firebaseAuthProvider);
-    final currentUser = auth.currentUser;
 
     final phoneNumber = ref.watch(phoneNumberProvider);
     final password = ref.watch(passWordProvider);
@@ -28,7 +27,7 @@ class RegistrationPage extends HookConsumerWidget {
     final birthday = ref.watch(birthdayProvider);
     final birthdayNotifier = ref.read(birthdayProvider.notifier);
 
-    Future<void> resistRation() async {
+    Future<void> registration() async {
       final phoneNumber = ref.read(phoneNumberProvider);
       final password = ref.read(passWordProvider);
       final realName = ref.read(realNameProvider);
@@ -74,10 +73,10 @@ class RegistrationPage extends HookConsumerWidget {
             );
             if (birthday != null) {
               final userModel = UserModel(
-                userUID: currentUser!.uid,
+                userUid: auth.currentUser!.uid,
                 profileImageUrl: '',
-                realname: realName,
-                nickname: '',
+                realName: realName,
+                nickName: '',
                 gender: gender,
                 birthday: birthday,
               );
@@ -210,7 +209,7 @@ class RegistrationPage extends HookConsumerWidget {
                           birthday != null &&
                           phoneNumber.isNotEmpty &&
                           password.isNotEmpty
-                      ? resistRation
+                      ? registration
                       : null,
                   child: const Text('会員登録'),
                 ),

@@ -7,10 +7,10 @@ part 'message_model.g.dart';
 @freezed
 class MessageModel with _$MessageModel {
   const factory MessageModel({
-    required String senderUID,
-    required String receiverUID,
+    required String senderUid,
+    required String receiverUid,
     required String text,
-    required String userUIDs,
+    required String userUid,
     DateTime? timestamp,
   }) = _MessageModel;
 

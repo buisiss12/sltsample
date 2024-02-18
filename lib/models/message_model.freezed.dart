@@ -20,10 +20,10 @@ MessageModel _$MessageModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$MessageModel {
-  String get senderUID => throw _privateConstructorUsedError;
-  String get receiverUID => throw _privateConstructorUsedError;
+  String get senderUid => throw _privateConstructorUsedError;
+  String get receiverUid => throw _privateConstructorUsedError;
   String get text => throw _privateConstructorUsedError;
-  String get userUIDs => throw _privateConstructorUsedError;
+  String get userUid => throw _privateConstructorUsedError;
   DateTime? get timestamp => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -39,10 +39,10 @@ abstract class $MessageModelCopyWith<$Res> {
       _$MessageModelCopyWithImpl<$Res, MessageModel>;
   @useResult
   $Res call(
-      {String senderUID,
-      String receiverUID,
+      {String senderUid,
+      String receiverUid,
       String text,
-      String userUIDs,
+      String userUid,
       DateTime? timestamp});
 }
 
@@ -59,28 +59,28 @@ class _$MessageModelCopyWithImpl<$Res, $Val extends MessageModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? senderUID = null,
-    Object? receiverUID = null,
+    Object? senderUid = null,
+    Object? receiverUid = null,
     Object? text = null,
-    Object? userUIDs = null,
+    Object? userUid = null,
     Object? timestamp = freezed,
   }) {
     return _then(_value.copyWith(
-      senderUID: null == senderUID
-          ? _value.senderUID
-          : senderUID // ignore: cast_nullable_to_non_nullable
+      senderUid: null == senderUid
+          ? _value.senderUid
+          : senderUid // ignore: cast_nullable_to_non_nullable
               as String,
-      receiverUID: null == receiverUID
-          ? _value.receiverUID
-          : receiverUID // ignore: cast_nullable_to_non_nullable
+      receiverUid: null == receiverUid
+          ? _value.receiverUid
+          : receiverUid // ignore: cast_nullable_to_non_nullable
               as String,
       text: null == text
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
-      userUIDs: null == userUIDs
-          ? _value.userUIDs
-          : userUIDs // ignore: cast_nullable_to_non_nullable
+      userUid: null == userUid
+          ? _value.userUid
+          : userUid // ignore: cast_nullable_to_non_nullable
               as String,
       timestamp: freezed == timestamp
           ? _value.timestamp
@@ -99,10 +99,10 @@ abstract class _$$MessageModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String senderUID,
-      String receiverUID,
+      {String senderUid,
+      String receiverUid,
       String text,
-      String userUIDs,
+      String userUid,
       DateTime? timestamp});
 }
 
@@ -117,28 +117,28 @@ class __$$MessageModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? senderUID = null,
-    Object? receiverUID = null,
+    Object? senderUid = null,
+    Object? receiverUid = null,
     Object? text = null,
-    Object? userUIDs = null,
+    Object? userUid = null,
     Object? timestamp = freezed,
   }) {
     return _then(_$MessageModelImpl(
-      senderUID: null == senderUID
-          ? _value.senderUID
-          : senderUID // ignore: cast_nullable_to_non_nullable
+      senderUid: null == senderUid
+          ? _value.senderUid
+          : senderUid // ignore: cast_nullable_to_non_nullable
               as String,
-      receiverUID: null == receiverUID
-          ? _value.receiverUID
-          : receiverUID // ignore: cast_nullable_to_non_nullable
+      receiverUid: null == receiverUid
+          ? _value.receiverUid
+          : receiverUid // ignore: cast_nullable_to_non_nullable
               as String,
       text: null == text
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
-      userUIDs: null == userUIDs
-          ? _value.userUIDs
-          : userUIDs // ignore: cast_nullable_to_non_nullable
+      userUid: null == userUid
+          ? _value.userUid
+          : userUid // ignore: cast_nullable_to_non_nullable
               as String,
       timestamp: freezed == timestamp
           ? _value.timestamp
@@ -152,29 +152,29 @@ class __$$MessageModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$MessageModelImpl with DiagnosticableTreeMixin implements _MessageModel {
   const _$MessageModelImpl(
-      {required this.senderUID,
-      required this.receiverUID,
+      {required this.senderUid,
+      required this.receiverUid,
       required this.text,
-      required this.userUIDs,
+      required this.userUid,
       this.timestamp});
 
   factory _$MessageModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$MessageModelImplFromJson(json);
 
   @override
-  final String senderUID;
+  final String senderUid;
   @override
-  final String receiverUID;
+  final String receiverUid;
   @override
   final String text;
   @override
-  final String userUIDs;
+  final String userUid;
   @override
   final DateTime? timestamp;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'MessageModel(senderUID: $senderUID, receiverUID: $receiverUID, text: $text, userUIDs: $userUIDs, timestamp: $timestamp)';
+    return 'MessageModel(senderUid: $senderUid, receiverUid: $receiverUid, text: $text, userUid: $userUid, timestamp: $timestamp)';
   }
 
   @override
@@ -182,10 +182,10 @@ class _$MessageModelImpl with DiagnosticableTreeMixin implements _MessageModel {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'MessageModel'))
-      ..add(DiagnosticsProperty('senderUID', senderUID))
-      ..add(DiagnosticsProperty('receiverUID', receiverUID))
+      ..add(DiagnosticsProperty('senderUid', senderUid))
+      ..add(DiagnosticsProperty('receiverUid', receiverUid))
       ..add(DiagnosticsProperty('text', text))
-      ..add(DiagnosticsProperty('userUIDs', userUIDs))
+      ..add(DiagnosticsProperty('userUid', userUid))
       ..add(DiagnosticsProperty('timestamp', timestamp));
   }
 
@@ -194,13 +194,12 @@ class _$MessageModelImpl with DiagnosticableTreeMixin implements _MessageModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$MessageModelImpl &&
-            (identical(other.senderUID, senderUID) ||
-                other.senderUID == senderUID) &&
-            (identical(other.receiverUID, receiverUID) ||
-                other.receiverUID == receiverUID) &&
+            (identical(other.senderUid, senderUid) ||
+                other.senderUid == senderUid) &&
+            (identical(other.receiverUid, receiverUid) ||
+                other.receiverUid == receiverUid) &&
             (identical(other.text, text) || other.text == text) &&
-            (identical(other.userUIDs, userUIDs) ||
-                other.userUIDs == userUIDs) &&
+            (identical(other.userUid, userUid) || other.userUid == userUid) &&
             (identical(other.timestamp, timestamp) ||
                 other.timestamp == timestamp));
   }
@@ -208,7 +207,7 @@ class _$MessageModelImpl with DiagnosticableTreeMixin implements _MessageModel {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, senderUID, receiverUID, text, userUIDs, timestamp);
+      runtimeType, senderUid, receiverUid, text, userUid, timestamp);
 
   @JsonKey(ignore: true)
   @override
@@ -226,23 +225,23 @@ class _$MessageModelImpl with DiagnosticableTreeMixin implements _MessageModel {
 
 abstract class _MessageModel implements MessageModel {
   const factory _MessageModel(
-      {required final String senderUID,
-      required final String receiverUID,
+      {required final String senderUid,
+      required final String receiverUid,
       required final String text,
-      required final String userUIDs,
+      required final String userUid,
       final DateTime? timestamp}) = _$MessageModelImpl;
 
   factory _MessageModel.fromJson(Map<String, dynamic> json) =
       _$MessageModelImpl.fromJson;
 
   @override
-  String get senderUID;
+  String get senderUid;
   @override
-  String get receiverUID;
+  String get receiverUid;
   @override
   String get text;
   @override
-  String get userUIDs;
+  String get userUid;
   @override
   DateTime? get timestamp;
   @override

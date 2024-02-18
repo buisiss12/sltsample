@@ -13,7 +13,7 @@ class AddPostPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final postTitle = useState('');
 
-    final selectedTodohuken = useState<List<String>>([]);
+    final selectedPrefecture = useState<List<String>>([]);
 
     Future<void> addPost() async {
       final auth = ref.watch(firebaseAuthProvider);
@@ -21,10 +21,10 @@ class AddPostPage extends HookConsumerWidget {
       final firestore = ref.watch(firebaseFirestoreProvider);
       if (currentUser != null &&
           postTitle.value.isNotEmpty &&
-          selectedTodohuken.value.isNotEmpty) {
+          selectedPrefecture.value.isNotEmpty) {
         final userDoc =
             await firestore.collection('users').doc(currentUser.uid).get();
-        final userNickname = userDoc.data()?['nickname'];
+        final userNickname = userDoc.data()?['nickName'];
         if (userNickname == null || userNickname.isEmpty) {
           if (context.mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -34,9 +34,9 @@ class AddPostPage extends HookConsumerWidget {
           return;
         }
         final postModel = PostModel(
-          postedUserUID: currentUser.uid,
-          todohuken: selectedTodohuken.value,
-          posttitle: postTitle.value,
+          postedUserUid: currentUser.uid,
+          prefecture: selectedPrefecture.value,
+          postTitle: postTitle.value,
           timestamp: DateTime.now(),
         );
 
@@ -59,10 +59,10 @@ class AddPostPage extends HookConsumerWidget {
             children: <Widget>[
               const Text('希望地域'),
               TextField(
-                onTap: () =>
-                    Utility.selectTodohukenDialog(context, selectedTodohuken),
+                onTap: () => Utility.selectedPrefectureDialog(
+                    context, selectedPrefecture),
                 controller: TextEditingController(
-                    text: selectedTodohuken.value.join(', ')),
+                    text: selectedPrefecture.value.join(', ')),
                 readOnly: true,
               ),
               const Text('募集内容'),
@@ -73,7 +73,7 @@ class AddPostPage extends HookConsumerWidget {
               ),
               ElevatedButton(
                 onPressed: postTitle.value.isNotEmpty &&
-                        selectedTodohuken.value.isNotEmpty
+                        selectedPrefecture.value.isNotEmpty
                     ? addPost
                     : null,
                 child: const Text('投稿する'),

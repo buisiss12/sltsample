@@ -8,10 +8,11 @@ part of 'post_model.dart';
 
 _$PostModelImpl _$$PostModelImplFromJson(Map<String, dynamic> json) =>
     _$PostModelImpl(
-      postedUserUID: json['postedUserUID'] as String,
-      posttitle: json['posttitle'] as String,
-      todohuken:
-          (json['todohuken'] as List<dynamic>).map((e) => e as String).toList(),
+      postedUserUid: json['postedUserUid'] as String,
+      postTitle: json['postTitle'] as String,
+      prefecture: (json['prefecture'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
       timestamp: json['timestamp'] == null
           ? null
           : DateTime.parse(json['timestamp'] as String),
@@ -19,8 +20,8 @@ _$PostModelImpl _$$PostModelImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$PostModelImplToJson(_$PostModelImpl instance) =>
     <String, dynamic>{
-      'postedUserUID': instance.postedUserUID,
-      'posttitle': instance.posttitle,
-      'todohuken': instance.todohuken,
+      'postedUserUid': instance.postedUserUid,
+      'postTitle': instance.postTitle,
+      'prefecture': instance.prefecture,
       'timestamp': instance.timestamp?.toIso8601String(),
     };

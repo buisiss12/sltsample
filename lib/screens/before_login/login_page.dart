@@ -2,7 +2,7 @@
 
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'resistration_page.dart';
+import 'registration_page.dart';
 import 'forgetpw_page.dart';
 import 'oldmember_page.dart';
 import '../after_login/solotte_page.dart';

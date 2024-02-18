@@ -9,8 +9,8 @@ part of 'recent_message_model.dart';
 _$RecentMessageModelImpl _$$RecentMessageModelImplFromJson(
         Map<String, dynamic> json) =>
     _$RecentMessageModelImpl(
-      userUIDs:
-          (json['userUIDs'] as List<dynamic>).map((e) => e as String).toList(),
+      userUid:
+          (json['userUid'] as List<dynamic>).map((e) => e as String).toList(),
       lastMessage: json['lastMessage'] as String,
       lastMessageTimestamp: json['lastMessageTimestamp'] == null
           ? null
@@ -20,7 +20,7 @@ _$RecentMessageModelImpl _$$RecentMessageModelImplFromJson(
 Map<String, dynamic> _$$RecentMessageModelImplToJson(
         _$RecentMessageModelImpl instance) =>
     <String, dynamic>{
-      'userUIDs': instance.userUIDs,
+      'userUid': instance.userUid,
       'lastMessage': instance.lastMessage,
       'lastMessageTimestamp': instance.lastMessageTimestamp?.toIso8601String(),
     };

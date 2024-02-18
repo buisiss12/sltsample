@@ -11,19 +11,12 @@ final firebaseAuthProvider = Provider((ref) => FirebaseAuth.instance);
 final firebaseFirestoreProvider = Provider((ref) => FirebaseFirestore.instance);
 final firebaseStorageProvider = Provider((ref) => FirebaseStorage.instance);
 
-// used in 'login_page.dart' 'resistration.dart'
 final phoneNumberProvider = StateProvider.autoDispose<String>((ref) => '');
 final passWordProvider = StateProvider.autoDispose<String>((ref) => '');
-
-// used in 'resistration.dart'
 final realNameProvider = StateProvider.autoDispose<String>((ref) => '');
 final genderProvider = StateProvider.autoDispose<String>((ref) => '');
 final birthdayProvider = StateProvider.autoDispose<DateTime?>((ref) => null);
-
-// used in 'forgetpw_page.dart'
 final memberNumberProvider = StateProvider.autoDispose<String>((ref) => '');
-
-// used id 'oldmember_resistration_page.dart'
 final userIdProvider = StateProvider<String>((ref) => '');
 final storeProvider = StateProvider<String>((ref) => '');
 
@@ -66,10 +59,10 @@ class UserStateAPI {
   }
 }
 
-final getPostedUserUIDProvider =
-    FutureProvider.family<UserModel, String>((ref, postedUserUID) async {
+final getPostedUserUidProvider =
+    FutureProvider.family<UserModel, String>((ref, postedUserUid) async {
   final firestore = ref.watch(firebaseFirestoreProvider);
-  final snapshot = await firestore.collection('users').doc(postedUserUID).get();
+  final snapshot = await firestore.collection('users').doc(postedUserUid).get();
   return UserModel.fromJson(snapshot.data()!);
 });
 
@@ -87,11 +80,11 @@ final postsStreamProvider = StreamProvider.autoDispose<List<PostModel>>((ref) {
 final selectedProfileImageProvider = StateProvider<File?>((ref) => null);
 
 final messageStreamProvider =
-    StreamProvider.family<List<RecentMessageModel>, String>((ref, userUID) {
+    StreamProvider.family<List<RecentMessageModel>, String>((ref, userUid) {
   final firestore = ref.watch(firebaseFirestoreProvider);
   return firestore
       .collection('conversations')
-      .where('userUIDs', arrayContains: userUID)
+      .where('userUid', arrayContains: userUid)
       .snapshots()
       .map((snapshot) => snapshot.docs
           .map((doc) => RecentMessageModel.fromJson(doc.data()))
@@ -99,9 +92,9 @@ final messageStreamProvider =
 });
 
 final userDetailProvider =
-    FutureProvider.family<UserModel, String>((ref, userUID) async {
+    FutureProvider.family<UserModel, String>((ref, userUid) async {
   final firestore = ref.read(firebaseFirestoreProvider);
-  final docSnapshot = await firestore.collection('users').doc(userUID).get();
+  final docSnapshot = await firestore.collection('users').doc(userUid).get();
   if (docSnapshot.exists) {
     return UserModel.fromJson(docSnapshot.data()!);
   }

@@ -8,20 +8,20 @@ part of 'user_model.dart';
 
 _$UserModelImpl _$$UserModelImplFromJson(Map<String, dynamic> json) =>
     _$UserModelImpl(
-      userUID: json['userUID'] as String,
+      userUid: json['userUid'] as String,
       profileImageUrl: json['profileImageUrl'] as String,
-      realname: json['realname'] as String,
-      nickname: json['nickname'] as String,
+      realName: json['realName'] as String,
+      nickName: json['nickName'] as String,
       gender: json['gender'] as String,
       birthday: DateTime.parse(json['birthday'] as String),
     );
 
 Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
     <String, dynamic>{
-      'userUID': instance.userUID,
+      'userUid': instance.userUid,
       'profileImageUrl': instance.profileImageUrl,
-      'realname': instance.realname,
-      'nickname': instance.nickname,
+      'realName': instance.realName,
+      'nickName': instance.nickName,
       'gender': instance.gender,
       'birthday': instance.birthday.toIso8601String(),
     };

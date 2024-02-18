@@ -49,7 +49,7 @@ class UserProfilePage extends ConsumerWidget {
                         ? Image.asset('assets/images/300x300defaultprofile.png')
                         : null,
                   ),
-                  Text('ニックネーム: ${user.nickname}'),
+                  Text('ニックネーム: ${user.nickName}'),
                   Text('性別: ${user.gender}'),
                   Text('年齢: $age'),
                 ],
@@ -75,7 +75,7 @@ class EditUserProfilePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final nicknameController = TextEditingController(text: user.nickname);
+    final nicknameController = TextEditingController(text: user.nickName);
 
     final imagePicker = ImagePicker();
     final selectedImage = ref.watch(selectedProfileImageProvider);
@@ -123,7 +123,7 @@ class EditUserProfilePage extends ConsumerWidget {
                 onPressed: () async {
                   String? imageUrl;
                   if (selectedImage != null) {
-                    String fileName = 'profileImage_${user.userUID}.jpg';
+                    String fileName = 'profileImage_${user.userUid}.jpg';
                     final fireStorage = ref.watch(firebaseStorageProvider);
                     final storageRef = fireStorage
                         .ref()
@@ -136,7 +136,7 @@ class EditUserProfilePage extends ConsumerWidget {
                   }
 
                   final updatedUser = user.copyWith(
-                    nickname: nicknameController.text,
+                    nickName: nicknameController.text,
                     profileImageUrl: imageUrl,
                   );
                   await ref.read(userStateAPIProvider).createUser(updatedUser);

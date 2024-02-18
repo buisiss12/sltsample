@@ -3,7 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 
 class Utility {
-  static const List<String> todohuken = [
+  static const List<String> prefecture = [
     '北海道',
     '青森県',
     '岩手県',
@@ -52,9 +52,9 @@ class Utility {
     '鹿児島県',
     '沖縄県',
   ];
-  static Future<void> selectTodohukenDialog(BuildContext context,
-      ValueNotifier<List<String>> selectedTodohuken) async {
-    final List<String> selectedValues = List.from(selectedTodohuken.value);
+  static Future<void> selectedPrefectureDialog(BuildContext context,
+      ValueNotifier<List<String>> selectedPrefecture) async {
+    final List<String> selectedValues = List.from(selectedPrefecture.value);
     await showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -62,7 +62,7 @@ class Utility {
           title: const Text('都道府県を選択'),
           content: SingleChildScrollView(
             child: ListBody(
-              children: todohuken.map((String prefecture) {
+              children: prefecture.map((String prefecture) {
                 return CheckboxListTile(
                   value: selectedValues.contains(prefecture),
                   title: Text(prefecture),
@@ -88,7 +88,7 @@ class Utility {
             TextButton(
               child: const Text('OK'),
               onPressed: () {
-                selectedTodohuken.value = selectedValues;
+                selectedPrefecture.value = selectedValues;
                 Navigator.of(context).pop();
               },
             ),
@@ -129,7 +129,7 @@ class Utility {
   }
 }
 
-String datetimeConverter(DateTime postTime) {
+String dateTimeConverter(DateTime postTime) {
   final currentTime = DateTime.now();
   final difference = currentTime.difference(postTime);
 

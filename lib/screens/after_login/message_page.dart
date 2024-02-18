@@ -7,13 +7,13 @@ import 'package:sltsampleapp/utils/utility.dart';
 import 'package:sltsampleapp/provider/provider.dart';
 
 class MessagePage extends HookConsumerWidget {
-  final String currentUserUID;
-  final String receiverUID;
+  final String currentUserUid;
+  final String receiverUid;
 
   const MessagePage({
     Key? key,
-    required this.currentUserUID,
-    required this.receiverUID,
+    required this.currentUserUid,
+    required this.receiverUid,
   }) : super(key: key);
 
   @override
@@ -25,14 +25,14 @@ class MessagePage extends HookConsumerWidget {
 
     void sendMessage() async {
       if (chatText.text.isEmpty) return;
-      List<String> ids = [currentUserUID, receiverUID]..sort();
+      List<String> ids = [currentUserUid, receiverUid]..sort();
       String chatId = ids.join("_");
 
       final chatModel = MessageModel(
-        senderUID: currentUserUID,
-        receiverUID: receiverUID,
+        senderUid: currentUserUid,
+        receiverUid: receiverUid,
         text: chatText.text,
-        userUIDs: chatId,
+        userUid: chatId,
         timestamp: DateTime.now(),
       );
       await chatService.sendMessage(chatModel);
@@ -56,7 +56,7 @@ class MessagePage extends HookConsumerWidget {
           children: [
             Expanded(
               child: StreamBuilder<List<MessageModel>>(
-                stream: chatService.getMessages(currentUserUID, receiverUID),
+                stream: chatService.getMessages(currentUserUid, receiverUid),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(child: CircularProgressIndicator());
@@ -79,7 +79,7 @@ class MessagePage extends HookConsumerWidget {
                     itemCount: messages.length,
                     itemBuilder: (context, index) {
                       final message = messages[index];
-                      final bool isMe = message.senderUID == currentUserUID;
+                      final bool isMe = message.senderUid == currentUserUid;
                       return Container(
                         alignment:
                             isMe ? Alignment.centerRight : Alignment.centerLeft,
@@ -100,7 +100,7 @@ class MessagePage extends HookConsumerWidget {
                                     color: isMe ? Colors.white : Colors.black),
                               ),
                               Text(
-                                datetimeConverter(message.timestamp!),
+                                dateTimeConverter(message.timestamp!),
                                 style: TextStyle(
                                     color:
                                         isMe ? Colors.white70 : Colors.black54,
@@ -143,14 +143,14 @@ class ChatService {
   ChatService(this.firestore);
 
   Future<void> sendMessage(MessageModel chatMessage) async {
-    List<String> ids = [chatMessage.senderUID, chatMessage.receiverUID]..sort();
+    List<String> ids = [chatMessage.senderUid, chatMessage.receiverUid]..sort();
     String chatId = ids.join("_");
     final conversationRef = firestore.collection('conversations').doc(chatId);
 
     final conversationSnapshot = await conversationRef.get();
     if (!conversationSnapshot.exists) {
       await conversationRef.set({
-        'userUIDs': [chatMessage.senderUID, chatMessage.receiverUID],
+        'userUid': [chatMessage.senderUid, chatMessage.receiverUid],
         'lastMessage': chatMessage.text,
         'lastMessageTimestamp': chatMessage.timestamp.toString(),
       });
@@ -163,8 +163,8 @@ class ChatService {
     await conversationRef.collection('messages').add(chatMessage.toJson());
   }
 
-  Stream<List<MessageModel>> getMessages(String senderUID, String receiverUID) {
-    List<String> ids = [senderUID, receiverUID]..sort();
+  Stream<List<MessageModel>> getMessages(String senderUid, String receiverUid) {
+    List<String> ids = [senderUid, receiverUid]..sort();
     String chatId = ids.join("_");
 
     return firestore

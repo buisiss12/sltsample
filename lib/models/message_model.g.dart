@@ -8,10 +8,10 @@ part of 'message_model.dart';
 
 _$MessageModelImpl _$$MessageModelImplFromJson(Map<String, dynamic> json) =>
     _$MessageModelImpl(
-      senderUID: json['senderUID'] as String,
-      receiverUID: json['receiverUID'] as String,
+      senderUid: json['senderUid'] as String,
+      receiverUid: json['receiverUid'] as String,
       text: json['text'] as String,
-      userUIDs: json['userUIDs'] as String,
+      userUid: json['userUid'] as String,
       timestamp: json['timestamp'] == null
           ? null
           : DateTime.parse(json['timestamp'] as String),
@@ -19,9 +19,9 @@ _$MessageModelImpl _$$MessageModelImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$MessageModelImplToJson(_$MessageModelImpl instance) =>
     <String, dynamic>{
-      'senderUID': instance.senderUID,
-      'receiverUID': instance.receiverUID,
+      'senderUid': instance.senderUid,
+      'receiverUid': instance.receiverUid,
       'text': instance.text,
-      'userUIDs': instance.userUIDs,
+      'userUid': instance.userUid,
       'timestamp': instance.timestamp?.toIso8601String(),
     };

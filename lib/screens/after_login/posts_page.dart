@@ -20,7 +20,7 @@ class PostsPage extends HookConsumerWidget {
           itemBuilder: (context, index) {
             final post = posts[index];
             final getPostedUser =
-                ref.watch(getPostedUserUIDProvider(post.postedUserUID));
+                ref.watch(getPostedUserUidProvider(post.postedUserUid));
 
             return ListTile(
               leading: getPostedUser.when(
@@ -37,19 +37,19 @@ class PostsPage extends HookConsumerWidget {
                 error: (e, st) => const Center(child: Icon(Icons.error)),
               ),
               title: getPostedUser.when(
-                data: (user) => Text(user.nickname),
+                data: (user) => Text(user.nickName),
                 loading: () => const SizedBox(),
                 error: (e, st) => const Text('ニックネームの取得に失敗しました'),
               ),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('希望エリア: ${post.todohuken}'),
-                  Text('投稿時間: ${datetimeConverter(post.timestamp!)}'),
-                  Text('本文: ${post.posttitle}'),
+                  Text('希望エリア: ${post.prefecture}'),
+                  Text('投稿時間: ${dateTimeConverter(post.timestamp!)}'),
+                  Text('本文: ${post.postTitle}'),
                 ],
               ),
-              trailing: currentUser?.uid != post.postedUserUID
+              trailing: currentUser?.uid != post.postedUserUid
                   ? IconButton(
                       icon: const Icon(Icons.email),
                       onPressed: () {
@@ -57,8 +57,8 @@ class PostsPage extends HookConsumerWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) => MessagePage(
-                              currentUserUID: currentUser!.uid,
-                              receiverUID: post.postedUserUID,
+                              currentUserUid: currentUser!.uid,
+                              receiverUid: post.postedUserUid,
                             ),
                           ),
                         );
