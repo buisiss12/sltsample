@@ -20,7 +20,7 @@ RecentMessageModel _$RecentMessageModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$RecentMessageModel {
-  List<String> get userUIDs => throw _privateConstructorUsedError;
+  List<String> get userUid => throw _privateConstructorUsedError; // 複数形でなく良い
   String get lastMessage => throw _privateConstructorUsedError;
   DateTime? get lastMessageTimestamp => throw _privateConstructorUsedError;
 
@@ -37,7 +37,7 @@ abstract class $RecentMessageModelCopyWith<$Res> {
       _$RecentMessageModelCopyWithImpl<$Res, RecentMessageModel>;
   @useResult
   $Res call(
-      {List<String> userUIDs,
+      {List<String> userUid,
       String lastMessage,
       DateTime? lastMessageTimestamp});
 }
@@ -55,14 +55,14 @@ class _$RecentMessageModelCopyWithImpl<$Res, $Val extends RecentMessageModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userUIDs = null,
+    Object? userUid = null,
     Object? lastMessage = null,
     Object? lastMessageTimestamp = freezed,
   }) {
     return _then(_value.copyWith(
-      userUIDs: null == userUIDs
-          ? _value.userUIDs
-          : userUIDs // ignore: cast_nullable_to_non_nullable
+      userUid: null == userUid
+          ? _value.userUid
+          : userUid // ignore: cast_nullable_to_non_nullable
               as List<String>,
       lastMessage: null == lastMessage
           ? _value.lastMessage
@@ -85,7 +85,7 @@ abstract class _$$RecentMessageModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<String> userUIDs,
+      {List<String> userUid,
       String lastMessage,
       DateTime? lastMessageTimestamp});
 }
@@ -101,14 +101,14 @@ class __$$RecentMessageModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userUIDs = null,
+    Object? userUid = null,
     Object? lastMessage = null,
     Object? lastMessageTimestamp = freezed,
   }) {
     return _then(_$RecentMessageModelImpl(
-      userUIDs: null == userUIDs
-          ? _value._userUIDs
-          : userUIDs // ignore: cast_nullable_to_non_nullable
+      userUid: null == userUid
+          ? _value._userUid
+          : userUid // ignore: cast_nullable_to_non_nullable
               as List<String>,
       lastMessage: null == lastMessage
           ? _value.lastMessage
@@ -128,22 +128,23 @@ class _$RecentMessageModelImpl
     with DiagnosticableTreeMixin
     implements _RecentMessageModel {
   const _$RecentMessageModelImpl(
-      {required final List<String> userUIDs,
+      {required final List<String> userUid,
       required this.lastMessage,
       this.lastMessageTimestamp})
-      : _userUIDs = userUIDs;
+      : _userUid = userUid;
 
   factory _$RecentMessageModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$RecentMessageModelImplFromJson(json);
 
-  final List<String> _userUIDs;
+  final List<String> _userUid;
   @override
-  List<String> get userUIDs {
-    if (_userUIDs is EqualUnmodifiableListView) return _userUIDs;
+  List<String> get userUid {
+    if (_userUid is EqualUnmodifiableListView) return _userUid;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_userUIDs);
+    return EqualUnmodifiableListView(_userUid);
   }
 
+// 複数形でなく良い
   @override
   final String lastMessage;
   @override
@@ -151,7 +152,7 @@ class _$RecentMessageModelImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'RecentMessageModel(userUIDs: $userUIDs, lastMessage: $lastMessage, lastMessageTimestamp: $lastMessageTimestamp)';
+    return 'RecentMessageModel(userUid: $userUid, lastMessage: $lastMessage, lastMessageTimestamp: $lastMessageTimestamp)';
   }
 
   @override
@@ -159,7 +160,7 @@ class _$RecentMessageModelImpl
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'RecentMessageModel'))
-      ..add(DiagnosticsProperty('userUIDs', userUIDs))
+      ..add(DiagnosticsProperty('userUid', userUid))
       ..add(DiagnosticsProperty('lastMessage', lastMessage))
       ..add(DiagnosticsProperty('lastMessageTimestamp', lastMessageTimestamp));
   }
@@ -169,7 +170,7 @@ class _$RecentMessageModelImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RecentMessageModelImpl &&
-            const DeepCollectionEquality().equals(other._userUIDs, _userUIDs) &&
+            const DeepCollectionEquality().equals(other._userUid, _userUid) &&
             (identical(other.lastMessage, lastMessage) ||
                 other.lastMessage == lastMessage) &&
             (identical(other.lastMessageTimestamp, lastMessageTimestamp) ||
@@ -180,7 +181,7 @@ class _$RecentMessageModelImpl
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(_userUIDs),
+      const DeepCollectionEquality().hash(_userUid),
       lastMessage,
       lastMessageTimestamp);
 
@@ -201,7 +202,7 @@ class _$RecentMessageModelImpl
 
 abstract class _RecentMessageModel implements RecentMessageModel {
   const factory _RecentMessageModel(
-      {required final List<String> userUIDs,
+      {required final List<String> userUid,
       required final String lastMessage,
       final DateTime? lastMessageTimestamp}) = _$RecentMessageModelImpl;
 
@@ -209,8 +210,8 @@ abstract class _RecentMessageModel implements RecentMessageModel {
       _$RecentMessageModelImpl.fromJson;
 
   @override
-  List<String> get userUIDs;
-  @override
+  List<String> get userUid;
+  @override // 複数形でなく良い
   String get lastMessage;
   @override
   DateTime? get lastMessageTimestamp;

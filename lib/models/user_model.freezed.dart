@@ -22,8 +22,8 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) {
 mixin _$UserModel {
   String get userUID => throw _privateConstructorUsedError;
   String get profileImageUrl => throw _privateConstructorUsedError;
-  String get realname => throw _privateConstructorUsedError;
-  String get nickname => throw _privateConstructorUsedError;
+  String get realName => throw _privateConstructorUsedError;
+  String get nickName => throw _privateConstructorUsedError;
   String get gender => throw _privateConstructorUsedError;
   DateTime get birthday => throw _privateConstructorUsedError;
 
@@ -41,8 +41,8 @@ abstract class $UserModelCopyWith<$Res> {
   $Res call(
       {String userUID,
       String profileImageUrl,
-      String realname,
-      String nickname,
+      String realName,
+      String nickName,
       String gender,
       DateTime birthday});
 }
@@ -62,8 +62,8 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
   $Res call({
     Object? userUID = null,
     Object? profileImageUrl = null,
-    Object? realname = null,
-    Object? nickname = null,
+    Object? realName = null,
+    Object? nickName = null,
     Object? gender = null,
     Object? birthday = null,
   }) {
@@ -76,13 +76,13 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.profileImageUrl
           : profileImageUrl // ignore: cast_nullable_to_non_nullable
               as String,
-      realname: null == realname
-          ? _value.realname
-          : realname // ignore: cast_nullable_to_non_nullable
+      realName: null == realName
+          ? _value.realName
+          : realName // ignore: cast_nullable_to_non_nullable
               as String,
-      nickname: null == nickname
-          ? _value.nickname
-          : nickname // ignore: cast_nullable_to_non_nullable
+      nickName: null == nickName
+          ? _value.nickName
+          : nickName // ignore: cast_nullable_to_non_nullable
               as String,
       gender: null == gender
           ? _value.gender
@@ -107,8 +107,8 @@ abstract class _$$UserModelImplCopyWith<$Res>
   $Res call(
       {String userUID,
       String profileImageUrl,
-      String realname,
-      String nickname,
+      String realName,
+      String nickName,
       String gender,
       DateTime birthday});
 }
@@ -126,8 +126,8 @@ class __$$UserModelImplCopyWithImpl<$Res>
   $Res call({
     Object? userUID = null,
     Object? profileImageUrl = null,
-    Object? realname = null,
-    Object? nickname = null,
+    Object? realName = null,
+    Object? nickName = null,
     Object? gender = null,
     Object? birthday = null,
   }) {
@@ -140,13 +140,13 @@ class __$$UserModelImplCopyWithImpl<$Res>
           ? _value.profileImageUrl
           : profileImageUrl // ignore: cast_nullable_to_non_nullable
               as String,
-      realname: null == realname
-          ? _value.realname
-          : realname // ignore: cast_nullable_to_non_nullable
+      realName: null == realName
+          ? _value.realName
+          : realName // ignore: cast_nullable_to_non_nullable
               as String,
-      nickname: null == nickname
-          ? _value.nickname
-          : nickname // ignore: cast_nullable_to_non_nullable
+      nickName: null == nickName
+          ? _value.nickName
+          : nickName // ignore: cast_nullable_to_non_nullable
               as String,
       gender: null == gender
           ? _value.gender
@@ -166,8 +166,8 @@ class _$UserModelImpl with DiagnosticableTreeMixin implements _UserModel {
   const _$UserModelImpl(
       {required this.userUID,
       required this.profileImageUrl,
-      required this.realname,
-      required this.nickname,
+      required this.realName,
+      required this.nickName,
       required this.gender,
       required this.birthday});
 
@@ -179,9 +179,9 @@ class _$UserModelImpl with DiagnosticableTreeMixin implements _UserModel {
   @override
   final String profileImageUrl;
   @override
-  final String realname;
+  final String realName;
   @override
-  final String nickname;
+  final String nickName;
   @override
   final String gender;
   @override
@@ -189,7 +189,7 @@ class _$UserModelImpl with DiagnosticableTreeMixin implements _UserModel {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'UserModel(userUID: $userUID, profileImageUrl: $profileImageUrl, realname: $realname, nickname: $nickname, gender: $gender, birthday: $birthday)';
+    return 'UserModel(userUID: $userUID, profileImageUrl: $profileImageUrl, realName: $realName, nickName: $nickName, gender: $gender, birthday: $birthday)';
   }
 
   @override
@@ -199,8 +199,8 @@ class _$UserModelImpl with DiagnosticableTreeMixin implements _UserModel {
       ..add(DiagnosticsProperty('type', 'UserModel'))
       ..add(DiagnosticsProperty('userUID', userUID))
       ..add(DiagnosticsProperty('profileImageUrl', profileImageUrl))
-      ..add(DiagnosticsProperty('realname', realname))
-      ..add(DiagnosticsProperty('nickname', nickname))
+      ..add(DiagnosticsProperty('realName', realName))
+      ..add(DiagnosticsProperty('nickName', nickName))
       ..add(DiagnosticsProperty('gender', gender))
       ..add(DiagnosticsProperty('birthday', birthday));
   }
@@ -213,10 +213,10 @@ class _$UserModelImpl with DiagnosticableTreeMixin implements _UserModel {
             (identical(other.userUID, userUID) || other.userUID == userUID) &&
             (identical(other.profileImageUrl, profileImageUrl) ||
                 other.profileImageUrl == profileImageUrl) &&
-            (identical(other.realname, realname) ||
-                other.realname == realname) &&
-            (identical(other.nickname, nickname) ||
-                other.nickname == nickname) &&
+            (identical(other.realName, realName) ||
+                other.realName == realName) &&
+            (identical(other.nickName, nickName) ||
+                other.nickName == nickName) &&
             (identical(other.gender, gender) || other.gender == gender) &&
             (identical(other.birthday, birthday) ||
                 other.birthday == birthday));
@@ -225,7 +225,7 @@ class _$UserModelImpl with DiagnosticableTreeMixin implements _UserModel {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, userUID, profileImageUrl,
-      realname, nickname, gender, birthday);
+      realName, nickName, gender, birthday);
 
   @JsonKey(ignore: true)
   @override
@@ -245,8 +245,8 @@ abstract class _UserModel implements UserModel {
   const factory _UserModel(
       {required final String userUID,
       required final String profileImageUrl,
-      required final String realname,
-      required final String nickname,
+      required final String realName,
+      required final String nickName,
       required final String gender,
       required final DateTime birthday}) = _$UserModelImpl;
 
@@ -258,9 +258,9 @@ abstract class _UserModel implements UserModel {
   @override
   String get profileImageUrl;
   @override
-  String get realname;
+  String get realName;
   @override
-  String get nickname;
+  String get nickName;
   @override
   String get gender;
   @override

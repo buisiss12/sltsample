@@ -21,8 +21,8 @@ PostModel _$PostModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$PostModel {
   String get postedUserUID => throw _privateConstructorUsedError;
-  String get posttitle => throw _privateConstructorUsedError;
-  List<String> get todohuken => throw _privateConstructorUsedError;
+  String get postTitle => throw _privateConstructorUsedError;
+  List<String> get prefecture => throw _privateConstructorUsedError;
   DateTime? get timestamp => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -38,8 +38,8 @@ abstract class $PostModelCopyWith<$Res> {
   @useResult
   $Res call(
       {String postedUserUID,
-      String posttitle,
-      List<String> todohuken,
+      String postTitle,
+      List<String> prefecture,
       DateTime? timestamp});
 }
 
@@ -57,8 +57,8 @@ class _$PostModelCopyWithImpl<$Res, $Val extends PostModel>
   @override
   $Res call({
     Object? postedUserUID = null,
-    Object? posttitle = null,
-    Object? todohuken = null,
+    Object? postTitle = null,
+    Object? prefecture = null,
     Object? timestamp = freezed,
   }) {
     return _then(_value.copyWith(
@@ -66,13 +66,13 @@ class _$PostModelCopyWithImpl<$Res, $Val extends PostModel>
           ? _value.postedUserUID
           : postedUserUID // ignore: cast_nullable_to_non_nullable
               as String,
-      posttitle: null == posttitle
-          ? _value.posttitle
-          : posttitle // ignore: cast_nullable_to_non_nullable
+      postTitle: null == postTitle
+          ? _value.postTitle
+          : postTitle // ignore: cast_nullable_to_non_nullable
               as String,
-      todohuken: null == todohuken
-          ? _value.todohuken
-          : todohuken // ignore: cast_nullable_to_non_nullable
+      prefecture: null == prefecture
+          ? _value.prefecture
+          : prefecture // ignore: cast_nullable_to_non_nullable
               as List<String>,
       timestamp: freezed == timestamp
           ? _value.timestamp
@@ -92,8 +92,8 @@ abstract class _$$PostModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {String postedUserUID,
-      String posttitle,
-      List<String> todohuken,
+      String postTitle,
+      List<String> prefecture,
       DateTime? timestamp});
 }
 
@@ -109,8 +109,8 @@ class __$$PostModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? postedUserUID = null,
-    Object? posttitle = null,
-    Object? todohuken = null,
+    Object? postTitle = null,
+    Object? prefecture = null,
     Object? timestamp = freezed,
   }) {
     return _then(_$PostModelImpl(
@@ -118,13 +118,13 @@ class __$$PostModelImplCopyWithImpl<$Res>
           ? _value.postedUserUID
           : postedUserUID // ignore: cast_nullable_to_non_nullable
               as String,
-      posttitle: null == posttitle
-          ? _value.posttitle
-          : posttitle // ignore: cast_nullable_to_non_nullable
+      postTitle: null == postTitle
+          ? _value.postTitle
+          : postTitle // ignore: cast_nullable_to_non_nullable
               as String,
-      todohuken: null == todohuken
-          ? _value._todohuken
-          : todohuken // ignore: cast_nullable_to_non_nullable
+      prefecture: null == prefecture
+          ? _value._prefecture
+          : prefecture // ignore: cast_nullable_to_non_nullable
               as List<String>,
       timestamp: freezed == timestamp
           ? _value.timestamp
@@ -139,10 +139,10 @@ class __$$PostModelImplCopyWithImpl<$Res>
 class _$PostModelImpl with DiagnosticableTreeMixin implements _PostModel {
   const _$PostModelImpl(
       {required this.postedUserUID,
-      required this.posttitle,
-      required final List<String> todohuken,
+      required this.postTitle,
+      required final List<String> prefecture,
       this.timestamp})
-      : _todohuken = todohuken;
+      : _prefecture = prefecture;
 
   factory _$PostModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$PostModelImplFromJson(json);
@@ -150,13 +150,13 @@ class _$PostModelImpl with DiagnosticableTreeMixin implements _PostModel {
   @override
   final String postedUserUID;
   @override
-  final String posttitle;
-  final List<String> _todohuken;
+  final String postTitle;
+  final List<String> _prefecture;
   @override
-  List<String> get todohuken {
-    if (_todohuken is EqualUnmodifiableListView) return _todohuken;
+  List<String> get prefecture {
+    if (_prefecture is EqualUnmodifiableListView) return _prefecture;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_todohuken);
+    return EqualUnmodifiableListView(_prefecture);
   }
 
   @override
@@ -164,7 +164,7 @@ class _$PostModelImpl with DiagnosticableTreeMixin implements _PostModel {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PostModel(postedUserUID: $postedUserUID, posttitle: $posttitle, todohuken: $todohuken, timestamp: $timestamp)';
+    return 'PostModel(postedUserUID: $postedUserUID, postTitle: $postTitle, prefecture: $prefecture, timestamp: $timestamp)';
   }
 
   @override
@@ -173,8 +173,8 @@ class _$PostModelImpl with DiagnosticableTreeMixin implements _PostModel {
     properties
       ..add(DiagnosticsProperty('type', 'PostModel'))
       ..add(DiagnosticsProperty('postedUserUID', postedUserUID))
-      ..add(DiagnosticsProperty('posttitle', posttitle))
-      ..add(DiagnosticsProperty('todohuken', todohuken))
+      ..add(DiagnosticsProperty('postTitle', postTitle))
+      ..add(DiagnosticsProperty('prefecture', prefecture))
       ..add(DiagnosticsProperty('timestamp', timestamp));
   }
 
@@ -185,18 +185,18 @@ class _$PostModelImpl with DiagnosticableTreeMixin implements _PostModel {
             other is _$PostModelImpl &&
             (identical(other.postedUserUID, postedUserUID) ||
                 other.postedUserUID == postedUserUID) &&
-            (identical(other.posttitle, posttitle) ||
-                other.posttitle == posttitle) &&
+            (identical(other.postTitle, postTitle) ||
+                other.postTitle == postTitle) &&
             const DeepCollectionEquality()
-                .equals(other._todohuken, _todohuken) &&
+                .equals(other._prefecture, _prefecture) &&
             (identical(other.timestamp, timestamp) ||
                 other.timestamp == timestamp));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, postedUserUID, posttitle,
-      const DeepCollectionEquality().hash(_todohuken), timestamp);
+  int get hashCode => Object.hash(runtimeType, postedUserUID, postTitle,
+      const DeepCollectionEquality().hash(_prefecture), timestamp);
 
   @JsonKey(ignore: true)
   @override
@@ -215,8 +215,8 @@ class _$PostModelImpl with DiagnosticableTreeMixin implements _PostModel {
 abstract class _PostModel implements PostModel {
   const factory _PostModel(
       {required final String postedUserUID,
-      required final String posttitle,
-      required final List<String> todohuken,
+      required final String postTitle,
+      required final List<String> prefecture,
       final DateTime? timestamp}) = _$PostModelImpl;
 
   factory _PostModel.fromJson(Map<String, dynamic> json) =
@@ -225,9 +225,9 @@ abstract class _PostModel implements PostModel {
   @override
   String get postedUserUID;
   @override
-  String get posttitle;
+  String get postTitle;
   @override
-  List<String> get todohuken;
+  List<String> get prefecture;
   @override
   DateTime? get timestamp;
   @override

@@ -3,14 +3,14 @@ import 'package:flutter/foundation.dart';
 
 part 'user_model.freezed.dart';
 part 'user_model.g.dart';
-
+// nameとつくところは、単語はつなげるときは、小文字、大文字の順番で繋げた方が良い。
 @freezed
 class UserModel with _$UserModel {
   const factory UserModel({
     required String userUID,
     required String profileImageUrl,
-    required String realname,
-    required String nickname,
+    required String realName,
+    required String nickName,
     required String gender,
     required DateTime birthday,
   }) = _UserModel;

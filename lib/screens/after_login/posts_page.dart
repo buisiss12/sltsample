@@ -37,16 +37,16 @@ class PostsPage extends HookConsumerWidget {
                 error: (e, st) => const Center(child: Icon(Icons.error)),
               ),
               title: getPostedUser.when(
-                data: (user) => Text(user.nickname),
+                data: (user) => Text(user.nickName),
                 loading: () => const SizedBox(),
                 error: (e, st) => const Text('ニックネームの取得に失敗しました'),
               ),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('希望エリア: ${post.todohuken}'),
-                  Text('投稿時間: ${datetimeConverter(post.timestamp!)}'),
-                  Text('本文: ${post.posttitle}'),
+                  Text('希望エリア: ${post.prefecture}'),
+                  Text('投稿時間: ${dateTimeConverter(post.timestamp!)}'),
+                  Text('本文: ${post.postTitle}'),
                 ],
               ),
               trailing: currentUser?.uid != post.postedUserUID

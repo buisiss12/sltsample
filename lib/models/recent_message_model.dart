@@ -7,7 +7,7 @@ part 'recent_message_model.g.dart';
 @freezed
 class RecentMessageModel with _$RecentMessageModel {
   const factory RecentMessageModel({
-    required List<String> userUIDs,
+    required List<String> userUid,// 複数形でなく良い
     required String lastMessage,
     DateTime? lastMessageTimestamp,
   }) = _RecentMessageModel;

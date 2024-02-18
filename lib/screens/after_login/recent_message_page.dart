@@ -21,13 +21,13 @@ class RecentMessagePage extends HookConsumerWidget {
             itemCount: conversations.length,
             itemBuilder: (context, index) {
               final conversation = conversations[index];
-              final userUID = conversation.userUIDs.firstWhere(
+              final userUID = conversation.userUid.firstWhere(
                   (uid) => uid != currentUser.uid,
                   orElse: () => currentUser.uid);
               final userDetailAsyncValue =
                   ref.watch(userDetailProvider(userUID));
 
-              final elapsedTime = datetimeConverter(
+              final elapsedTime = dateTimeConverter(
                   conversation.lastMessageTimestamp ?? DateTime.now());
 
               return ListTile(
@@ -46,7 +46,7 @@ class RecentMessagePage extends HookConsumerWidget {
                   error: (_, __) => const Center(child: Icon(Icons.error)),
                 ),
                 title: userDetailAsyncValue.when(
-                  data: (user) => Text(user.nickname),
+                  data: (user) => Text(user.nickName),
                   loading: () => const Text("Loading..."),
                   error: (_, __) => const Text("Error"),
                 ),
