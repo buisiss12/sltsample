@@ -26,11 +26,9 @@ class ForgetPwPage extends ConsumerWidget {
               const SizedBox(height: 16),
               const Text('会員ID', style: TextStyle(fontWeight: FontWeight.bold)),
               TextField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: '会員IDを入力',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5.0),
-                  ),
+                  border: OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -41,11 +39,9 @@ class ForgetPwPage extends ConsumerWidget {
               const SizedBox(height: 16),
               const Text('電話番号', style: TextStyle(fontWeight: FontWeight.bold)),
               TextField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: '電話番号を入力(ハイフンなし)',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5.0),
-                  ),
+                  border: OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
