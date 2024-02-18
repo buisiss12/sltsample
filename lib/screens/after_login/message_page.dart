@@ -1,16 +1,16 @@
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:sltsampleapp/models/chat_model.dart';
+import 'package:sltsampleapp/models/message_model.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:sltsampleapp/models/model.dart';
+import 'package:sltsampleapp/utils/utility.dart';
 import 'package:sltsampleapp/provider/provider.dart';
 
-class ChatPage extends HookConsumerWidget {
+class MessagePage extends HookConsumerWidget {
   final String currentUserUID;
   final String receiverUID;
 
-  const ChatPage({
+  const MessagePage({
     Key? key,
     required this.currentUserUID,
     required this.receiverUID,
@@ -28,7 +28,7 @@ class ChatPage extends HookConsumerWidget {
       List<String> ids = [currentUserUID, receiverUID]..sort();
       String chatId = ids.join("_");
 
-      final chatModel = ChatModel(
+      final chatModel = MessageModel(
         senderUID: currentUserUID,
         receiverUID: receiverUID,
         text: chatText.text,
@@ -55,7 +55,7 @@ class ChatPage extends HookConsumerWidget {
         body: Column(
           children: [
             Expanded(
-              child: StreamBuilder<List<ChatModel>>(
+              child: StreamBuilder<List<MessageModel>>(
                 stream: chatService.getMessages(currentUserUID, receiverUID),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
@@ -142,7 +142,7 @@ class ChatService {
 
   ChatService(this.firestore);
 
-  Future<void> sendMessage(ChatModel chatMessage) async {
+  Future<void> sendMessage(MessageModel chatMessage) async {
     List<String> ids = [chatMessage.senderUID, chatMessage.receiverUID]..sort();
     String chatId = ids.join("_");
     final conversationRef = firestore.collection('conversations').doc(chatId);
@@ -163,7 +163,7 @@ class ChatService {
     await conversationRef.collection('messages').add(chatMessage.toJson());
   }
 
-  Stream<List<ChatModel>> getMessages(String senderUID, String receiverUID) {
+  Stream<List<MessageModel>> getMessages(String senderUID, String receiverUID) {
     List<String> ids = [senderUID, receiverUID]..sort();
     String chatId = ids.join("_");
 
@@ -175,7 +175,7 @@ class ChatService {
         .snapshots()
         .map((snapshot) {
       return snapshot.docs
-          .map((doc) => ChatModel.fromJson(doc.data()))
+          .map((doc) => MessageModel.fromJson(doc.data()))
           .toList();
     });
   }

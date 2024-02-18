@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sltsampleapp/models/conversation_model.dart';
+import 'package:sltsampleapp/models/recent_message_model.dart';
 import 'package:sltsampleapp/models/post_model.dart';
 import 'package:sltsampleapp/models/user_model.dart';
 
@@ -87,14 +87,14 @@ final postsStreamProvider = StreamProvider.autoDispose<List<PostModel>>((ref) {
 final selectedProfileImageProvider = StateProvider<File?>((ref) => null);
 
 final messageStreamProvider =
-    StreamProvider.family<List<ConversationModel>, String>((ref, userUID) {
+    StreamProvider.family<List<RecentMessageModel>, String>((ref, userUID) {
   final firestore = ref.watch(firebaseFirestoreProvider);
   return firestore
       .collection('conversations')
       .where('userUIDs', arrayContains: userUID)
       .snapshots()
       .map((snapshot) => snapshot.docs
-          .map((doc) => ConversationModel.fromJson(doc.data()))
+          .map((doc) => RecentMessageModel.fromJson(doc.data()))
           .toList());
 });
 

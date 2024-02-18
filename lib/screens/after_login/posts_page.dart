@@ -1,11 +1,11 @@
-import 'package:sltsampleapp/models/model.dart';
-import 'package:sltsampleapp/screens/after_login/chat_page.dart';
+import 'package:sltsampleapp/utils/utility.dart';
+import 'package:sltsampleapp/screens/after_login/message_page.dart';
 import '../../provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class ViewPostPage extends HookConsumerWidget {
-  const ViewPostPage({super.key});
+class PostsPage extends HookConsumerWidget {
+  const PostsPage({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final auth = ref.watch(firebaseAuthProvider);
@@ -30,7 +30,7 @@ class ViewPostPage extends HookConsumerWidget {
                       ? NetworkImage(user.profileImageUrl)
                       : null,
                   child: user.profileImageUrl.isEmpty
-                      ? Image.asset('assets/images/profiledefault.png')
+                      ? Image.asset('assets/images/300x300defaultprofile.png')
                       : null,
                 ),
                 loading: () => const Center(child: CircularProgressIndicator()),
@@ -56,7 +56,7 @@ class ViewPostPage extends HookConsumerWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ChatPage(
+                            builder: (context) => MessagePage(
                               currentUserUID: currentUser!.uid,
                               receiverUID: post.postedUserUID,
                             ),

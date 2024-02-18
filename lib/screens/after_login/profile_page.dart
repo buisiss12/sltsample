@@ -1,5 +1,5 @@
 // ignore_for_file: avoid_print
-import 'package:sltsampleapp/models/model.dart';
+import 'package:sltsampleapp/utils/utility.dart';
 import 'package:sltsampleapp/models/user_model.dart';
 import '../../provider/provider.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +26,7 @@ class UserProfilePage extends ConsumerWidget {
           itemCount: userList.length,
           itemBuilder: (context, index) {
             final user = userList[index];
-            final age = Logics.birthdayToAge(user.birthday);
+            final age = Utility.birthdayToAge(user.birthday);
             return Card(
               child: Column(
                 children: [
@@ -46,7 +46,7 @@ class UserProfilePage extends ConsumerWidget {
                         ? NetworkImage(user.profileImageUrl)
                         : null,
                     child: user.profileImageUrl.isEmpty
-                        ? Image.asset('assets/images/profiledefault.png')
+                        ? Image.asset('assets/images/300x300defaultprofile.png')
                         : null,
                   ),
                   Text('ニックネーム: ${user.nickname}'),
@@ -109,7 +109,7 @@ class EditUserProfilePage extends ConsumerWidget {
                           : (user.profileImageUrl.isNotEmpty
                                   ? NetworkImage(user.profileImageUrl)
                                   : const AssetImage(
-                                      'assets/images/profiledefault.png'))
+                                      'assets/images/300x300defaultprofile.png'))
                               as ImageProvider,
                     ),
                   );

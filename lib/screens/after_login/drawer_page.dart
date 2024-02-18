@@ -6,8 +6,8 @@ import '../before_login/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class SettingsDrawer extends ConsumerWidget {
-  const SettingsDrawer({Key? key}) : super(key: key);
+class DrawerPage extends ConsumerWidget {
+  const DrawerPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -19,7 +19,7 @@ class SettingsDrawer extends ConsumerWidget {
         padding: EdgeInsets.zero,
         children: <Widget>[
           const SizedBox(
-            height: 100, // ここでヘッダーの高さを調整
+            height: 100,
             child: DrawerHeader(
               child: Center(
                 child: Text('設定'),

@@ -1,6 +1,6 @@
 import 'login_page.dart';
 import 'resistration_page.dart';
-import '../../models/model.dart';
+import '../../utils/utility.dart';
 import '../../provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -73,7 +73,7 @@ class OldMemberPage extends ConsumerWidget {
                     style: TextStyle(fontWeight: FontWeight.bold)),
                 ElevatedButton(
                   onPressed: () =>
-                      Logics.selectBirthday(context, birthdayNotifier),
+                      Utility.selectBirthday(context, birthdayNotifier),
                   child: Text(
                     birthday != null
                         ? "${birthday.year}/${birthday.month}/${birthday.day}"

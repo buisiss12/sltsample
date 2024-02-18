@@ -1,11 +1,11 @@
 // ignore_for_file: avoid_print
 
-import 'package:sltsampleapp/screens/after_login/message_users_page.dart';
+import 'recent_message_page.dart';
 import 'oriag_page.dart';
-import 'user_profile_page.dart';
-import 'viewpost_page.dart';
+import 'profile_page.dart';
+import 'posts_page.dart';
 import 'addpost_page.dart';
-import 'settings_drawer_page.dart';
+import 'drawer_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
@@ -33,8 +33,8 @@ class SolottePage extends HookWidget {
     ];
 
     final pages = [
-      const ViewPostPage(),
-      const MessageUsersPage(),
+      const PostsPage(),
+      const RecentMessagePage(),
       const AddPostPage(),
       const Center(child: Text('お知らせ Page')),
       const UserProfilePage(),
@@ -60,7 +60,7 @@ class SolottePage extends HookWidget {
         onPageChanged: (index) => selectedIndex.value = index,
         children: pages,
       ),
-      drawer: const SettingsDrawer(),
+      drawer: const DrawerPage(),
       bottomNavigationBar: NavigationBar(
         selectedIndex: selectedIndex.value,
         onDestinationSelected: (index) {

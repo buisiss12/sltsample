@@ -1,5 +1,5 @@
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:sltsampleapp/models/model.dart';
+import 'package:sltsampleapp/utils/utility.dart';
 import 'package:sltsampleapp/models/post_model.dart';
 import 'package:sltsampleapp/screens/after_login/solotte_page.dart';
 import '../../provider/provider.dart';
@@ -59,7 +59,8 @@ class AddPostPage extends HookConsumerWidget {
             children: <Widget>[
               const Text('希望地域'),
               TextField(
-                onTap: () => Logics.show(context, selectedTodohuken),
+                onTap: () =>
+                    Utility.selectTodohukenDialog(context, selectedTodohuken),
                 controller: TextEditingController(
                     text: selectedTodohuken.value.join(', ')),
                 readOnly: true,

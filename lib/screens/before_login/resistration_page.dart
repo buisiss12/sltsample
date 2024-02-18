@@ -4,8 +4,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:sltsampleapp/models/user_model.dart';
 import 'package:sltsampleapp/screens/after_login/solotte_page.dart';
 import 'login_page.dart';
-import 'oldmember_resistration_page.dart';
-import '../../models/model.dart';
+import 'oldmember_page.dart';
+import '../../utils/utility.dart';
 import '../../provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -153,7 +153,7 @@ class RegistrationPage extends HookConsumerWidget {
                     style: TextStyle(fontWeight: FontWeight.bold)),
                 ElevatedButton(
                   onPressed: () =>
-                      Logics.selectBirthday(context, birthdayNotifier),
+                      Utility.selectBirthday(context, birthdayNotifier),
                   child: Text(
                     birthday != null
                         ? "${birthday.year}/${birthday.month}/${birthday.day}"

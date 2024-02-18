@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'conversation_model.dart';
+part of 'recent_message_model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,27 +14,27 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-ConversationModel _$ConversationModelFromJson(Map<String, dynamic> json) {
-  return _ConversationModel.fromJson(json);
+RecentMessageModel _$RecentMessageModelFromJson(Map<String, dynamic> json) {
+  return _RecentMessageModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$ConversationModel {
+mixin _$RecentMessageModel {
   List<String> get userUIDs => throw _privateConstructorUsedError;
   String get lastMessage => throw _privateConstructorUsedError;
   DateTime? get lastMessageTimestamp => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ConversationModelCopyWith<ConversationModel> get copyWith =>
+  $RecentMessageModelCopyWith<RecentMessageModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ConversationModelCopyWith<$Res> {
-  factory $ConversationModelCopyWith(
-          ConversationModel value, $Res Function(ConversationModel) then) =
-      _$ConversationModelCopyWithImpl<$Res, ConversationModel>;
+abstract class $RecentMessageModelCopyWith<$Res> {
+  factory $RecentMessageModelCopyWith(
+          RecentMessageModel value, $Res Function(RecentMessageModel) then) =
+      _$RecentMessageModelCopyWithImpl<$Res, RecentMessageModel>;
   @useResult
   $Res call(
       {List<String> userUIDs,
@@ -43,9 +43,9 @@ abstract class $ConversationModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ConversationModelCopyWithImpl<$Res, $Val extends ConversationModel>
-    implements $ConversationModelCopyWith<$Res> {
-  _$ConversationModelCopyWithImpl(this._value, this._then);
+class _$RecentMessageModelCopyWithImpl<$Res, $Val extends RecentMessageModel>
+    implements $RecentMessageModelCopyWith<$Res> {
+  _$RecentMessageModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -77,11 +77,11 @@ class _$ConversationModelCopyWithImpl<$Res, $Val extends ConversationModel>
 }
 
 /// @nodoc
-abstract class _$$ConversationModelImplCopyWith<$Res>
-    implements $ConversationModelCopyWith<$Res> {
-  factory _$$ConversationModelImplCopyWith(_$ConversationModelImpl value,
-          $Res Function(_$ConversationModelImpl) then) =
-      __$$ConversationModelImplCopyWithImpl<$Res>;
+abstract class _$$RecentMessageModelImplCopyWith<$Res>
+    implements $RecentMessageModelCopyWith<$Res> {
+  factory _$$RecentMessageModelImplCopyWith(_$RecentMessageModelImpl value,
+          $Res Function(_$RecentMessageModelImpl) then) =
+      __$$RecentMessageModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -91,11 +91,11 @@ abstract class _$$ConversationModelImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$ConversationModelImplCopyWithImpl<$Res>
-    extends _$ConversationModelCopyWithImpl<$Res, _$ConversationModelImpl>
-    implements _$$ConversationModelImplCopyWith<$Res> {
-  __$$ConversationModelImplCopyWithImpl(_$ConversationModelImpl _value,
-      $Res Function(_$ConversationModelImpl) _then)
+class __$$RecentMessageModelImplCopyWithImpl<$Res>
+    extends _$RecentMessageModelCopyWithImpl<$Res, _$RecentMessageModelImpl>
+    implements _$$RecentMessageModelImplCopyWith<$Res> {
+  __$$RecentMessageModelImplCopyWithImpl(_$RecentMessageModelImpl _value,
+      $Res Function(_$RecentMessageModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -105,7 +105,7 @@ class __$$ConversationModelImplCopyWithImpl<$Res>
     Object? lastMessage = null,
     Object? lastMessageTimestamp = freezed,
   }) {
-    return _then(_$ConversationModelImpl(
+    return _then(_$RecentMessageModelImpl(
       userUIDs: null == userUIDs
           ? _value._userUIDs
           : userUIDs // ignore: cast_nullable_to_non_nullable
@@ -124,17 +124,17 @@ class __$$ConversationModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$ConversationModelImpl
+class _$RecentMessageModelImpl
     with DiagnosticableTreeMixin
-    implements _ConversationModel {
-  const _$ConversationModelImpl(
+    implements _RecentMessageModel {
+  const _$RecentMessageModelImpl(
       {required final List<String> userUIDs,
       required this.lastMessage,
       this.lastMessageTimestamp})
       : _userUIDs = userUIDs;
 
-  factory _$ConversationModelImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ConversationModelImplFromJson(json);
+  factory _$RecentMessageModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RecentMessageModelImplFromJson(json);
 
   final List<String> _userUIDs;
   @override
@@ -151,14 +151,14 @@ class _$ConversationModelImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ConversationModel(userUIDs: $userUIDs, lastMessage: $lastMessage, lastMessageTimestamp: $lastMessageTimestamp)';
+    return 'RecentMessageModel(userUIDs: $userUIDs, lastMessage: $lastMessage, lastMessageTimestamp: $lastMessageTimestamp)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'ConversationModel'))
+      ..add(DiagnosticsProperty('type', 'RecentMessageModel'))
       ..add(DiagnosticsProperty('userUIDs', userUIDs))
       ..add(DiagnosticsProperty('lastMessage', lastMessage))
       ..add(DiagnosticsProperty('lastMessageTimestamp', lastMessageTimestamp));
@@ -168,7 +168,7 @@ class _$ConversationModelImpl
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ConversationModelImpl &&
+            other is _$RecentMessageModelImpl &&
             const DeepCollectionEquality().equals(other._userUIDs, _userUIDs) &&
             (identical(other.lastMessage, lastMessage) ||
                 other.lastMessage == lastMessage) &&
@@ -187,26 +187,26 @@ class _$ConversationModelImpl
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$ConversationModelImplCopyWith<_$ConversationModelImpl> get copyWith =>
-      __$$ConversationModelImplCopyWithImpl<_$ConversationModelImpl>(
+  _$$RecentMessageModelImplCopyWith<_$RecentMessageModelImpl> get copyWith =>
+      __$$RecentMessageModelImplCopyWithImpl<_$RecentMessageModelImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$ConversationModelImplToJson(
+    return _$$RecentMessageModelImplToJson(
       this,
     );
   }
 }
 
-abstract class _ConversationModel implements ConversationModel {
-  const factory _ConversationModel(
+abstract class _RecentMessageModel implements RecentMessageModel {
+  const factory _RecentMessageModel(
       {required final List<String> userUIDs,
       required final String lastMessage,
-      final DateTime? lastMessageTimestamp}) = _$ConversationModelImpl;
+      final DateTime? lastMessageTimestamp}) = _$RecentMessageModelImpl;
 
-  factory _ConversationModel.fromJson(Map<String, dynamic> json) =
-      _$ConversationModelImpl.fromJson;
+  factory _RecentMessageModel.fromJson(Map<String, dynamic> json) =
+      _$RecentMessageModelImpl.fromJson;
 
   @override
   List<String> get userUIDs;
@@ -216,6 +216,6 @@ abstract class _ConversationModel implements ConversationModel {
   DateTime? get lastMessageTimestamp;
   @override
   @JsonKey(ignore: true)
-  _$$ConversationModelImplCopyWith<_$ConversationModelImpl> get copyWith =>
+  _$$RecentMessageModelImplCopyWith<_$RecentMessageModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

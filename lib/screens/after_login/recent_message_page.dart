@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sltsampleapp/models/model.dart';
+import 'package:sltsampleapp/utils/utility.dart';
 import 'package:sltsampleapp/provider/provider.dart';
-import 'package:sltsampleapp/screens/after_login/chat_page.dart';
+import 'package:sltsampleapp/screens/after_login/message_page.dart';
 
-class MessageUsersPage extends HookConsumerWidget {
-  const MessageUsersPage({Key? key}) : super(key: key);
+class RecentMessagePage extends HookConsumerWidget {
+  const RecentMessagePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -38,7 +38,7 @@ class MessageUsersPage extends HookConsumerWidget {
                         ? NetworkImage(user.profileImageUrl)
                         : null,
                     child: user.profileImageUrl.isEmpty
-                        ? Image.asset('assets/images/profiledefault.png')
+                        ? Image.asset('assets/images/300x300defaultprofile.png')
                         : null,
                   ),
                   loading: () =>
@@ -56,7 +56,7 @@ class MessageUsersPage extends HookConsumerWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ChatPage(
+                      builder: (context) => MessagePage(
                         currentUserUID: currentUser.uid,
                         receiverUID: userUID,
                       ),

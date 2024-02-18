@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 
-class Logics {
+class Utility {
   static const List<String> todohuken = [
     '北海道',
     '青森県',
@@ -52,7 +52,7 @@ class Logics {
     '鹿児島県',
     '沖縄県',
   ];
-  static Future<void> show(BuildContext context,
+  static Future<void> selectTodohukenDialog(BuildContext context,
       ValueNotifier<List<String>> selectedTodohuken) async {
     final List<String> selectedValues = List.from(selectedTodohuken.value);
     await showDialog(
