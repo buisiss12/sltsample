@@ -2,12 +2,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 import 'login_page.dart';
 import 'registration_page.dart';
-import '../../utils/utility.dart';
-import '../../provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-// import 'package:flutter_picker/flutter_picker.dart';
 
 // このページは現在ロジックは未実装、UIのみ実装
 
@@ -17,8 +14,6 @@ class OldMemberPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final gender = useState<String>('');
-    final birthday = ref.watch(birthdayProvider);
-    final birthdayNotifier = ref.read(birthdayProvider.notifier);
 
     //final store = ref.watch(storeProvider);
 
@@ -70,15 +65,15 @@ class OldMemberPage extends HookConsumerWidget {
                 const SizedBox(height: 16),
                 const Text('生年月日',
                     style: TextStyle(fontWeight: FontWeight.bold)),
-                ElevatedButton(
-                  onPressed: () =>
-                      Utility.selectBirthday(context, birthdayNotifier),
-                  child: Text(
-                    birthday != null
-                        ? "${birthday.year}/${birthday.month}/${birthday.day}"
-                        : '日付を選択',
-                  ),
-                ),
+                // ElevatedButton(
+                //   onPressed: () =>
+                //       Utility.selectBirthday(context, birthdayNotifier),
+                //   child: Text(
+                //     birthday != null
+                //         ? "${birthday.year}/${birthday.month}/${birthday.day}"
+                //         : '日付を選択',
+                //   ),
+                // ),
                 const SizedBox(height: 16),
                 const Text('登録店舗',
                     style: TextStyle(fontWeight: FontWeight.bold)),

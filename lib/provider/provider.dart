@@ -11,8 +11,6 @@ final firebaseAuthProvider = Provider((ref) => FirebaseAuth.instance);
 final firebaseFirestoreProvider = Provider((ref) => FirebaseFirestore.instance);
 final firebaseStorageProvider = Provider((ref) => FirebaseStorage.instance);
 
-final birthdayProvider = StateProvider.autoDispose<DateTime?>((ref) => null);
-
 final userStateFutureProvider = FutureProvider<List<UserModel>>((ref) async {
   final userStateAPI = UserStateAPI(ref);
   return userStateAPI.fetchUsers();

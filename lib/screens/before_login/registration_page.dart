@@ -24,8 +24,7 @@ class RegistrationPage extends HookConsumerWidget {
     final hidePassword = useState<bool>(true);
     final realName = useState<String>('');
     final gender = useState<String>('');
-    final birthday = ref.watch(birthdayProvider);
-    final birthdayNotifier = ref.read(birthdayProvider.notifier);
+    final birthDay = useState<DateTime?>(null);
 
     Future<void> registration() async {
       await auth.verifyPhoneNumber(
@@ -67,14 +66,14 @@ class RegistrationPage extends HookConsumerWidget {
               email: "${phoneNumber.value}@test.com",
               password: passWord.value,
             );
-            if (birthday != null) {
+            if (birthDay.value != null) {
               final userModel = UserModel(
                 userUid: auth.currentUser!.uid,
                 profileImageUrl: '',
                 realName: realName.value,
                 nickName: '',
                 gender: gender.value,
-                birthday: birthday,
+                birthday: birthDay.value!,
               );
               await ref.read(userStateAPIProvider).createUser(userModel);
             }
@@ -143,12 +142,16 @@ class RegistrationPage extends HookConsumerWidget {
                 const Text('生年月日',
                     style: TextStyle(fontWeight: FontWeight.bold)),
                 ElevatedButton(
-                  onPressed: () =>
-                      Utility.selectBirthday(context, birthdayNotifier),
+                  onPressed: () {
+                    Utility().showDatePicker(
+                      context,
+                      (date) => birthDay.value = date,
+                    );
+                  },
                   child: Text(
-                    birthday != null
-                        ? "${birthday.year}/${birthday.month}/${birthday.day}"
-                        : '日付を選択',
+                    birthDay.value != null
+                        ? "${birthDay.value!.year}年${birthDay.value!.month}月${birthDay.value!.day}日"
+                        : "日付を選択",
                   ),
                 ),
                 const SizedBox(height: 16),
@@ -192,7 +195,7 @@ class RegistrationPage extends HookConsumerWidget {
                 ElevatedButton(
                   onPressed: realName.value.isNotEmpty &&
                           gender.value.isNotEmpty &&
-                          birthday != null &&
+                          birthDay.value != null &&
                           phoneNumber.value.isNotEmpty &&
                           passWord.value.isNotEmpty
                       ? registration
