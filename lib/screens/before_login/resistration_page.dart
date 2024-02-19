@@ -68,6 +68,9 @@ class RegistrationPage extends HookConsumerWidget {
               verificationId: verificationId, smsCode: smsCode);
           await auth.signInWithCredential(credential);
           try {
+            // こんな使い方は本来しない。Firebaseの提供している機能を使えていない。
+            // ドキュメントやチュートリアルを読んで、正しい使い方を学ぶべき。
+            // https://firebase.google.com/docs/auth/flutter/password-auth?hl=ja
             await auth.createUserWithEmailAndPassword(
               email: "$phoneNumber@test.com",
               password: password,

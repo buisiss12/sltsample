@@ -11,6 +11,9 @@ final firebaseAuthProvider = Provider((ref) => FirebaseAuth.instance);
 final firebaseFirestoreProvider = Provider((ref) => FirebaseFirestore.instance);
 final firebaseStorageProvider = Provider((ref) => FirebaseStorage.instance);
 
+// StateProviderは今後非推奨になるので使うべきでない。View側で使うなら。
+// View側での状態管理をするなら、setStateか、useStateを使うべき。
+
 // used in 'login_page.dart' 'resistration.dart'
 final phoneNumberProvider = StateProvider.autoDispose<String>((ref) => '');
 final passWordProvider = StateProvider.autoDispose<String>((ref) => '');

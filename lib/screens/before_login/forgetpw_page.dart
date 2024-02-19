@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+// パスワードのリセットのメールは登録したメールアドレスにしか来ない。
+// こんな方法は公式ドキュメントには存在しない。メールアドレス・パスワード認証でしか使えない。
+// https://firebase.google.com/docs/auth/flutter/manage-users?hl=ja#set_a_users_password
+
 class ForgetPwPage extends ConsumerWidget {
   const ForgetPwPage({super.key});
 

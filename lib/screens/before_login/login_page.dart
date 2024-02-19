@@ -72,6 +72,7 @@ class LoginPage extends HookConsumerWidget {
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   obscureText: hidePassword.value,
                   onChanged: (value) {
+                    // flutter_hooksが使えるなら、onChangedのところはuseStateで値は渡せる。
                     ref.read(passWordProvider.notifier).state = value;
                   },
                 ),
@@ -94,7 +95,16 @@ class LoginPage extends HookConsumerWidget {
                               );
                             }
                           } on FirebaseAuthException catch (e) {
-                            print('ログイン失敗: $e');
+                            // 不要なprint文は書くべきではない。現場では嫌がられる。
+                            // print('ログイン失敗: $e');
+                            /// [FirebaseAuthException] は、error messageを出さないなら書く必要ない!
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'ログイン失敗: ${e.message}',
+                                ),
+                              ),
+                            );
                           }
                         }
                       : null,
