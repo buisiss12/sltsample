@@ -84,7 +84,7 @@ class OldMemberPage extends ConsumerWidget {
                 const Text('登録店舗',
                     style: TextStyle(fontWeight: FontWeight.bold)),
                 ElevatedButton(
-                  onPressed: () => _showPicker(context, ref),
+                  onPressed: () => _selectStorePicker(context, ref),
                   child: Text(store),
                 ),
                 const SizedBox(height: 16),
@@ -117,7 +117,7 @@ class OldMemberPage extends ConsumerWidget {
     );
   }
 
-  void _showPicker(BuildContext context, WidgetRef ref) {
+  void _selectStorePicker(BuildContext context, WidgetRef ref) {
     Picker(
         adapter: PickerDataAdapter<String>(
           pickerData: [

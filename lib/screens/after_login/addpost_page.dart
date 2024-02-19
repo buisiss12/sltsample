@@ -59,14 +59,25 @@ class AddPostPage extends HookConsumerWidget {
             children: <Widget>[
               const Text('希望地域'),
               TextField(
-                onTap: () => Utility.selectedPrefectureDialog(
-                    context, selectedPrefecture),
+                decoration: const InputDecoration(
+                  hintText: '希望地域を選択',
+                  border: OutlineInputBorder(),
+                ),
                 controller: TextEditingController(
                     text: selectedPrefecture.value.join(', ')),
                 readOnly: true,
+                onTap: () => Utility.selectedPrefectureDialog(
+                    context, selectedPrefecture),
               ),
+              const SizedBox(height: 16),
               const Text('募集内容'),
               TextField(
+                decoration: const InputDecoration(
+                  hintText: '本文',
+                  border: OutlineInputBorder(),
+                ),
+                maxLines: null,
+                minLines: 4,
                 onChanged: (value) {
                   postTitle.value = value;
                 },
