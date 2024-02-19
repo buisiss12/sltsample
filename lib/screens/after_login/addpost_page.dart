@@ -27,9 +27,7 @@ class AddPostPage extends HookConsumerWidget {
         final userNickname = userDoc.data()?['nickName'];
         if (userNickname == null || userNickname.isEmpty) {
           if (context.mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('ニックネームを編集してください')),
-            );
+            Utility.showSnackBar(context, 'ニックネームを入力してください');
           }
           return;
         }

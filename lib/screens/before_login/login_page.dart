@@ -2,6 +2,7 @@
 
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sltsampleapp/utils/utility.dart';
 import 'registration_page.dart';
 import 'forgetpw_page.dart';
 import 'oldmember_page.dart';
@@ -90,13 +91,8 @@ class LoginPage extends HookConsumerWidget {
                             }
                           } on FirebaseAuthException catch (e) {
                             if (context.mounted) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                    'ログイン失敗: ${e.message}',
-                                  ),
-                                ),
-                              );
+                              Utility.showSnackBar(
+                                  context, 'ログイン失敗: ${e.message}');
                             }
                           }
                         }

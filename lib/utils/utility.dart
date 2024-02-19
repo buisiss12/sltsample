@@ -119,6 +119,11 @@ class Utility {
     }
     return age;
   }
+
+  static void showSnackBar(BuildContext context, String message) {
+    final snackBar = SnackBar(content: Text(message));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
 }
 
 String dateTimeConverter(DateTime postTime) {

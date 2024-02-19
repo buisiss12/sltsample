@@ -31,7 +31,7 @@ class RegistrationPage extends HookConsumerWidget {
         phoneNumber: "+81${phoneNumber.value}",
         verificationCompleted: (PhoneAuthCredential credential) async {},
         verificationFailed: (FirebaseAuthException e) {
-          print(e.message);
+          Utility.showSnackBar(context, '認証に失敗しました: ${e.message}');
         },
 //iOSの場合resendTokenは常にnull
         codeSent: (String verificationId, int? resendToken) async {
@@ -44,9 +44,7 @@ class RegistrationPage extends HookConsumerWidget {
                 content: const Text("SMS宛に届いた認証コードを入力してください"),
                 actions: <Widget>[
                   TextFormField(
-                    onChanged: (value) {
-                      smsCode = value;
-                    },
+                    onChanged: (value) => smsCode = value,
                     keyboardType: TextInputType.number,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   ),
@@ -85,7 +83,9 @@ class RegistrationPage extends HookConsumerWidget {
               );
             }
           } on FirebaseAuthException catch (e) {
-            print('登録失敗: $e');
+            if (context.mounted) {
+              Utility.showSnackBar(context, 'アカウント作成に失敗しました: ${e.message}');
+            }
           }
         },
         codeAutoRetrievalTimeout: (String verificationId) {},
