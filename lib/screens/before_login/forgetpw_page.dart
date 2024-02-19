@@ -1,4 +1,3 @@
-import '../../provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -35,9 +34,6 @@ class ForgetPwPage extends ConsumerWidget {
                 ),
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                onChanged: (value) {
-                  ref.read(memberNumberProvider.notifier).state = value;
-                },
               ),
               const SizedBox(height: 16),
               const Text('電話番号', style: TextStyle(fontWeight: FontWeight.bold)),

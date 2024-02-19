@@ -11,11 +11,7 @@ final firebaseAuthProvider = Provider((ref) => FirebaseAuth.instance);
 final firebaseFirestoreProvider = Provider((ref) => FirebaseFirestore.instance);
 final firebaseStorageProvider = Provider((ref) => FirebaseStorage.instance);
 
-final genderProvider = StateProvider.autoDispose<String>((ref) => '');
 final birthdayProvider = StateProvider.autoDispose<DateTime?>((ref) => null);
-final memberNumberProvider = StateProvider.autoDispose<String>((ref) => '');
-final userIdProvider = StateProvider<String>((ref) => '');
-final storeProvider = StateProvider<String>((ref) => '');
 
 final userStateFutureProvider = FutureProvider<List<UserModel>>((ref) async {
   final userStateAPI = UserStateAPI(ref);
