@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+// このページは現在ロジックは未実装、UIのみ実装
+// ロジックは電話番号宛に認証番号を送信し、成功した場合は新しいPWを再設定できる様にする
+
 class ForgetPwPage extends ConsumerWidget {
   const ForgetPwPage({super.key});
 
@@ -45,9 +48,6 @@ class ForgetPwPage extends ConsumerWidget {
                 ),
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                onChanged: (value) {
-                  ref.read(phoneNumberProvider.notifier).state = value;
-                },
               ),
               const SizedBox(height: 16),
               const Text(

@@ -19,21 +19,17 @@ class RegistrationPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final auth = ref.watch(firebaseAuthProvider);
 
-    final phoneNumber = ref.watch(phoneNumberProvider);
-    final password = ref.watch(passWordProvider);
+    final phoneNumber = useState<String>('');
+    final passWord = useState<String>('');
     final hidePassword = useState<bool>(true);
-    final realName = ref.watch(realNameProvider);
-    final gender = ref.watch(genderProvider);
+    final realName = useState<String>('');
+    final gender = useState<String>('');
     final birthday = ref.watch(birthdayProvider);
     final birthdayNotifier = ref.read(birthdayProvider.notifier);
 
     Future<void> registration() async {
-      final phoneNumber = ref.read(phoneNumberProvider);
-      final password = ref.read(passWordProvider);
-      final realName = ref.read(realNameProvider);
-
       await auth.verifyPhoneNumber(
-        phoneNumber: "+81$phoneNumber",
+        phoneNumber: "+81${phoneNumber.value}",
         verificationCompleted: (PhoneAuthCredential credential) async {},
         verificationFailed: (FirebaseAuthException e) {
           print(e.message);
@@ -68,16 +64,16 @@ class RegistrationPage extends HookConsumerWidget {
           await auth.signInWithCredential(credential);
           try {
             await auth.createUserWithEmailAndPassword(
-              email: "$phoneNumber@test.com",
-              password: password,
+              email: "${phoneNumber.value}@test.com",
+              password: passWord.value,
             );
             if (birthday != null) {
               final userModel = UserModel(
                 userUid: auth.currentUser!.uid,
                 profileImageUrl: '',
-                realName: realName,
+                realName: realName.value,
                 nickName: '',
-                gender: gender,
+                gender: gender.value,
                 birthday: birthday,
               );
               await ref.read(userStateAPIProvider).createUser(userModel);
@@ -117,9 +113,7 @@ class RegistrationPage extends HookConsumerWidget {
                     border: OutlineInputBorder(),
                   ),
                   keyboardType: TextInputType.multiline,
-                  onChanged: (value) {
-                    ref.read(realNameProvider.notifier).state = value;
-                  },
+                  onChanged: (value) => realName.value = value,
                 ),
                 const Text('*店舗での本人確認にのみ使用いたします。第三者には公開されません。'),
                 const SizedBox(height: 16),
@@ -129,20 +123,18 @@ class RegistrationPage extends HookConsumerWidget {
                   children: [
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: gender == '男性' ? Colors.blue : null,
+                        backgroundColor:
+                            gender.value == '男性' ? Colors.blue : null,
                       ),
-                      onPressed: () {
-                        ref.read(genderProvider.notifier).state = '男性';
-                      },
+                      onPressed: () => gender.value = '男性',
                       child: const Text('男性'),
                     ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: gender == '女性' ? Colors.pink : null,
+                        backgroundColor:
+                            gender.value == '女性' ? Colors.pink : null,
                       ),
-                      onPressed: () {
-                        ref.read(genderProvider.notifier).state = '女性';
-                      },
+                      onPressed: () => gender.value = '女性',
                       child: const Text('女性'),
                     ),
                   ],
@@ -169,9 +161,7 @@ class RegistrationPage extends HookConsumerWidget {
                   ),
                   keyboardType: TextInputType.number,
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  onChanged: (value) {
-                    ref.read(phoneNumberProvider.notifier).state = value;
-                  },
+                  onChanged: (value) => phoneNumber.value = value,
                 ),
                 const SizedBox(height: 16),
                 const Text('パスワード(数字6桁以上)',
@@ -186,17 +176,13 @@ class RegistrationPage extends HookConsumerWidget {
                             ? Icons.visibility_off
                             : Icons.visibility,
                       ),
-                      onPressed: () {
-                        hidePassword.value = !hidePassword.value;
-                      },
+                      onPressed: () => hidePassword.value = !hidePassword.value,
                     ),
                   ),
                   keyboardType: TextInputType.number,
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   obscureText: hidePassword.value,
-                  onChanged: (value) {
-                    ref.read(passWordProvider.notifier).state = value;
-                  },
+                  onChanged: (value) => passWord.value = value,
                 ),
                 const SizedBox(height: 16),
                 const Text('*オリエンタルラウンジ・ag入店時に身分証を確認させていただきます'),
@@ -204,11 +190,11 @@ class RegistrationPage extends HookConsumerWidget {
                 const Text('*「会員登録」のボタンを押すことにより、利用規約に同意したものとみなします。'),
                 const SizedBox(height: 16),
                 ElevatedButton(
-                  onPressed: realName.isNotEmpty &&
-                          gender.isNotEmpty &&
+                  onPressed: realName.value.isNotEmpty &&
+                          gender.value.isNotEmpty &&
                           birthday != null &&
-                          phoneNumber.isNotEmpty &&
-                          password.isNotEmpty
+                          phoneNumber.value.isNotEmpty &&
+                          passWord.value.isNotEmpty
                       ? registration
                       : null,
                   child: const Text('会員登録'),

@@ -7,6 +7,8 @@ import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_picker/flutter_picker.dart';
 
+// このページは現在ロジックは未実装、UIのみ実装
+
 class OldMemberPage extends ConsumerWidget {
   const OldMemberPage({super.key});
 

@@ -11,9 +11,6 @@ final firebaseAuthProvider = Provider((ref) => FirebaseAuth.instance);
 final firebaseFirestoreProvider = Provider((ref) => FirebaseFirestore.instance);
 final firebaseStorageProvider = Provider((ref) => FirebaseStorage.instance);
 
-final phoneNumberProvider = StateProvider.autoDispose<String>((ref) => '');
-final passWordProvider = StateProvider.autoDispose<String>((ref) => '');
-final realNameProvider = StateProvider.autoDispose<String>((ref) => '');
 final genderProvider = StateProvider.autoDispose<String>((ref) => '');
 final birthdayProvider = StateProvider.autoDispose<DateTime?>((ref) => null);
 final memberNumberProvider = StateProvider.autoDispose<String>((ref) => '');

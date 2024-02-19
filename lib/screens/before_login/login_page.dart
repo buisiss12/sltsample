@@ -18,8 +18,8 @@ class LoginPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final auth = ref.watch(firebaseAuthProvider);
 
-    final phoneNumber = ref.watch(phoneNumberProvider);
-    final passWord = ref.watch(passWordProvider);
+    final phoneNumber = useState<String>('');
+    final passWord = useState<String>('');
     final hidePassword = useState<bool>(true);
 
     return GestureDetector(
@@ -46,9 +46,7 @@ class LoginPage extends HookConsumerWidget {
                   ),
                   keyboardType: TextInputType.number,
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  onChanged: (value) {
-                    ref.read(phoneNumberProvider.notifier).state = value;
-                  },
+                  onChanged: (value) => phoneNumber.value = value,
                 ),
                 const SizedBox(height: 16),
                 const Text('パスワード (数字6桁以上)',
@@ -63,26 +61,23 @@ class LoginPage extends HookConsumerWidget {
                             ? Icons.visibility_off
                             : Icons.visibility,
                       ),
-                      onPressed: () {
-                        hidePassword.value = !hidePassword.value;
-                      },
+                      onPressed: () => hidePassword.value = !hidePassword.value,
                     ),
                   ),
                   keyboardType: TextInputType.number,
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   obscureText: hidePassword.value,
-                  onChanged: (value) {
-                    ref.read(passWordProvider.notifier).state = value;
-                  },
+                  onChanged: (value) => passWord.value = value,
                 ),
                 const SizedBox(height: 16),
                 ElevatedButton(
-                  onPressed: phoneNumber.isNotEmpty && passWord.isNotEmpty
+                  onPressed: phoneNumber.value.isNotEmpty &&
+                          passWord.value.isNotEmpty
                       ? () async {
                           try {
                             await auth.signInWithEmailAndPassword(
-                              email: '$phoneNumber@test.com',
-                              password: passWord,
+                              email: '${phoneNumber.value}@test.com',
+                              password: passWord.value,
                             );
                             print('ログイン成功');
 
@@ -94,7 +89,15 @@ class LoginPage extends HookConsumerWidget {
                               );
                             }
                           } on FirebaseAuthException catch (e) {
-                            print('ログイン失敗: $e');
+                            if (context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'ログイン失敗: ${e.message}',
+                                  ),
+                                ),
+                              );
+                            }
                           }
                         }
                       : null,
