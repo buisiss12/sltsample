@@ -41,7 +41,7 @@ class DrawerPage extends ConsumerWidget {
             onTap: () async {
               Navigator.of(context).pop();
               try {
-                await FirebaseAuth.instance.signOut();
+                await auth.signOut();
                 if (context.mounted) {
                   Navigator.pushReplacement(
                     context,

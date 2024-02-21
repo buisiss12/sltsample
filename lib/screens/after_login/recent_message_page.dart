@@ -13,27 +13,23 @@ class RecentMessagePage extends HookConsumerWidget {
     final currentUser = auth.currentUser;
     final messageStream = ref.watch(messageStreamProvider(currentUser!.uid));
 
-    return GestureDetector(
-      onTap: () => primaryFocus?.unfocus(),
-      child: Scaffold(
-        body: messageStream.when(
-          data: (conversations) => ListView.builder(
-            itemCount: conversations.length,
-            itemBuilder: (context, index) {
-              final conversation = conversations[index];
-              final userUid = conversation.userUid.firstWhere(
-                  (uid) => uid != currentUser.uid,
-                  orElse: () => currentUser.uid);
-              final userDetailAsyncValue =
-                  ref.watch(userDetailProvider(userUid));
+    return Scaffold(
+      body: messageStream.when(
+        data: (messages) => ListView.builder(
+          itemCount: messages.length,
+          itemBuilder: (context, index) {
+            final message = messages[index];
+            final otherUserUid =
+                message.userUid.firstWhere((uid) => uid != currentUser.uid);
+            final getOtherUserUid = ref.watch(userDetailProvider(otherUserUid));
+            final getTime = dateTimeConverter(
+                message.lastMessageTimestamp ?? DateTime.now());
 
-              final elapsedTime = dateTimeConverter(
-                  conversation.lastMessageTimestamp ?? DateTime.now());
-
-              return ListTile(
-                leading: userDetailAsyncValue.when(
-                  data: (user) => CircleAvatar(
-                    radius: 40,
+            return getOtherUserUid.when(
+              data: (user) => Card(
+                child: ListTile(
+                  leading: CircleAvatar(
+                    radius: 30,
                     backgroundImage: user.profileImageUrl.isNotEmpty
                         ? NetworkImage(user.profileImageUrl)
                         : null,
@@ -41,34 +37,29 @@ class RecentMessagePage extends HookConsumerWidget {
                         ? Image.asset('assets/images/300x300defaultprofile.png')
                         : null,
                   ),
-                  loading: () =>
-                      const Center(child: CircularProgressIndicator()),
-                  error: (_, __) => const Center(child: Icon(Icons.error)),
-                ),
-                title: userDetailAsyncValue.when(
-                  data: (user) => Text(user.nickName),
-                  loading: () => const Text("Loading..."),
-                  error: (_, __) => const Text("Error"),
-                ),
-                subtitle: Text(conversation.lastMessage),
-                trailing: Text(elapsedTime),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => MessagePage(
-                        currentUserUid: currentUser.uid,
-                        receiverUid: userUid,
+                  title: Text(user.nickName),
+                  subtitle: Text(message.lastMessage),
+                  trailing: Text(getTime),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MessagePage(
+                          currentUserUid: currentUser.uid,
+                          receiverUid: otherUserUid,
+                        ),
                       ),
-                    ),
-                  );
-                },
-              );
-            },
-          ),
-          loading: () => const Center(child: CircularProgressIndicator()),
-          error: (error, stack) => Center(child: Text('Error: $error')),
+                    );
+                  },
+                ),
+              ),
+              loading: () => const CircularProgressIndicator(),
+              error: (_, __) => const Text('Error loading user details'),
+            );
+          },
         ),
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (error, stack) => Center(child: Text('Error: $error')),
       ),
     );
   }

@@ -127,7 +127,6 @@ class MessagePage extends HookConsumerWidget {
                   ),
                   border: const OutlineInputBorder(),
                 ),
-                onSubmitted: (_) => sendMessage(),
               ),
             ),
           ],

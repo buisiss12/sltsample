@@ -1,3 +1,4 @@
+import 'package:sltsampleapp/models/user_model.dart';
 import 'package:sltsampleapp/utils/utility.dart';
 import 'package:sltsampleapp/screens/after_login/message_page.dart';
 import '../../provider/provider.dart';
@@ -10,6 +11,7 @@ class PostsPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final auth = ref.watch(firebaseAuthProvider);
     final currentUser = auth.currentUser;
+    final firestore = ref.watch(firebaseFirestoreProvider);
 
     final postsStream = ref.watch(postsStreamProvider);
 
@@ -19,57 +21,76 @@ class PostsPage extends HookConsumerWidget {
           itemCount: posts.length,
           itemBuilder: (context, index) {
             final post = posts[index];
-            final getPostedUser =
-                ref.watch(getPostedUserUidProvider(post.postedUserUid));
+            return FutureBuilder<UserModel>(
+              future:
+                  ref.read(getPostedUserUidProvider(post.postedUserUid).future),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done &&
+                    snapshot.hasData) {
+                  final user = snapshot.data!;
 
-            return ListTile(
-              leading: getPostedUser.when(
-                data: (user) => CircleAvatar(
-                  radius: 40,
-                  backgroundImage: user.profileImageUrl.isNotEmpty
-                      ? NetworkImage(user.profileImageUrl)
-                      : null,
-                  child: user.profileImageUrl.isEmpty
-                      ? Image.asset('assets/images/300x300defaultprofile.png')
-                      : null,
-                ),
-                loading: () => const Center(child: CircularProgressIndicator()),
-                error: (e, st) => const Center(child: Icon(Icons.error)),
-              ),
-              title: getPostedUser.when(
-                data: (user) => Text(user.nickName),
-                loading: () => const SizedBox(),
-                error: (e, st) => const Text('ニックネームの取得に失敗しました'),
-              ),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('希望エリア: ${post.prefecture}'),
-                  Text('投稿時間: ${dateTimeConverter(post.timestamp!)}'),
-                  Text('本文: ${post.postTitle}'),
-                ],
-              ),
-              trailing: currentUser?.uid != post.postedUserUid
-                  ? IconButton(
-                      icon: const Icon(Icons.email),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MessagePage(
-                              currentUserUid: currentUser!.uid,
-                              receiverUid: post.postedUserUid,
-                            ),
-                          ),
-                        );
-                      },
-                    )
-                  : null,
+                  return Card(
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        radius: 30,
+                        backgroundImage: user.profileImageUrl.isNotEmpty
+                            ? NetworkImage(user.profileImageUrl)
+                            : const AssetImage(
+                                    'assets/images/300x300defaultprofile.png')
+                                as ImageProvider,
+                      ),
+                      title: Text(user.nickName),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('希望エリア: ${post.prefecture}'),
+                          Text(dateTimeConverter(post.timestamp!)),
+                          Text('本文: ${post.postTitle}'),
+                        ],
+                      ),
+                      trailing: currentUser?.uid != post.postedUserUid
+                          ? IconButton(
+                              icon: const Icon(Icons.email),
+                              onPressed: () async {
+                                final userDoc = await firestore
+                                    .collection('users')
+                                    .doc(currentUser?.uid)
+                                    .get();
+                                final userNickname =
+                                    userDoc.data()?['nickName'];
+                                if (userNickname == null ||
+                                    userNickname.isEmpty) {
+                                  if (context.mounted) {
+                                    Utility.showSnackBar(
+                                        context, 'ニックネームを入力してください');
+                                  }
+                                  return;
+                                }
+                                if (context.mounted) {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => MessagePage(
+                                        currentUserUid: currentUser!.uid,
+                                        receiverUid: post.postedUserUid,
+                                      ),
+                                    ),
+                                  );
+                                }
+                              },
+                            )
+                          : null,
+                    ),
+                  );
+                } else {
+                  return const Center(child: CircularProgressIndicator());
+                }
+              },
             );
           },
         ),
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stac) => Center(child: Text('Error: $error')),
+        error: (error, stack) => Center(child: Text('Error: $error')),
       ),
     );
   }

@@ -44,10 +44,9 @@ class UserProfilePage extends ConsumerWidget {
                     radius: 40,
                     backgroundImage: user.profileImageUrl.isNotEmpty
                         ? NetworkImage(user.profileImageUrl)
-                        : null,
-                    child: user.profileImageUrl.isEmpty
-                        ? Image.asset('assets/images/300x300defaultprofile.png')
-                        : null,
+                        : const AssetImage(
+                                'assets/images/300x300defaultprofile.png')
+                            as ImageProvider,
                   ),
                   Text('ニックネーム: ${user.nickName}'),
                   Text('性別: ${user.gender}'),
