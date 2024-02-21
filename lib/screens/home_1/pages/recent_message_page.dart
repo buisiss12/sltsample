@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sltsampleapp/screens/home_1/pages/message_page.dart';
 import 'package:sltsampleapp/utils/utility.dart';
 import 'package:sltsampleapp/provider/provider.dart';
-import 'package:sltsampleapp/screens/after_login/message_page.dart';
 
 class RecentMessagePage extends HookConsumerWidget {
   const RecentMessagePage({Key? key}) : super(key: key);

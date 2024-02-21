@@ -2,7 +2,7 @@
 
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:sltsampleapp/models/user_model.dart';
-import 'package:sltsampleapp/screens/after_login/solotte_page.dart';
+import 'package:sltsampleapp/screens/home_1/solotte_page.dart';
 import 'login_page.dart';
 import 'oldmember_page.dart';
 import '../../utils/utility.dart';

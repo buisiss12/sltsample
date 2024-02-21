@@ -1,11 +1,11 @@
 // ignore_for_file: avoid_print
 
-import 'recent_message_page.dart';
-import 'oriag_page.dart';
-import 'profile_page.dart';
-import 'posts_page.dart';
-import 'addpost_page.dart';
-import 'drawer_page.dart';
+import 'package:sltsampleapp/screens/home_1/pages/addpost_page.dart';
+import 'package:sltsampleapp/screens/home_1/pages/drawer_page.dart';
+import 'package:sltsampleapp/screens/home_1/pages/posts_page.dart';
+import 'package:sltsampleapp/screens/home_1/pages/profile_page.dart';
+import 'package:sltsampleapp/screens/home_1/pages/recent_message_page.dart';
+import 'package:sltsampleapp/screens/home_2/oriag_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 

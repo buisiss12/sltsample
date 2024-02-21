@@ -1,7 +1,8 @@
 // ignore_for_file: avoid_print
 
+import 'package:sltsampleapp/screens/home_1/solotte_page.dart';
+
 import 'screens/before_login/login_page.dart';
-import 'screens/after_login/solotte_page.dart';
 import 'provider/provider.dart';
 import 'firebase_options/firebase_options.dart';
 import 'package:flutter/material.dart';

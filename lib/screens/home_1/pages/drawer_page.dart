@@ -2,7 +2,8 @@
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sltsampleapp/provider/provider.dart';
-import '../before_login/login_page.dart';
+import 'package:sltsampleapp/screens/before_login/login_page.dart';
+import 'package:sltsampleapp/utils/utility.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -49,7 +50,9 @@ class DrawerPage extends ConsumerWidget {
                   );
                 }
               } on FirebaseAuthException catch (e) {
-                print('ログアウト失敗: $e');
+                if (context.mounted) {
+                  Utility.showSnackBar(context, 'ログアウト失敗: ${e.message}');
+                }
               }
             },
           ),
@@ -107,7 +110,9 @@ class DrawerPage extends ConsumerWidget {
                   );
                 }
               } on FirebaseAuthException catch (e) {
-                print('アカウント削除失敗: $e');
+                if (context.mounted) {
+                  Utility.showSnackBar(context, 'アカウント削除失敗: ${e.message}');
+                }
               }
             },
           ),

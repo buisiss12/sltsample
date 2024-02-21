@@ -1,8 +1,8 @@
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:sltsampleapp/provider/provider.dart';
+import 'package:sltsampleapp/screens/home_1/solotte_page.dart';
 import 'package:sltsampleapp/utils/utility.dart';
 import 'package:sltsampleapp/models/post_model.dart';
-import 'package:sltsampleapp/screens/after_login/solotte_page.dart';
-import '../../provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

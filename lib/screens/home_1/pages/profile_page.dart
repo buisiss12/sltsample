@@ -1,7 +1,7 @@
 // ignore_for_file: avoid_print
+import 'package:sltsampleapp/provider/provider.dart';
 import 'package:sltsampleapp/utils/utility.dart';
 import 'package:sltsampleapp/models/user_model.dart';
-import '../../provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'dart:io';
