@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:sltsampleapp/screens/home_1/solotte_page.dart';
+import 'package:sltsampleapp/screens/home_2/pages/people_in_store_page.dart';
 
 class OriAgPage extends HookWidget {
   const OriAgPage({super.key});
@@ -41,7 +42,7 @@ class OriAgPage extends HookWidget {
           ],
         ),
       ),
-      const Center(child: Text('店内人数 Page')),
+      const PeopleInStorePage(),
       const Center(child: Text('チェックイン Page')),
       const Center(child: Text('メニュー Page')),
       const Center(child: Text('会計 Page')),
@@ -65,6 +66,7 @@ class OriAgPage extends HookWidget {
       body: PageView(
         controller: pageController,
         onPageChanged: (index) => selectedIndex.value = index,
+        physics: const NeverScrollableScrollPhysics(),
         children: pages,
       ),
       bottomNavigationBar: NavigationBar(
