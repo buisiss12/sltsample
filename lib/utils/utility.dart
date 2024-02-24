@@ -109,7 +109,7 @@ class Utility {
     );
   }
 
-  static birthdayToAge(DateTime birthday) {
+  static birthdayToAgeConverter(DateTime birthday) {
     DateTime currentDate = DateTime.now();
     int age = currentDate.year - birthday.year;
     if (currentDate.month < birthday.month ||

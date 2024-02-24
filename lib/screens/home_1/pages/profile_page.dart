@@ -26,7 +26,7 @@ class UserProfilePage extends ConsumerWidget {
           itemCount: userList.length,
           itemBuilder: (context, index) {
             final user = userList[index];
-            final age = Utility.birthdayToAge(user.birthday);
+            final age = Utility.birthdayToAgeConverter(user.birthday);
             return Card(
               child: Column(
                 children: [

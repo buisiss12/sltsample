@@ -1,14 +1,12 @@
 // ignore_for_file: avoid_print
 
 import 'package:sltsampleapp/screens/home_1/solotte_page.dart';
-
 import 'screens/before_login/login_page.dart';
 import 'provider/provider.dart';
 import 'firebase_options/firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 Future<void> main() async {
@@ -16,24 +14,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
-  final messaging = FirebaseMessaging.instance;
-  await messaging.requestPermission(
-    alert: true,
-    announcement: false,
-    badge: true,
-    carPlay: false,
-    criticalAlert: false,
-    provisional: false,
-    sound: true,
-  );
-
-  final token = await messaging.getToken();
-  print('FCM TOKEN: $token');
-
-  runApp(
-    const ProviderScope(child: MyApp()),
-  );
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends ConsumerWidget {
@@ -51,11 +32,10 @@ class MyApp extends ConsumerWidget {
         stream: auth.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData && snapshot.data != null) {
-            print("ユーザーがログインしました");
             return const SolottePage();
+          } else {
+            return const LoginPage();
           }
-          print("ユーザーはログアウト状態です");
-          return const LoginPage();
         },
       ),
     );
