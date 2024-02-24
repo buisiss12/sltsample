@@ -31,11 +31,10 @@ class MyApp extends ConsumerWidget {
       home: StreamBuilder<User?>(
         stream: auth.authStateChanges(),
         builder: (context, snapshot) {
-          if (snapshot.hasData && snapshot.data != null) {
+          if (snapshot.hasData) {
             return const SolottePage();
-          } else {
-            return const LoginPage();
           }
+          return const LoginPage();
         },
       ),
     );
