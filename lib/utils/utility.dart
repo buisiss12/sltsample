@@ -51,7 +51,36 @@ class Utility {
     '鹿児島県',
     '沖縄県',
   ];
-  static Future<void> selectedPrefectureDialog(BuildContext context,
+
+  static void selectSinglePrefectureDialog(
+      BuildContext context, TextEditingController residenceController) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('都道府県を選択'),
+          content: SizedBox(
+            width: double.maxFinite,
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: Utility.prefecture.length,
+              itemBuilder: (BuildContext context, int index) {
+                return ListTile(
+                  title: Text(Utility.prefecture[index]),
+                  onTap: () {
+                    residenceController.text = Utility.prefecture[index];
+                    Navigator.of(context).pop();
+                  },
+                );
+              },
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  static Future<void> selectMultiPrefectureDialog(BuildContext context,
       ValueNotifier<List<String>> selectedPrefecture) async {
     final List<String> selectedValues = List.from(selectedPrefecture.value);
     await showDialog(

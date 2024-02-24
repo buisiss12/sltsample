@@ -26,6 +26,9 @@ mixin _$UserModel {
   String get nickName => throw _privateConstructorUsedError;
   String get gender => throw _privateConstructorUsedError;
   DateTime get birthday => throw _privateConstructorUsedError;
+  String get height => throw _privateConstructorUsedError;
+  String get job => throw _privateConstructorUsedError;
+  String get residence => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -44,7 +47,10 @@ abstract class $UserModelCopyWith<$Res> {
       String realName,
       String nickName,
       String gender,
-      DateTime birthday});
+      DateTime birthday,
+      String height,
+      String job,
+      String residence});
 }
 
 /// @nodoc
@@ -66,6 +72,9 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
     Object? nickName = null,
     Object? gender = null,
     Object? birthday = null,
+    Object? height = null,
+    Object? job = null,
+    Object? residence = null,
   }) {
     return _then(_value.copyWith(
       userUid: null == userUid
@@ -92,6 +101,18 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.birthday
           : birthday // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      height: null == height
+          ? _value.height
+          : height // ignore: cast_nullable_to_non_nullable
+              as String,
+      job: null == job
+          ? _value.job
+          : job // ignore: cast_nullable_to_non_nullable
+              as String,
+      residence: null == residence
+          ? _value.residence
+          : residence // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -110,7 +131,10 @@ abstract class _$$UserModelImplCopyWith<$Res>
       String realName,
       String nickName,
       String gender,
-      DateTime birthday});
+      DateTime birthday,
+      String height,
+      String job,
+      String residence});
 }
 
 /// @nodoc
@@ -130,6 +154,9 @@ class __$$UserModelImplCopyWithImpl<$Res>
     Object? nickName = null,
     Object? gender = null,
     Object? birthday = null,
+    Object? height = null,
+    Object? job = null,
+    Object? residence = null,
   }) {
     return _then(_$UserModelImpl(
       userUid: null == userUid
@@ -156,6 +183,18 @@ class __$$UserModelImplCopyWithImpl<$Res>
           ? _value.birthday
           : birthday // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      height: null == height
+          ? _value.height
+          : height // ignore: cast_nullable_to_non_nullable
+              as String,
+      job: null == job
+          ? _value.job
+          : job // ignore: cast_nullable_to_non_nullable
+              as String,
+      residence: null == residence
+          ? _value.residence
+          : residence // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -169,7 +208,10 @@ class _$UserModelImpl with DiagnosticableTreeMixin implements _UserModel {
       required this.realName,
       required this.nickName,
       required this.gender,
-      required this.birthday});
+      required this.birthday,
+      required this.height,
+      required this.job,
+      required this.residence});
 
   factory _$UserModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserModelImplFromJson(json);
@@ -186,10 +228,16 @@ class _$UserModelImpl with DiagnosticableTreeMixin implements _UserModel {
   final String gender;
   @override
   final DateTime birthday;
+  @override
+  final String height;
+  @override
+  final String job;
+  @override
+  final String residence;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'UserModel(userUid: $userUid, profileImageUrl: $profileImageUrl, realName: $realName, nickName: $nickName, gender: $gender, birthday: $birthday)';
+    return 'UserModel(userUid: $userUid, profileImageUrl: $profileImageUrl, realName: $realName, nickName: $nickName, gender: $gender, birthday: $birthday, height: $height, job: $job, residence: $residence)';
   }
 
   @override
@@ -202,7 +250,10 @@ class _$UserModelImpl with DiagnosticableTreeMixin implements _UserModel {
       ..add(DiagnosticsProperty('realName', realName))
       ..add(DiagnosticsProperty('nickName', nickName))
       ..add(DiagnosticsProperty('gender', gender))
-      ..add(DiagnosticsProperty('birthday', birthday));
+      ..add(DiagnosticsProperty('birthday', birthday))
+      ..add(DiagnosticsProperty('height', height))
+      ..add(DiagnosticsProperty('job', job))
+      ..add(DiagnosticsProperty('residence', residence));
   }
 
   @override
@@ -219,13 +270,17 @@ class _$UserModelImpl with DiagnosticableTreeMixin implements _UserModel {
                 other.nickName == nickName) &&
             (identical(other.gender, gender) || other.gender == gender) &&
             (identical(other.birthday, birthday) ||
-                other.birthday == birthday));
+                other.birthday == birthday) &&
+            (identical(other.height, height) || other.height == height) &&
+            (identical(other.job, job) || other.job == job) &&
+            (identical(other.residence, residence) ||
+                other.residence == residence));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, userUid, profileImageUrl,
-      realName, nickName, gender, birthday);
+      realName, nickName, gender, birthday, height, job, residence);
 
   @JsonKey(ignore: true)
   @override
@@ -248,7 +303,10 @@ abstract class _UserModel implements UserModel {
       required final String realName,
       required final String nickName,
       required final String gender,
-      required final DateTime birthday}) = _$UserModelImpl;
+      required final DateTime birthday,
+      required final String height,
+      required final String job,
+      required final String residence}) = _$UserModelImpl;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
       _$UserModelImpl.fromJson;
@@ -265,6 +323,12 @@ abstract class _UserModel implements UserModel {
   String get gender;
   @override
   DateTime get birthday;
+  @override
+  String get height;
+  @override
+  String get job;
+  @override
+  String get residence;
   @override
   @JsonKey(ignore: true)
   _$$UserModelImplCopyWith<_$UserModelImpl> get copyWith =>

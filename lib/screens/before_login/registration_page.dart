@@ -72,6 +72,9 @@ class RegistrationPage extends HookConsumerWidget {
                 nickName: '',
                 gender: gender.value,
                 birthday: birthDay.value!,
+                height: '',
+                job: '',
+                residence: '',
               );
               await ref.read(userStateAPIProvider).createUser(userModel);
             }
