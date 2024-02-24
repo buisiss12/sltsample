@@ -32,13 +32,21 @@ class AddPostPage extends HookConsumerWidget {
           return;
         }
         final postModel = PostModel(
+          postId: '',
           postedUserUid: currentUser.uid,
           prefecture: selectedPrefecture.value,
           postTitle: postTitle.value,
           timestamp: DateTime.now(),
         );
 
-        await firestore.collection('posts').add(postModel.toJson());
+        final documentRef =
+            await firestore.collection('posts').add(postModel.toJson());
+        final postId = documentRef.id;
+
+        await firestore
+            .collection('posts')
+            .doc(postId)
+            .update({'postId': postId});
 
         if (context.mounted) {
           Navigator.of(context).pushReplacement(MaterialPageRoute(
