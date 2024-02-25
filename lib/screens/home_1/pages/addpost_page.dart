@@ -63,6 +63,12 @@ class AddPostPage extends HookConsumerWidget {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: <Widget>[
+              const SizedBox(height: 16),
+              const Text('(注意事項)'),
+              const Text('*アイコンがご自身が写った写真に設定していない場合、投稿を削除いたします。'),
+              const Text(
+                  '*宣伝、ネットワークビジネス、パーティー業者と見受けられるものは禁止となっております。見つけ次第、削除退会処置を取ります。'),
+              const SizedBox(height: 16),
               const Text('希望地域'),
               TextField(
                   decoration: const InputDecoration(

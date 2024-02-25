@@ -45,46 +45,57 @@ class PostsPage extends HookConsumerWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text('希望エリア: ${post.prefecture}'),
-                          Text(dateTimeConverter(post.timestamp!)),
                           Text('本文: ${post.postTitle}'),
                         ],
                       ),
-                      trailing: currentUser?.uid != post.postedUserUid
-                          ? IconButton(
-                              icon: const Icon(Icons.email),
-                              onPressed: () async {
-                                final userDoc = await firestore
-                                    .collection('users')
-                                    .doc(currentUser?.uid)
-                                    .get();
-                                final userNickname =
-                                    userDoc.data()?['nickName'];
-                                if (userNickname == null ||
-                                    userNickname.isEmpty) {
-                                  if (context.mounted) {
-                                    Utility.showSnackBar(
-                                        context, 'ニックネームを入力してください');
-                                  }
-                                  return;
-                                }
-                                if (context.mounted) {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => MessagePage(
-                                        currentUserUid: currentUser!.uid,
-                                        receiverUid: post.postedUserUid,
-                                      ),
-                                    ),
-                                  );
-                                }
-                              },
-                            )
-                          : IconButton(
-                              icon: const Icon(Icons.delete),
-                              onPressed: () => _deletePostDialog(
-                                  context, firestore, post.postId),
-                            ),
+                      trailing: Column(
+                        children: [
+                          Text(dateTimeConverter(post.timestamp!)),
+                          const SizedBox(height: 8),
+                          currentUser?.uid != post.postedUserUid
+                              ? InkWell(
+                                  child: const Icon(
+                                    Icons.email,
+                                    size: 28.0,
+                                  ),
+                                  onTap: () async {
+                                    final userDoc = await firestore
+                                        .collection('users')
+                                        .doc(currentUser?.uid)
+                                        .get();
+                                    final userNickname =
+                                        userDoc.data()?['nickName'];
+                                    if (userNickname == null ||
+                                        userNickname.isEmpty) {
+                                      if (context.mounted) {
+                                        Utility.showSnackBar(
+                                            context, 'ニックネームを入力してください');
+                                      }
+                                      return;
+                                    }
+                                    if (context.mounted) {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => MessagePage(
+                                            currentUserUid: currentUser!.uid,
+                                            receiverUid: post.postedUserUid,
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                )
+                              : InkWell(
+                                  child: const Icon(
+                                    Icons.delete,
+                                    size: 28.0,
+                                  ),
+                                  onTap: () => _deletePostDialog(
+                                      context, firestore, post.postId),
+                                ),
+                        ],
+                      ),
                     ),
                   );
                 } else {
