@@ -61,46 +61,48 @@ class AddPostPage extends HookConsumerWidget {
       child: Scaffold(
         body: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: <Widget>[
-              const SizedBox(height: 16),
-              const Text('(注意事項)'),
-              const Text('*アイコンがご自身が写った写真に設定していない場合、投稿を削除いたします。'),
-              const Text(
-                  '*宣伝、ネットワークビジネス、パーティー業者と見受けられるものは禁止となっております。見つけ次第、削除退会処置を取ります。'),
-              const SizedBox(height: 16),
-              const Text('希望地域'),
-              TextField(
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                const SizedBox(height: 16),
+                const Text('(注意事項)'),
+                const Text('*アイコンがご自身が写った写真に設定していない場合、投稿を削除いたします。'),
+                const Text(
+                    '*宣伝、ネットワークビジネス、パーティー業者と見受けられるものは禁止となっております。見つけ次第、削除退会処置を取ります。'),
+                const SizedBox(height: 16),
+                const Text('希望地域'),
+                TextField(
+                    decoration: const InputDecoration(
+                      hintText: '希望地域を選択',
+                      border: OutlineInputBorder(),
+                    ),
+                    controller: TextEditingController(
+                        text: selectedPrefecture.value.join(', ')),
+                    readOnly: true,
+                    onTap: () => Utility.selectMultiPrefectureDialog(
+                        context, selectedPrefecture)),
+                const SizedBox(height: 16),
+                const Text('募集内容'),
+                TextField(
                   decoration: const InputDecoration(
-                    hintText: '希望地域を選択',
+                    hintText: '本文',
                     border: OutlineInputBorder(),
                   ),
-                  controller: TextEditingController(
-                      text: selectedPrefecture.value.join(', ')),
-                  readOnly: true,
-                  onTap: () => Utility.selectMultiPrefectureDialog(
-                      context, selectedPrefecture)),
-              const SizedBox(height: 16),
-              const Text('募集内容'),
-              TextField(
-                decoration: const InputDecoration(
-                  hintText: '本文',
-                  border: OutlineInputBorder(),
+                  maxLines: null,
+                  minLines: 4,
+                  onChanged: (value) {
+                    postTitle.value = value;
+                  },
                 ),
-                maxLines: null,
-                minLines: 4,
-                onChanged: (value) {
-                  postTitle.value = value;
-                },
-              ),
-              ElevatedButton(
-                onPressed: postTitle.value.isNotEmpty &&
-                        selectedPrefecture.value.isNotEmpty
-                    ? addPost
-                    : null,
-                child: const Text('投稿する'),
-              ),
-            ],
+                ElevatedButton(
+                  onPressed: postTitle.value.isNotEmpty &&
+                          selectedPrefecture.value.isNotEmpty
+                      ? addPost
+                      : null,
+                  child: const Text('投稿する'),
+                ),
+              ],
+            ),
           ),
         ),
       ),

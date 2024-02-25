@@ -22,6 +22,7 @@ class MessagePage extends HookConsumerWidget {
     final chatService = ChatService(firestore);
     final chatText = useTextEditingController();
     final scrollController = useScrollController();
+    final receiverUserDetails = ref.watch(userDetailProvider(receiverUid));
 
     void sendMessage() async {
       if (chatText.text.isEmpty) return;
@@ -50,7 +51,11 @@ class MessagePage extends HookConsumerWidget {
       onTap: () => primaryFocus?.unfocus(),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Chat"),
+          title: receiverUserDetails.when(
+            data: (user) => Text(user.nickName),
+            loading: () => const Text('ロード中...'),
+            error: (_, __) => const Text('エラー'),
+          ),
         ),
         body: Column(
           children: [

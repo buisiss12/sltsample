@@ -58,6 +58,7 @@ class SolottePage extends HookWidget {
       body: PageView(
         controller: pageController,
         onPageChanged: (index) => selectedIndex.value = index,
+        physics: const NeverScrollableScrollPhysics(),
         children: pages,
       ),
       drawer: const DrawerPage(),

@@ -160,7 +160,7 @@ String dateTimeConverter(DateTime postTime) {
   final difference = currentTime.difference(postTime);
 
   if (difference.inMinutes < 1) {
-    return 'ちょうど今';
+    return 'たった今';
   } else if (difference.inMinutes < 60) {
     return '${difference.inMinutes}分前';
   } else if (difference.inHours < 24) {
