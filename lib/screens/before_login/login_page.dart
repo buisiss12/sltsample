@@ -91,7 +91,7 @@ class LoginPage extends HookConsumerWidget {
                             }
                           } on FirebaseAuthException catch (e) {
                             if (context.mounted) {
-                              Utility.showSnackBar(
+                              Utility.showSnackBarAPI(
                                   context, 'ログイン失敗: ${e.message}');
                             }
                           }

@@ -31,7 +31,7 @@ class RegistrationPage extends HookConsumerWidget {
         phoneNumber: "+81${phoneNumber.value}",
         verificationCompleted: (PhoneAuthCredential credential) async {},
         verificationFailed: (FirebaseAuthException e) {
-          Utility.showSnackBar(context, '認証に失敗しました: ${e.message}');
+          Utility.showSnackBarAPI(context, '認証に失敗しました: ${e.message}');
         },
 //iOSの場合resendTokenは常にnull
         codeSent: (String verificationId, int? resendToken) async {
@@ -87,7 +87,7 @@ class RegistrationPage extends HookConsumerWidget {
             }
           } on FirebaseAuthException catch (e) {
             if (context.mounted) {
-              Utility.showSnackBar(context, 'アカウント作成に失敗しました: ${e.message}');
+              Utility.showSnackBarAPI(context, 'アカウント作成に失敗しました: ${e.message}');
             }
           }
         },

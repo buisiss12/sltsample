@@ -68,7 +68,7 @@ class PostsPage extends HookConsumerWidget {
                                     if (userNickname == null ||
                                         userNickname.isEmpty) {
                                       if (context.mounted) {
-                                        Utility.showSnackBar(
+                                        Utility.showSnackBarAPI(
                                             context, 'ニックネームを入力してください');
                                       }
                                       return;

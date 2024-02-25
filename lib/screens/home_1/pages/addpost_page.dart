@@ -27,7 +27,7 @@ class AddPostPage extends HookConsumerWidget {
         final userNickname = userDoc.data()?['nickName'];
         if (userNickname == null || userNickname.isEmpty) {
           if (context.mounted) {
-            Utility.showSnackBar(context, 'ニックネームを入力してください');
+            Utility.showSnackBarAPI(context, 'ニックネームを入力してください');
           }
           return;
         }

@@ -149,9 +149,37 @@ class Utility {
     return age;
   }
 
-  static void showSnackBar(BuildContext context, String message) {
+  static void showSnackBarAPI(BuildContext context, String message) {
     final snackBar = SnackBar(content: Text(message));
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  static Future<void> showMyDialogAPI(BuildContext context, String title,
+      String content, VoidCallback onConfirm) async {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: SingleChildScrollView(
+            child: ListBody(children: <Widget>[Text(content)]),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text("キャンセル"),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                onConfirm();
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }
 
