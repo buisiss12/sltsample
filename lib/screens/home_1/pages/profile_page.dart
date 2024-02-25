@@ -59,15 +59,57 @@ class UserProfilePage extends ConsumerWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('ニックネーム: ${user.nickName}'),
-                            Text('性別: ${user.gender}'),
-                            Text('年齢: $age'),
-                            Text('身長: ${user.height}'),
-                            Text('職業: ${user.job}'),
-                            Text('居住地: ${user.residence}'),
+                            Row(
+                              children: [
+                                const Icon(Icons.person),
+                                const SizedBox(width: 8),
+                                Text('ニックネーム: ${user.nickName}'),
+                              ],
+                            ),
+                            const Divider(),
+                            Row(
+                              children: [
+                                const Icon(Icons.transgender),
+                                const SizedBox(width: 8),
+                                Text('性別: ${user.gender}'),
+                              ],
+                            ),
+                            const Divider(),
+                            Row(
+                              children: [
+                                const Icon(Icons.cake),
+                                const SizedBox(width: 8),
+                                Text('年齢: $age'),
+                              ],
+                            ),
+                            const Divider(),
+                            Row(
+                              children: [
+                                const Icon(Icons.height),
+                                const SizedBox(width: 8),
+                                Text('身長: ${user.height}'),
+                              ],
+                            ),
+                            const Divider(),
+                            Row(
+                              children: [
+                                const Icon(Icons.work),
+                                const SizedBox(width: 8),
+                                Text('職業: ${user.job}'),
+                              ],
+                            ),
+                            const Divider(),
+                            Row(
+                              children: [
+                                const Icon(Icons.home),
+                                const SizedBox(width: 8),
+                                Text('居住地: ${user.residence}'),
+                              ],
+                            ),
+                            const Divider(),
                           ],
                         ),
-                      ),
+                      )
                     ],
                   ),
                 ),
@@ -104,94 +146,142 @@ class EditUserProfilePage extends ConsumerWidget {
         appBar: AppBar(title: const Text('プロフィール編集')),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              Consumer(
-                builder: (context, ref, child) {
-                  final selectedImage = ref.watch(selectedProfileImageProvider);
-                  return InkWell(
-                    onTap: () async {
-                      final pickedFile = await imagePicker.pickImage(
-                          source: ImageSource.gallery);
-                      if (pickedFile != null) {
-                        ref.read(selectedProfileImageProvider.notifier).state =
-                            File(pickedFile.path);
-                      }
-                    },
-                    child: CircleAvatar(
-                      radius: 40,
-                      backgroundImage: selectedImage != null
-                          ? FileImage(selectedImage)
-                          : (user.profileImageUrl.isNotEmpty
-                                  ? NetworkImage(user.profileImageUrl)
-                                  : const AssetImage(
-                                      'assets/images/300x300defaultprofile.png'))
-                              as ImageProvider,
-                    ),
-                  );
-                },
-              ),
-              TextField(
-                controller: nicknameController,
-                decoration: const InputDecoration(hintText: 'ニックネーム'),
-              ),
-              IgnorePointer(
-                child: TextField(
-                  controller: genderController,
-                  decoration: const InputDecoration(hintText: '性別'),
-                  style: TextStyle(color: Colors.grey[700]),
-                  readOnly: true,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Consumer(
+                  builder: (context, ref, child) {
+                    final selectedImage =
+                        ref.watch(selectedProfileImageProvider);
+                    return InkWell(
+                      onTap: () async {
+                        final pickedFile = await imagePicker.pickImage(
+                            source: ImageSource.gallery);
+                        if (pickedFile != null) {
+                          ref
+                              .read(selectedProfileImageProvider.notifier)
+                              .state = File(pickedFile.path);
+                        }
+                      },
+                      child: Stack(
+                        alignment: Alignment.bottomRight,
+                        children: [
+                          CircleAvatar(
+                            radius: 40,
+                            backgroundImage: selectedImage != null
+                                ? FileImage(selectedImage)
+                                : (user.profileImageUrl.isNotEmpty
+                                        ? NetworkImage(user.profileImageUrl)
+                                        : const AssetImage(
+                                            'assets/images/defaultprofile.png'))
+                                    as ImageProvider,
+                          ),
+                          Container(
+                            decoration: const BoxDecoration(
+                              color: Colors.black54,
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              Icons.camera_alt,
+                              color: Colors.white,
+                              size: 20,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                 ),
-              ),
-              TextField(
-                controller: heightController,
-                decoration: const InputDecoration(hintText: '身長'),
-                keyboardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-              ),
-              TextField(
-                controller: jobController,
-                decoration: const InputDecoration(hintText: '職業'),
-              ),
-              TextField(
-                  controller: residenceController,
-                  decoration: const InputDecoration(hintText: '居住地'),
-                  readOnly: true,
-                  onTap: () => Utility.selectSinglePrefectureDialog(
-                      context, residenceController)),
-              ElevatedButton(
-                onPressed: () async {
-                  String? imageUrl;
-                  if (selectedImage != null) {
-                    String fileName = 'profileImage_${user.userUid}.jpg';
-                    final fireStorage = ref.watch(firebaseStorageProvider);
-                    final storageRef = fireStorage
-                        .ref()
-                        .child('profileImages')
-                        .child(fileName);
-                    await storageRef.putFile(selectedImage);
-                    imageUrl = await storageRef.getDownloadURL();
-                  } else {
-                    imageUrl = user.profileImageUrl;
-                  }
+                const Padding(
+                  padding: EdgeInsets.only(top: 4.0),
+                  child: Text('タップして変更',
+                      style: TextStyle(fontSize: 12, color: Colors.grey)),
+                ),
+                const SizedBox(height: 16),
+                TextField(
+                  controller: nicknameController,
+                  decoration: const InputDecoration(
+                    labelText: 'ニックネーム',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                IgnorePointer(
+                  child: TextField(
+                    controller: genderController,
+                    decoration: const InputDecoration(
+                      labelText: '性別',
+                      border: OutlineInputBorder(),
+                    ),
+                    style: TextStyle(color: Colors.grey[700]),
+                    readOnly: true,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                TextField(
+                  controller: heightController,
+                  decoration: const InputDecoration(
+                    labelText: '身長',
+                    border: OutlineInputBorder(),
+                  ),
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                ),
+                const SizedBox(height: 16),
+                TextField(
+                  controller: jobController,
+                  decoration: const InputDecoration(
+                    labelText: '職業',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                TextField(
+                    controller: residenceController,
+                    decoration: const InputDecoration(
+                      labelText: '居住地',
+                      border: OutlineInputBorder(),
+                    ),
+                    readOnly: true,
+                    onTap: () => Utility.selectSinglePrefectureDialog(
+                        context, residenceController)),
+                const SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () async {
+                    String? imageUrl;
+                    if (selectedImage != null) {
+                      String fileName = 'profileImage_${user.userUid}.jpg';
+                      final fireStorage = ref.watch(firebaseStorageProvider);
+                      final storageRef = fireStorage
+                          .ref()
+                          .child('profileImages')
+                          .child(fileName);
+                      await storageRef.putFile(selectedImage);
+                      imageUrl = await storageRef.getDownloadURL();
+                    } else {
+                      imageUrl = user.profileImageUrl;
+                    }
 
-                  final updatedUser = user.copyWith(
-                    nickName: nicknameController.text,
-                    profileImageUrl: imageUrl,
-                    height: heightController.text,
-                    job: jobController.text,
-                    residence: residenceController.text,
-                  );
-                  await ref.read(userStateAPIProvider).createUser(updatedUser);
-                  ref.invalidate(userStateFutureProvider);
+                    final updatedUser = user.copyWith(
+                      nickName: nicknameController.text,
+                      profileImageUrl: imageUrl,
+                      height: heightController.text,
+                      job: jobController.text,
+                      residence: residenceController.text,
+                    );
+                    await ref
+                        .read(userStateAPIProvider)
+                        .createUser(updatedUser);
+                    ref.invalidate(userStateFutureProvider);
 
-                  if (context.mounted) {
-                    Navigator.pop(context);
-                  }
-                },
-                child: const Text('保存'),
-              ),
-            ],
+                    if (context.mounted) {
+                      Navigator.pop(context);
+                    }
+                  },
+                  child: const Text('保存'),
+                ),
+              ],
+            ),
           ),
         ),
       ),
