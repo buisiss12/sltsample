@@ -90,22 +90,24 @@ class Utility {
           title: const Text('都道府県を選択'),
           content: SingleChildScrollView(
             child: ListBody(
-              children: prefecture.map((String prefecture) {
-                return CheckboxListTile(
-                  value: selectedValues.contains(prefecture),
-                  title: Text(prefecture),
-                  onChanged: (bool? value) {
-                    if (value == true) {
-                      if (!selectedValues.contains(prefecture)) {
-                        selectedValues.add(prefecture);
+              children: prefecture.map(
+                (String prefecture) {
+                  return CheckboxListTile(
+                    value: selectedValues.contains(prefecture),
+                    title: Text(prefecture),
+                    onChanged: (bool? value) {
+                      if (value == true) {
+                        if (!selectedValues.contains(prefecture)) {
+                          selectedValues.add(prefecture);
+                        }
+                      } else {
+                        selectedValues.remove(prefecture);
                       }
-                    } else {
-                      selectedValues.remove(prefecture);
-                    }
-                    (context as Element).markNeedsBuild();
-                  },
-                );
-              }).toList(),
+                      (context as Element).markNeedsBuild();
+                    },
+                  );
+                },
+              ).toList(),
             ),
           ),
           actions: <Widget>[
@@ -154,7 +156,7 @@ class Utility {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-  static Future<void> showMyDialogAPI(BuildContext context, String title,
+  static Future<void> showDialogAPI(BuildContext context, String title,
       String content, VoidCallback onConfirm) async {
     return showDialog(
       context: context,

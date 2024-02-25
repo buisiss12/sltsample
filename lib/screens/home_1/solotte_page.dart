@@ -24,6 +24,7 @@ class SolottePage extends HookWidget {
       'お知らせ',
       'プロフィール',
     ];
+
     final icons = [
       Icons.assignment,
       Icons.email,
@@ -68,12 +69,15 @@ class SolottePage extends HookWidget {
           selectedIndex.value = index;
           pageController.jumpToPage(index);
         },
-        destinations: List.generate(labels.length, (index) {
-          return NavigationDestination(
-            icon: Icon(icons[index]),
-            label: labels[index],
-          );
-        }),
+        destinations: List.generate(
+          labels.length,
+          (index) {
+            return NavigationDestination(
+              icon: Icon(icons[index]),
+              label: labels[index],
+            );
+          },
+        ),
       ),
     );
   }

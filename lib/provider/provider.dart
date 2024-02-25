@@ -63,9 +63,13 @@ final postsStreamProvider = StreamProvider.autoDispose<List<PostModel>>((ref) {
       .collection('posts')
       .orderBy('timestamp', descending: true)
       .snapshots()
-      .map((snapshot) {
-    return snapshot.docs.map((doc) => PostModel.fromJson(doc.data())).toList();
-  });
+      .map(
+    (snapshot) {
+      return snapshot.docs
+          .map((doc) => PostModel.fromJson(doc.data()))
+          .toList();
+    },
+  );
 });
 
 final selectedProfileImageProvider = StateProvider<File?>((ref) => null);
@@ -77,9 +81,13 @@ final messageStreamProvider =
       .collection('conversations')
       .where('userUid', arrayContains: userUid)
       .snapshots()
-      .map((snapshot) => snapshot.docs
+      .map(
+    (snapshot) {
+      return snapshot.docs
           .map((doc) => RecentMessageModel.fromJson(doc.data()))
-          .toList());
+          .toList();
+    },
+  );
 });
 
 final userDetailProvider =

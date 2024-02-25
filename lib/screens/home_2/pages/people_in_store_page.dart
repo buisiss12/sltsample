@@ -9,8 +9,6 @@ class PeopleInStorePage extends StatelessWidget {
     final controller = WebViewController()
       ..loadRequest(Uri.parse('https://oriental-lounge.com/#shop'));
 
-    return Scaffold(
-      body: WebViewWidget(controller: controller),
-    );
+    return Scaffold(body: WebViewWidget(controller: controller));
   }
 }

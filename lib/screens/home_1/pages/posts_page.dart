@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sltsampleapp/models/user_model.dart';
 import 'package:sltsampleapp/provider/provider.dart';
 import 'package:sltsampleapp/screens/home_1/pages/message_page.dart';
@@ -91,8 +90,19 @@ class PostsPage extends HookConsumerWidget {
                                     Icons.delete,
                                     size: 28.0,
                                   ),
-                                  onTap: () => _deletePostDialog(
-                                      context, firestore, post.postId),
+                                  onTap: () async {
+                                    Utility.showDialogAPI(
+                                      context,
+                                      '投稿を削除',
+                                      'この投稿を削除してもよろしいですか？',
+                                      () async {
+                                        await firestore
+                                            .collection('posts')
+                                            .doc(post.postId)
+                                            .delete();
+                                      },
+                                    );
+                                  },
                                 ),
                         ],
                       ),
@@ -108,34 +118,6 @@ class PostsPage extends HookConsumerWidget {
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, stack) => Center(child: Text('Error: $error')),
       ),
-    );
-  }
-
-  Future<void> _deletePostDialog(
-      BuildContext context, FirebaseFirestore firestore, String postId) async {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('投稿を削除'),
-          content: const Text('この投稿を削除してもよろしいですか？'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('キャンセル'),
-            ),
-            TextButton(
-              onPressed: () async {
-                await firestore.collection('posts').doc(postId).delete();
-                if (context.mounted) {
-                  Navigator.of(context).pop();
-                }
-              },
-              child: const Text('削除'),
-            ),
-          ],
-        );
-      },
     );
   }
 }

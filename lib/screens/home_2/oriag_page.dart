@@ -18,6 +18,7 @@ class OriAgPage extends HookWidget {
       'メニュー',
       '会計',
     ];
+
     final icons = [
       Icons.emoji_events,
       Icons.store,
@@ -75,12 +76,15 @@ class OriAgPage extends HookWidget {
           selectedIndex.value = index;
           pageController.jumpToPage(index);
         },
-        destinations: List.generate(labels.length, (index) {
-          return NavigationDestination(
-            icon: Icon(icons[index]),
-            label: labels[index],
-          );
-        }),
+        destinations: List.generate(
+          labels.length,
+          (index) {
+            return NavigationDestination(
+              icon: Icon(icons[index]),
+              label: labels[index],
+            );
+          },
+        ),
       ),
     );
   }

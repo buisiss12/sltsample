@@ -44,8 +44,9 @@ class UserProfilePage extends ConsumerWidget {
                             onPressed: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
-                                  builder: (context) =>
-                                      EditUserProfilePage(user: user),
+                                  builder: (context) {
+                                    return EditUserProfilePage(user: user);
+                                  },
                                 ),
                               );
                             },
@@ -194,8 +195,13 @@ class EditUserProfilePage extends ConsumerWidget {
                 ),
                 const Padding(
                   padding: EdgeInsets.only(top: 4.0),
-                  child: Text('タップして変更',
-                      style: TextStyle(fontSize: 12, color: Colors.grey)),
+                  child: Text(
+                    'タップして変更',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey,
+                    ),
+                  ),
                 ),
                 const SizedBox(height: 16),
                 TextField(
@@ -237,14 +243,17 @@ class EditUserProfilePage extends ConsumerWidget {
                 ),
                 const SizedBox(height: 16),
                 TextField(
-                    controller: residenceController,
-                    decoration: const InputDecoration(
-                      labelText: '居住地',
-                      border: OutlineInputBorder(),
-                    ),
-                    readOnly: true,
-                    onTap: () => Utility.selectSinglePrefectureDialog(
-                        context, residenceController)),
+                  controller: residenceController,
+                  decoration: const InputDecoration(
+                    labelText: '居住地',
+                    border: OutlineInputBorder(),
+                  ),
+                  readOnly: true,
+                  onTap: () => Utility.selectSinglePrefectureDialog(
+                    context,
+                    residenceController,
+                  ),
+                ),
                 const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () async {

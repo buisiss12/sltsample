@@ -30,7 +30,7 @@ class DrawerPage extends ConsumerWidget {
           ListTile(
             title: const Text('ログアウト'),
             onTap: () async {
-              await Utility.showMyDialogAPI(
+              await Utility.showDialogAPI(
                 context,
                 "ログアウト",
                 "ログアウトしますか？",
@@ -52,7 +52,7 @@ class DrawerPage extends ConsumerWidget {
             title: const Text('アカウント削除'),
             onTap: () async {
               if (currentUser != null) {
-                await Utility.showMyDialogAPI(
+                await Utility.showDialogAPI(
                   context,
                   "アカウント削除",
                   "本当にアカウントを削除しますか？",

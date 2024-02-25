@@ -49,9 +49,8 @@ class AddPostPage extends HookConsumerWidget {
             .update({'postId': postId});
 
         if (context.mounted) {
-          Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (context) => const SolottePage(),
-          ));
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => const SolottePage()));
         }
       }
     }
@@ -72,15 +71,18 @@ class AddPostPage extends HookConsumerWidget {
                 const SizedBox(height: 16),
                 const Text('希望地域'),
                 TextField(
-                    decoration: const InputDecoration(
-                      hintText: '希望地域を選択',
-                      border: OutlineInputBorder(),
-                    ),
-                    controller: TextEditingController(
-                        text: selectedPrefecture.value.join(', ')),
-                    readOnly: true,
-                    onTap: () => Utility.selectMultiPrefectureDialog(
-                        context, selectedPrefecture)),
+                  decoration: const InputDecoration(
+                    hintText: '希望地域を選択',
+                    border: OutlineInputBorder(),
+                  ),
+                  controller: TextEditingController(
+                      text: selectedPrefecture.value.join(', ')),
+                  readOnly: true,
+                  onTap: () => Utility.selectMultiPrefectureDialog(
+                    context,
+                    selectedPrefecture,
+                  ),
+                ),
                 const SizedBox(height: 16),
                 const Text('募集内容'),
                 TextField(

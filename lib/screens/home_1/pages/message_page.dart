@@ -91,7 +91,9 @@ class MessagePage extends HookConsumerWidget {
                         child: Container(
                           padding: const EdgeInsets.all(8),
                           margin: const EdgeInsets.symmetric(
-                              vertical: 4, horizontal: 8),
+                            vertical: 4,
+                            horizontal: 8,
+                          ),
                           decoration: BoxDecoration(
                             color: isMe ? Colors.blue : Colors.grey[300],
                             borderRadius: BorderRadius.circular(10),
@@ -102,14 +104,15 @@ class MessagePage extends HookConsumerWidget {
                               Text(
                                 message.text,
                                 style: TextStyle(
-                                    color: isMe ? Colors.white : Colors.black),
+                                  color: isMe ? Colors.white : Colors.black,
+                                ),
                               ),
                               Text(
                                 dateTimeConverter(message.timestamp!),
                                 style: TextStyle(
-                                    color:
-                                        isMe ? Colors.white70 : Colors.black54,
-                                    fontSize: 10),
+                                  color: isMe ? Colors.white70 : Colors.black54,
+                                  fontSize: 10,
+                                ),
                               ),
                             ],
                           ),
@@ -177,10 +180,12 @@ class ChatService {
         .collection('messages')
         .orderBy('timestamp')
         .snapshots()
-        .map((snapshot) {
-      return snapshot.docs
-          .map((doc) => MessageModel.fromJson(doc.data()))
-          .toList();
-    });
+        .map(
+      (snapshot) {
+        return snapshot.docs
+            .map((doc) => MessageModel.fromJson(doc.data()))
+            .toList();
+      },
+    );
   }
 }
