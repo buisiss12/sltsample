@@ -13,20 +13,23 @@ class ForgetPwPage extends ConsumerWidget {
     return GestureDetector(
       onTap: () => primaryFocus?.unfocus(),
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('パスワード再設定'),
-        ),
+        appBar: AppBar(title: const Text('パスワード再設定')),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              const Text('パスワードを忘れてしまった場合',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+              const Text(
+                'パスワードを忘れてしまった場合',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
               const SizedBox(height: 16),
               const Text('会員IDと電話番号を入力後、電話番号宛に認証番号が送信されます。'),
               const SizedBox(height: 16),
-              const Text('会員ID', style: TextStyle(fontWeight: FontWeight.bold)),
+              const Text(
+                '会員ID',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
               TextField(
                 decoration: const InputDecoration(
                   hintText: '会員IDを入力',
@@ -36,7 +39,10 @@ class ForgetPwPage extends ConsumerWidget {
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               ),
               const SizedBox(height: 16),
-              const Text('電話番号', style: TextStyle(fontWeight: FontWeight.bold)),
+              const Text(
+                '電話番号',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
               TextField(
                 decoration: const InputDecoration(
                   hintText: '電話番号を入力(ハイフンなし)',

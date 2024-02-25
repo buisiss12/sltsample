@@ -98,17 +98,17 @@ class RegistrationPage extends HookConsumerWidget {
     return GestureDetector(
       onTap: () => primaryFocus?.unfocus(),
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('新規会員登録'),
-        ),
+        appBar: AppBar(title: const Text('新規会員登録')),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                const Text('本名フルネーム(ひらがな)',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
+                const Text(
+                  '本名フルネーム(ひらがな)',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
                 TextField(
                   decoration: const InputDecoration(
                     hintText: '本名をフルネームで入力(ひらがな)',
@@ -119,7 +119,10 @@ class RegistrationPage extends HookConsumerWidget {
                 ),
                 const Text('*店舗での本人確認にのみ使用いたします。第三者には公開されません。'),
                 const SizedBox(height: 16),
-                const Text('性別', style: TextStyle(fontWeight: FontWeight.bold)),
+                const Text(
+                  '性別',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -142,8 +145,10 @@ class RegistrationPage extends HookConsumerWidget {
                   ],
                 ),
                 const SizedBox(height: 16),
-                const Text('生年月日',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
+                const Text(
+                  '生年月日',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
                 ElevatedButton(
                   onPressed: () {
                     Utility().showDatePicker(
@@ -158,8 +163,10 @@ class RegistrationPage extends HookConsumerWidget {
                   ),
                 ),
                 const SizedBox(height: 16),
-                const Text('電話番号',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
+                const Text(
+                  '電話番号',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
                 TextField(
                   decoration: const InputDecoration(
                     hintText: '電話番号を入力(ハイフンなし)',
@@ -170,8 +177,10 @@ class RegistrationPage extends HookConsumerWidget {
                   onChanged: (value) => phoneNumber.value = value,
                 ),
                 const SizedBox(height: 16),
-                const Text('パスワード(数字6桁以上)',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
+                const Text(
+                  'パスワード(数字6桁以上)',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
                 TextField(
                   decoration: InputDecoration(
                     hintText: 'パスワードを入力',
@@ -211,7 +220,8 @@ class RegistrationPage extends HookConsumerWidget {
                     Navigator.pop(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const LoginPage()),
+                        builder: (context) => const LoginPage(),
+                      ),
                     );
                   },
                   child: const Text('ログイン'),
@@ -222,7 +232,8 @@ class RegistrationPage extends HookConsumerWidget {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const OldMemberPage()),
+                        builder: (context) => const OldMemberPage(),
+                      ),
                     );
                   },
                   child: const Text('以前会員登録した方はこちら'),

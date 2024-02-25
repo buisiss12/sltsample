@@ -34,12 +34,15 @@ class LoginPage extends HookConsumerWidget {
               children: <Widget>[
                 const SizedBox(height: 70),
                 Image.asset('assets/images/1080x384solotte.png'),
-                const Text('ログイン',
-                    style:
-                        TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
+                const Text(
+                  'ログイン',
+                  style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+                ),
                 const SizedBox(height: 16),
-                const Text('電話番号 または 会員ID',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
+                const Text(
+                  '電話番号 または 会員ID',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
                 TextField(
                   decoration: const InputDecoration(
                     hintText: '電話番号または会員IDを入力(ハイフンなし)',
@@ -50,8 +53,10 @@ class LoginPage extends HookConsumerWidget {
                   onChanged: (value) => phoneNumber.value = value,
                 ),
                 const SizedBox(height: 16),
-                const Text('パスワード (数字6桁以上)',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
+                const Text(
+                  'パスワード (数字6桁以上)',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
                 TextField(
                   decoration: InputDecoration(
                     hintText: 'パスワードを入力',
@@ -72,31 +77,32 @@ class LoginPage extends HookConsumerWidget {
                 ),
                 const SizedBox(height: 16),
                 ElevatedButton(
-                  onPressed: phoneNumber.value.isNotEmpty &&
-                          passWord.value.isNotEmpty
-                      ? () async {
-                          try {
-                            await auth.signInWithEmailAndPassword(
-                              email: '${phoneNumber.value}@test.com',
-                              password: passWord.value,
-                            );
-                            print('ログイン成功');
+                  onPressed:
+                      phoneNumber.value.isNotEmpty && passWord.value.isNotEmpty
+                          ? () async {
+                              try {
+                                await auth.signInWithEmailAndPassword(
+                                  email: '${phoneNumber.value}@test.com',
+                                  password: passWord.value,
+                                );
+                                print('ログイン成功');
 
-                            if (context.mounted) {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const SolottePage()),
-                              );
+                                if (context.mounted) {
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const SolottePage(),
+                                    ),
+                                  );
+                                }
+                              } on FirebaseAuthException catch (e) {
+                                if (context.mounted) {
+                                  Utility.showSnackBarAPI(
+                                      context, 'ログイン失敗: ${e.message}');
+                                }
+                              }
                             }
-                          } on FirebaseAuthException catch (e) {
-                            if (context.mounted) {
-                              Utility.showSnackBarAPI(
-                                  context, 'ログイン失敗: ${e.message}');
-                            }
-                          }
-                        }
-                      : null,
+                          : null,
                   child: const Text('ログイン'),
                 ),
                 TextButton(
@@ -104,14 +110,13 @@ class LoginPage extends HookConsumerWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const ForgetPwPage()),
+                        builder: (context) => const ForgetPwPage(),
+                      ),
                     );
                   },
                   child: const Text(
                     'パスワードを忘れてしまった場合',
-                    style: TextStyle(
-                      decoration: TextDecoration.underline,
-                    ),
+                    style: TextStyle(decoration: TextDecoration.underline),
                   ),
                 ),
                 ElevatedButton(
@@ -119,7 +124,8 @@ class LoginPage extends HookConsumerWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const RegistrationPage()),
+                        builder: (context) => const RegistrationPage(),
+                      ),
                     );
                   },
                   child: const Text('新規会員登録'),
@@ -129,7 +135,8 @@ class LoginPage extends HookConsumerWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const OldMemberPage()),
+                        builder: (context) => const OldMemberPage(),
+                      ),
                     );
                   },
                   child: const Text('以前会員登録した方はこちら'),

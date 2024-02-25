@@ -257,6 +257,12 @@ class EditUserProfilePage extends ConsumerWidget {
                 const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () async {
+                    if (nicknameController.text.trim().isEmpty) {
+                      if (context.mounted) {
+                        Utility.showSnackBarAPI(context, 'ニックネームを入力してください');
+                      }
+                      return;
+                    }
                     String? imageUrl;
                     if (selectedImage != null) {
                       String fileName = 'profileImage_${user.userUid}.jpg';

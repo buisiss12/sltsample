@@ -20,17 +20,17 @@ class OldMemberPage extends HookConsumerWidget {
     return GestureDetector(
       onTap: () => primaryFocus?.unfocus(),
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('以前会員登録した方'),
-        ),
+        appBar: AppBar(title: const Text('以前会員登録した方')),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                const Text('会員ID(数字４桁以上)',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
+                const Text(
+                  '会員ID(数字４桁以上)',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
                 TextField(
                   decoration: const InputDecoration(
                     hintText: '会員IDを入力',
@@ -40,7 +40,10 @@ class OldMemberPage extends HookConsumerWidget {
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 ),
                 const SizedBox(height: 16),
-                const Text('性別', style: TextStyle(fontWeight: FontWeight.bold)),
+                const Text(
+                  '性別',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -63,8 +66,10 @@ class OldMemberPage extends HookConsumerWidget {
                   ],
                 ),
                 const SizedBox(height: 16),
-                const Text('生年月日',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
+                const Text(
+                  '生年月日',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
                 // ElevatedButton(
                 //   onPressed: () =>
                 //       Utility.selectBirthday(context, birthdayNotifier),
@@ -75,8 +80,10 @@ class OldMemberPage extends HookConsumerWidget {
                 //   ),
                 // ),
                 const SizedBox(height: 16),
-                const Text('登録店舗',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
+                const Text(
+                  '登録店舗',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
                 // ElevatedButton(
                 //   onPressed: () => _selectStorePicker(context, ref),
                 //   child: Text(store),
@@ -87,7 +94,8 @@ class OldMemberPage extends HookConsumerWidget {
                     Navigator.pop(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const LoginPage()),
+                        builder: (context) => const LoginPage(),
+                      ),
                     );
                   },
                   child: const Text('ログイン'),
@@ -98,7 +106,8 @@ class OldMemberPage extends HookConsumerWidget {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const RegistrationPage()),
+                        builder: (context) => const RegistrationPage(),
+                      ),
                     );
                   },
                   child: const Text('新規会員登録'),
