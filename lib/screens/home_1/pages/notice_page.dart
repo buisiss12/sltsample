@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class NoticePage extends StatelessWidget {
-  NoticePage({super.key});
-
-  final controller = WebViewController()
-    ..loadRequest(Uri.parse('https://oriental-lounge.com/information/'));
+  const NoticePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: WebViewWidget(controller: controller));
+    return Scaffold(
+      body: WebViewWidget(
+        controller: WebViewController()
+          ..loadRequest(Uri.parse("https://oriental-lounge.com/information/")),
+      ),
+    );
   }
 }

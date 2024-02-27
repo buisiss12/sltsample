@@ -1,5 +1,6 @@
 import 'package:sltsampleapp/screens/home_1/pages/addpost_page.dart';
 import 'package:sltsampleapp/screens/home_1/pages/drawer_page.dart';
+import 'package:sltsampleapp/screens/home_1/pages/notice_page.dart';
 import 'package:sltsampleapp/screens/home_1/pages/posts_page.dart';
 import 'package:sltsampleapp/screens/home_1/pages/profile_page.dart';
 import 'package:sltsampleapp/screens/home_1/pages/recent_message_page.dart';
@@ -50,7 +51,7 @@ class SolottePage extends HookWidget {
         const PostsPage(),
         const RecentMessagePage(),
         const AddPostPage(),
-        const Center(child: Text('お知らせ Page')),
+        const NoticePage(),
         const UserProfilePage(),
       ][currentIndex.value],
       bottomNavigationBar: NavigationBar(
