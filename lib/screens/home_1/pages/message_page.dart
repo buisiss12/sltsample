@@ -108,7 +108,7 @@ class MessagePage extends HookConsumerWidget {
                                 ),
                               ),
                               Text(
-                                dateTimeConverter(message.timestamp!),
+                                Utility.dateTimeConverter(message.timestamp!),
                                 style: TextStyle(
                                   color: isMe ? Colors.white70 : Colors.black54,
                                   fontSize: 10,

@@ -43,7 +43,7 @@ class OriAgPage extends HookWidget {
           ],
         ),
       ),
-      const PeopleInStorePage(),
+      PeopleInStorePage(),
       const Center(child: Text('チェックイン Page')),
       const Center(child: Text('メニュー Page')),
       const Center(child: Text('会計 Page')),

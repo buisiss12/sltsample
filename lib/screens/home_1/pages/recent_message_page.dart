@@ -22,7 +22,7 @@ class RecentMessagePage extends HookConsumerWidget {
             final otherUserUid =
                 message.userUid.firstWhere((uid) => uid != currentUser.uid);
             final getOtherUserUid = ref.watch(userDetailProvider(otherUserUid));
-            final getTime = dateTimeConverter(
+            final getTime = Utility.dateTimeConverter(
                 message.lastMessageTimestamp ?? DateTime.now());
 
             return getOtherUserUid.when(
@@ -32,10 +32,9 @@ class RecentMessagePage extends HookConsumerWidget {
                     radius: 30,
                     backgroundImage: user.profileImageUrl.isNotEmpty
                         ? NetworkImage(user.profileImageUrl)
-                        : null,
-                    child: user.profileImageUrl.isEmpty
-                        ? Image.asset('assets/images/300x300defaultprofile.png')
-                        : null,
+                        : const AssetImage(
+                                'assets/images/300x300defaultprofile.png')
+                            as ImageProvider,
                   ),
                   title: Text(user.nickName),
                   subtitle: Text(message.lastMessage),
@@ -53,8 +52,9 @@ class RecentMessagePage extends HookConsumerWidget {
                   },
                 ),
               ),
-              loading: () => const CircularProgressIndicator(),
-              error: (_, __) => const Text('Error loading user details'),
+              loading: () => const Center(child: CircularProgressIndicator()),
+              error: (_, __) =>
+                  const Center(child: Text('Error loading user details')),
             );
           },
         ),
