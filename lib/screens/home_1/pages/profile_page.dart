@@ -174,7 +174,7 @@ class EditUserProfilePage extends ConsumerWidget {
                                 : (user.profileImageUrl.isNotEmpty
                                         ? NetworkImage(user.profileImageUrl)
                                         : const AssetImage(
-                                            'assets/images/defaultprofile.png'))
+                                            'assets/images/300x300defaultprofile.png'))
                                     as ImageProvider,
                           ),
                           Container(

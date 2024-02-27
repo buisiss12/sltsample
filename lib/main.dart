@@ -30,7 +30,7 @@ class MyApp extends ConsumerWidget {
         stream: auth.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return const SolottePage();
+            return SolottePage();
           }
           return const LoginPage();
         },

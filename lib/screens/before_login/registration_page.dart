@@ -81,7 +81,7 @@ class RegistrationPage extends HookConsumerWidget {
             if (context.mounted) {
               Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (context) => const SolottePage()),
+                MaterialPageRoute(builder: (context) => SolottePage()),
                 (Route<dynamic> route) => false,
               );
             }

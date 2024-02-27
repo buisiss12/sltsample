@@ -50,7 +50,7 @@ class AddPostPage extends HookConsumerWidget {
 
         if (context.mounted) {
           Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => const SolottePage()));
+              MaterialPageRoute(builder: (context) => SolottePage()));
         }
       }
     }

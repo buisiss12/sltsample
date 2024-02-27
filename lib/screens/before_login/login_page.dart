@@ -91,7 +91,7 @@ class LoginPage extends HookConsumerWidget {
                                   Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => const SolottePage(),
+                                      builder: (context) => SolottePage(),
                                     ),
                                   );
                                 }
