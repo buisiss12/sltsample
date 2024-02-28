@@ -1,6 +1,6 @@
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:sltsampleapp/provider/provider.dart';
-import 'package:sltsampleapp/screens/home_1/solotte_page.dart';
+import 'package:sltsampleapp/screens/home_widget/home_page.dart';
 import 'package:sltsampleapp/utils/utility.dart';
 import 'package:sltsampleapp/models/post_model.dart';
 import 'package:flutter/material.dart';
@@ -49,8 +49,10 @@ class AddPostPage extends HookConsumerWidget {
             .update({'postId': postId});
 
         if (context.mounted) {
-          Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => SolottePage()));
+          Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => HomePage()),
+            (Route<dynamic> route) => false,
+          );
         }
       }
     }
@@ -58,6 +60,7 @@ class AddPostPage extends HookConsumerWidget {
     return GestureDetector(
       onTap: () => primaryFocus?.unfocus(),
       child: Scaffold(
+        appBar: AppBar(title: const Text('投稿')),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: SingleChildScrollView(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sltsampleapp/screens/home_1/pages/message_page.dart';
+import 'package:sltsampleapp/screens/home_widget/pages/message_page.dart';
 import 'package:sltsampleapp/utils/utility.dart';
 import 'package:sltsampleapp/provider/provider.dart';
 

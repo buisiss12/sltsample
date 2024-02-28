@@ -7,6 +7,7 @@ class NoticePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: const Text('お知らせ')),
       body: WebViewWidget(
         controller: WebViewController()
           ..loadRequest(Uri.parse("https://oriental-lounge.com/information/")),

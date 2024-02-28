@@ -1,8 +1,6 @@
-// ignore_for_file: avoid_print
-
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:sltsampleapp/models/user_model.dart';
-import 'package:sltsampleapp/screens/home_1/solotte_page.dart';
+import 'package:sltsampleapp/screens/home_widget/home_page.dart';
 import 'login_page.dart';
 import 'oldmember_page.dart';
 import '../../utils/utility.dart';
@@ -81,7 +79,7 @@ class RegistrationPage extends HookConsumerWidget {
             if (context.mounted) {
               Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (context) => SolottePage()),
+                MaterialPageRoute(builder: (context) => HomePage()),
                 (Route<dynamic> route) => false,
               );
             }

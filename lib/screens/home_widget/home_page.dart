@@ -1,29 +1,28 @@
-import 'package:sltsampleapp/screens/home_1/pages/addpost_page.dart';
-import 'package:sltsampleapp/screens/home_1/pages/drawer_page.dart';
-import 'package:sltsampleapp/screens/home_1/pages/notice_page.dart';
-import 'package:sltsampleapp/screens/home_1/pages/posts_page.dart';
-import 'package:sltsampleapp/screens/home_1/pages/profile_page.dart';
-import 'package:sltsampleapp/screens/home_1/pages/recent_message_page.dart';
-import 'package:sltsampleapp/screens/home_2/oriag_page.dart';
+import 'package:sltsampleapp/screens/home_widget/pages/settings_page.dart';
+import 'package:sltsampleapp/screens/home_widget/pages/notice_page.dart';
+import 'package:sltsampleapp/screens/home_widget/pages/posts_page.dart';
+import 'package:sltsampleapp/screens/home_widget/pages/profile_page.dart';
+import 'package:sltsampleapp/screens/home_widget/pages/recent_message_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:sltsampleapp/screens/home_widget/pages/people_in_store_page.dart';
 
-class SolottePage extends HookWidget {
-  SolottePage({super.key});
+class HomePage extends HookWidget {
+  HomePage({super.key});
 
   final labelsList = [
     '掲示板',
     'メッセージ',
-    '投稿',
-    'お知らせ',
-    'プロフィール',
+    '店内人数',
+    'メニュー',
+    'マイページ',
   ];
 
   final iconsList = [
     Icons.assignment,
     Icons.email,
-    Icons.edit_note,
-    Icons.notifications,
+    Icons.store,
+    Icons.restaurant_menu,
     Icons.person,
   ];
 
@@ -36,22 +35,30 @@ class SolottePage extends HookWidget {
         title: Text(labelsList[currentIndex.value]),
         actions: <Widget>[
           IconButton(
-            icon: Image.asset('assets/images/263x105oriag.png'),
+            icon: const Icon(Icons.notifications),
             onPressed: () {
-              Navigator.pushReplacement(
+              Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => OriAgPage()),
+                MaterialPageRoute(builder: (context) => const NoticePage()),
+              );
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const SettingsPage()),
               );
             },
           ),
         ],
       ),
-      drawer: const DrawerPage(),
       body: <Widget>[
         const PostsPage(),
         const RecentMessagePage(),
-        const AddPostPage(),
-        const NoticePage(),
+        const PeopleInStorePage(),
+        const Center(child: Text('menu qr')),
         const UserProfilePage(),
       ][currentIndex.value],
       bottomNavigationBar: NavigationBar(

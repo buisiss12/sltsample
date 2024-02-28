@@ -6,26 +6,18 @@ import 'package:sltsampleapp/screens/before_login/login_page.dart';
 import 'package:sltsampleapp/utils/utility.dart';
 import 'package:flutter/material.dart';
 
-class DrawerPage extends ConsumerWidget {
-  const DrawerPage({Key? key}) : super(key: key);
+class SettingsPage extends ConsumerWidget {
+  const SettingsPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final auth = ref.watch(firebaseAuthProvider);
     final currentUser = auth.currentUser;
 
-    return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
+    return Scaffold(
+      appBar: AppBar(title: const Text('設定')),
+      body: ListView(
         children: <Widget>[
-          const SizedBox(
-            height: 120,
-            child: DrawerHeader(child: Center(child: Text('設定'))),
-          ),
-          ListTile(
-            title: const Text('各種設定'),
-            onTap: () {},
-          ),
           const Divider(),
           ListTile(
             title: const Text('ログアウト'),

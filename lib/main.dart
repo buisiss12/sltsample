@@ -1,6 +1,4 @@
-// ignore_for_file: avoid_print
-
-import 'package:sltsampleapp/screens/home_1/solotte_page.dart';
+import 'package:sltsampleapp/screens/home_widget/home_page.dart';
 import 'screens/before_login/login_page.dart';
 import 'provider/provider.dart';
 import 'firebase_options/firebase_options.dart';
@@ -11,7 +9,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -24,13 +24,13 @@ class MyApp extends ConsumerWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'solotteサンプル',
+      title: 'サンプル',
       theme: ThemeData.dark(),
       home: StreamBuilder<User?>(
         stream: auth.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return SolottePage();
+            return HomePage();
           }
           return const LoginPage();
         },
