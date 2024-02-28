@@ -1,7 +1,7 @@
 import 'package:sltsampleapp/screens/home_widget/pages/settings_page.dart';
 import 'package:sltsampleapp/screens/home_widget/pages/notice_page.dart';
 import 'package:sltsampleapp/screens/home_widget/pages/posts_page.dart';
-import 'package:sltsampleapp/screens/home_widget/pages/profile_page.dart';
+import 'package:sltsampleapp/screens/home_widget/pages/my_page.dart';
 import 'package:sltsampleapp/screens/home_widget/pages/recent_message_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -59,7 +59,7 @@ class HomePage extends HookWidget {
         const RecentMessagePage(),
         const PeopleInStorePage(),
         const Center(child: Text('menu qr')),
-        const UserProfilePage(),
+        const MyPage(),
       ][currentIndex.value],
       bottomNavigationBar: NavigationBar(
         selectedIndex: currentIndex.value,

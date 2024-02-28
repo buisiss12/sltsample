@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sltsampleapp/provider/provider.dart';
 import 'package:sltsampleapp/screens/before_login/login_page.dart';

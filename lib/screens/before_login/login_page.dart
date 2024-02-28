@@ -110,8 +110,7 @@ class LoginPage extends HookConsumerWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const ForgetPwPage(),
-                      ),
+                          builder: (context) => const ForgetPwPage()),
                     );
                   },
                   child: const Text(
