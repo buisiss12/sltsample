@@ -54,28 +54,32 @@ class RegistrationPage extends HookConsumerWidget {
               );
             },
           );
-          final PhoneAuthCredential credential = PhoneAuthProvider.credential(
-              verificationId: verificationId, smsCode: smsCode);
-          await auth.signInWithCredential(credential);
+
           try {
-            await auth.createUserWithEmailAndPassword(
-              email: "${phoneNumber.value}@test.com",
-              password: passWord.value,
+            //電話番号認証:現状ログイン時は"新規会員登録"ページから上書きという形になっている。
+            final credential = PhoneAuthProvider.credential(
+                verificationId: verificationId, smsCode: smsCode);
+            await auth.signInWithCredential(credential);
+
+            //*非推奨:電話番号+パスワードで登録する際は下記コードも加える。（電話番号をメールアドレスとして登録、Authには電話番号認証、メール認証の二つのアカウントが作成される。ユーザーの識別"UID"は全て後者で管理される)　一応動く
+            // await auth.createUserWithEmailAndPassword(
+            //   email: "${phoneNumber.value}@test.com",
+            //   password: passWord.value,
+            // );
+
+            final userModel = UserModel(
+              userUid: auth.currentUser!.uid,
+              profileImageUrl: '',
+              realName: realName.value,
+              nickName: '',
+              gender: gender.value,
+              birthday: birthDay.value!,
+              height: '',
+              job: '',
+              residence: '',
             );
-            if (birthDay.value != null) {
-              final userModel = UserModel(
-                userUid: auth.currentUser!.uid,
-                profileImageUrl: '',
-                realName: realName.value,
-                nickName: '',
-                gender: gender.value,
-                birthday: birthDay.value!,
-                height: '',
-                job: '',
-                residence: '',
-              );
-              await ref.read(userStateAPIProvider).createUser(userModel);
-            }
+            await ref.read(userStateAPIProvider).createUser(userModel);
+
             if (context.mounted) {
               Navigator.pushAndRemoveUntil(
                 context,

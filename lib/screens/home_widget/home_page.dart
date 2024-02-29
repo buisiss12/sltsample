@@ -58,7 +58,7 @@ class HomePage extends HookWidget {
         const PostsPage(),
         const RecentMessagePage(),
         const PeopleInStorePage(),
-        const Center(child: Text('menu qr')),
+        const Center(child: Text('メニュー')),
         const MyPage(),
       ][currentIndex.value],
       bottomNavigationBar: NavigationBar(

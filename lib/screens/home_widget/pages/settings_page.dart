@@ -25,13 +25,19 @@ class SettingsPage extends ConsumerWidget {
                 "ログアウト",
                 "ログアウトしますか？",
                 () async {
-                  await auth.signOut();
-                  if (context.mounted) {
-                    Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(
-                          builder: (context) => const LoginPage()),
-                      (Route<dynamic> route) => false,
-                    );
+                  try {
+                    await auth.signOut();
+                    if (context.mounted) {
+                      Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(
+                            builder: (context) => const LoginPage()),
+                        (Route<dynamic> route) => false,
+                      );
+                    }
+                  } catch (e) {
+                    if (context.mounted) {
+                      Utility.showSnackBarAPI(context, 'ログアウト失敗: $e');
+                    }
                   }
                 },
               );
@@ -47,14 +53,20 @@ class SettingsPage extends ConsumerWidget {
                   "アカウント削除",
                   "本当にアカウントを削除しますか？",
                   () async {
-                    await currentUser.delete();
-                    await auth.signOut();
-                    if (context.mounted) {
-                      Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(
-                            builder: (context) => const LoginPage()),
-                        (Route<dynamic> route) => false,
-                      );
+                    try {
+                      await currentUser.delete();
+                      await auth.signOut();
+                      if (context.mounted) {
+                        Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                              builder: (context) => const LoginPage()),
+                          (Route<dynamic> route) => false,
+                        );
+                      }
+                    } catch (e) {
+                      if (context.mounted) {
+                        Utility.showSnackBarAPI(context, 'アカウント削除失敗: $e');
+                      }
                     }
                   },
                 );
