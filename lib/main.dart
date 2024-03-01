@@ -1,4 +1,3 @@
-import 'theme/color_schemes.g.dart';
 import 'package:sltsampleapp/screens/home_widget/home_page.dart';
 import 'screens/before_login/login_page.dart';
 import 'provider/provider.dart';
@@ -26,7 +25,7 @@ class MyApp extends ConsumerWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'サンプル',
-      theme: ThemeData(colorScheme: darkColorScheme),
+      theme: ThemeData.dark(),
       home: StreamBuilder<User?>(
         stream: auth.authStateChanges(),
         builder: (context, snapshot) {
