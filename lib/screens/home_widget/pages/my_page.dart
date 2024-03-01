@@ -129,7 +129,7 @@ class MyPage extends ConsumerWidget {
                       ),
                       ConstrainedBox(
                         constraints: const BoxConstraints(
-                            maxHeight: 500), // 高さ指定しないと無限にレンダリングされるためエラーになる
+                            maxHeight: 800), // 高さ指定しないと無限にレンダリングされるためエラーになる
                         child: const TabBarView(
                           children: [
                             MemberRankTab(),

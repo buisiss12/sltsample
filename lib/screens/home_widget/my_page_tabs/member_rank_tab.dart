@@ -25,7 +25,7 @@ class MemberRankTab extends StatelessWidget {
             child: Stack(
               alignment: Alignment.center,
               children: <Widget>[
-                Image.asset('assets/images/450x250membercard.png'),
+                Image.asset('assets/images/350x219membercard.png'),
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
@@ -45,6 +45,20 @@ class MemberRankTab extends StatelessWidget {
                   ],
                 ),
               ],
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              Utility.showDialogAPI(
+                context,
+                "会員ランク",
+                "来店頻度、時間、アンケート回答数などにより評点が計算されます。\nランクが高くなると様々な特典を受け取ることができます。\n評点の計算方法などは随時アップデートされますので、急な点数の上下が発生することがありますがご了承ください。",
+                () {},
+              );
+            },
+            child: const Text(
+              '会員ランクについて',
+              style: TextStyle(decoration: TextDecoration.underline),
             ),
           ),
           const SizedBox(height: 16),
