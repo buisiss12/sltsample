@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+// このページのパスワードの再設定について。存在するメールアドレスでないと、パスワードの
+// リセットメールは送信できない。もしパスワードのリセットをするなら、以前共有した、
+// 通常のメールアドレスパスワードに直すべき。
+
 // このページは現在ロジックは未実装、UIのみ実装
 // ロジックは電話番号宛に認証番号を送信し、成功した場合は新しいPWを再設定できる様にする
 

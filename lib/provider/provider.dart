@@ -54,7 +54,7 @@ final getPostedUserUidProvider =
     FutureProvider.family<UserModel, String>((ref, postedUserUid) async {
   final firestore = ref.watch(firebaseFirestoreProvider);
   final snapshot = await firestore.collection('users').doc(postedUserUid).get();
-  return UserModel.fromJson(snapshot.data()!);
+  return UserModel.fromJson(snapshot.data() ?? {});// ! -> ?? {}に変更
 });
 
 final postsStreamProvider = StreamProvider.autoDispose<List<PostModel>>((ref) {

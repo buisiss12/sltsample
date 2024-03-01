@@ -15,8 +15,6 @@ class OldMemberPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final gender = useState<String>('');
 
-    //final store = ref.watch(storeProvider);
-
     return GestureDetector(
       onTap: () => primaryFocus?.unfocus(),
       child: Scaffold(

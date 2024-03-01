@@ -22,6 +22,7 @@ class LoginPage extends HookConsumerWidget {
     final phoneNumber = useState<String>('');
     final passWord = useState<String>('');
     final hidePassword = useState<bool>(true);
+    final utility = Utility();
 
     return GestureDetector(
       onTap: () => primaryFocus?.unfocus(),
@@ -81,6 +82,8 @@ class LoginPage extends HookConsumerWidget {
                       phoneNumber.value.isNotEmpty && passWord.value.isNotEmpty
                           ? () async {
                               try {
+                                // @test.comという存在しないであろうメールアドレスなので、この機能は使えない。
+                                // signInWithEmailAndPassword使うなら、通常のログインにするべき。
                                 await auth.signInWithEmailAndPassword(
                                   email: '${phoneNumber.value}@test.com',
                                   password: passWord.value,
@@ -97,7 +100,7 @@ class LoginPage extends HookConsumerWidget {
                                 }
                               } on FirebaseAuthException catch (e) {
                                 if (context.mounted) {
-                                  Utility.showSnackBarAPI(
+                                  utility.showSnackBarAPI(
                                       context, 'ログイン失敗: ${e.message}');
                                 }
                               }

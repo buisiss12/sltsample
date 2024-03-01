@@ -97,7 +97,7 @@ class Utility {
     );
   }
 
-  static Future<void> selectMultiPrefectureDialog(BuildContext context,
+  Future<void> selectMultiPrefectureDialog(BuildContext context,
       ValueNotifier<List<String>> selectedPrefecture) async {
     final List<String> selectedValues = List.from(selectedPrefecture.value);
     await showDialog(
@@ -157,7 +157,7 @@ class Utility {
     );
   }
 
-  static birthdayToAgeConverter(DateTime birthday) {
+  int birthdayToAgeConverter(DateTime birthday) {
     DateTime currentDate = DateTime.now();
     int age = currentDate.year - birthday.year;
     if (currentDate.month < birthday.month ||
@@ -168,7 +168,7 @@ class Utility {
     return age;
   }
 
-  static void showSnackBarAPI(BuildContext context, String message) {
+  void showSnackBarAPI(BuildContext context, String message) {
     final snackBar = SnackBar(content: Text(message));
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
