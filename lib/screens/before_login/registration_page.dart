@@ -63,7 +63,7 @@ class RegistrationPage extends HookConsumerWidget {
 
             //*非推奨:電話番号+パスワードで登録する際は下記コードも加える。（電話番号をメールアドレスとして登録、Authには電話番号認証、メール認証の二つのアカウントが作成される。ユーザーの識別"UID"は全て後者で管理される)　一応動く
             // await auth.createUserWithEmailAndPassword(
-            //   email: "${phoneNumber.value}@test.com",
+            //   email: "${phoneNumber.value}@asEmail.com",
             //   password: passWord.value,
             // );
 
