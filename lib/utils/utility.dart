@@ -52,6 +52,49 @@ class Utility {
     '沖縄県',
   ];
 
+  static const List<String> shops = [
+    'ag札幌',
+    'ag仙台',
+    'ソウル カンナム',
+    'ag金沢',
+    '宇都宮',
+    '大宮',
+    'ag上野',
+    '上野',
+    '新宿',
+    'ag渋谷',
+    '渋谷本店',
+    '渋谷駅前',
+    '恵比寿',
+    '町田',
+    '横浜',
+    '静岡',
+    '浜松',
+    '名古屋 栄',
+    '名古屋 錦',
+    'ag名古屋',
+    '京都',
+    '梅田',
+    '茶屋町',
+    '心斎橋',
+    '難波',
+    '神戸',
+    '岡山',
+    '広島',
+    '福岡',
+    '小倉',
+    '熊本',
+    '宮崎',
+    '鹿児島',
+    'ag沖縄'
+  ];
+  static String regularBenefits = ("Regular: チャージ無料");
+  static String rubyBenefits = ("Ruby: 最初の30分無料(20時までに入店された方&2名以上)");
+  static String sapphireBenefits =
+      ("Sapphire: 平日VIP ROOM半額\n*予約、お部屋の指定は不可\n*シャンパン等のサービス品提供は一切ございません\n*一般席への途中移動をお願いする可能性がございます");
+  static String diamondBenefits =
+      ("Diamond: 毎日22時までVIP ROOM無料\n*予約、お部屋の指定は不可\n*シャンパン等のサービス品提供は一切ございません\n*一般席への途中移動をお願いする可能性がございます");
+
   static String dateTimeConverter(DateTime postTime) {
     final currentTime = DateTime.now();
     final difference = currentTime.difference(postTime);
