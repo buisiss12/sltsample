@@ -21,30 +21,29 @@ class MemberRankTab extends StatelessWidget {
       body: Column(
         children: [
           const SizedBox(height: 16),
-          Center(
-            child: Stack(
-              alignment: Alignment.center,
-              children: <Widget>[
-                Image.asset('assets/images/350x219membercard.png'),
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    const Text(
-                      '会員ランク: Regular',
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: Colors.white,
+          Flexible(
+            child: Center(
+              child: Stack(
+                alignment: Alignment.center,
+                children: <Widget>[
+                  Image.asset('assets/images/350x219membercard.png'),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      const Flexible(
+                        child: Text('会員ランク: Regular'),
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      //会員のランクに合わせてアイコンの数を増減（未実装）
-                      children: buildDiamondIcons(3),
-                    )
-                  ],
-                ),
-              ],
+                      Flexible(
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          //アイコンの数指定
+                          children: buildDiamondIcons(3),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
           TextButton(
@@ -62,7 +61,7 @@ class MemberRankTab extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          Expanded(
+          Flexible(
             child: ListView.builder(
               itemCount: Utility.shops.length,
               itemBuilder: (context, index) {
