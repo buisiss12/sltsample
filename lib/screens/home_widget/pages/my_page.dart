@@ -127,8 +127,9 @@ class MyPage extends ConsumerWidget {
                         ),
                       ),
                       const SliverAppBar(
-                        pinned: true,
+                        pinned: true, //trueの場合、スクロールしても上にBarが残る
                         floating: true,
+                        expandedHeight: 10, //barの高さ
                         bottom: TabBar(
                           tabs: [
                             Tab(text: '会員ランク'),
@@ -139,11 +140,11 @@ class MyPage extends ConsumerWidget {
                       ),
                     ];
                   },
-                  body: TabBarView(
+                  body: const TabBarView(
                     children: [
-                      const MemberRankTab(),
+                      MemberRankTab(),
                       SpecialMemberTab(),
-                      const HonorTab(),
+                      HonorTab(),
                     ],
                   ),
                 ),

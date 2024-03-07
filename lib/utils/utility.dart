@@ -88,12 +88,12 @@ class Utility {
     '鹿児島',
     'ag沖縄'
   ];
-  static String regularBenefits = ("Regular: チャージ無料");
-  static String rubyBenefits = ("Ruby: 最初の30分無料(20時までに入店された方&2名以上)");
+  static String regularBenefits = ("チャージ無料");
+  static String rubyBenefits = ("最初の30分無料(20時までに入店された方&2名以上)");
   static String sapphireBenefits =
-      ("Sapphire: 平日VIP ROOM半額\n*予約、お部屋の指定は不可\n*シャンパン等のサービス品提供は一切ございません\n*一般席への途中移動をお願いする可能性がございます");
+      ("平日VIP ROOM半額\n*予約、お部屋の指定は不可\n*シャンパン等のサービス品提供は一切ございません\n*一般席への途中移動をお願いする可能性がございます");
   static String diamondBenefits =
-      ("Diamond: 毎日22時までVIP ROOM無料\n*予約、お部屋の指定は不可\n*シャンパン等のサービス品提供は一切ございません\n*一般席への途中移動をお願いする可能性がございます");
+      ("毎日22時までVIP ROOM無料\n*予約、お部屋の指定は不可\n*シャンパン等のサービス品提供は一切ございません\n*一般席への途中移動をお願いする可能性がございます");
 
   static String dateTimeConverter(DateTime postTime) {
     final currentTime = DateTime.now();
