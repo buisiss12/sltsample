@@ -22,6 +22,7 @@ class LoginPage extends HookConsumerWidget {
     final phoneNumber = useState<String>('');
     final passWord = useState<String>('');
     final hidePassword = useState<bool>(true);
+    final utility = Utility();
 
     return GestureDetector(
       onTap: () => primaryFocus?.unfocus(),
@@ -97,7 +98,7 @@ class LoginPage extends HookConsumerWidget {
                                 }
                               } on FirebaseAuthException catch (e) {
                                 if (context.mounted) {
-                                  Utility.showSnackBarAPI(
+                                  utility.showSnackBarAPI(
                                       context, 'ログイン失敗: ${e.message}');
                                 }
                               }

@@ -11,6 +11,7 @@ class SettingsPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final auth = ref.watch(firebaseAuthProvider);
     final currentUser = auth.currentUser;
+    final utility = Utility();
 
     return Scaffold(
       appBar: AppBar(title: const Text('設定')),
@@ -36,7 +37,7 @@ class SettingsPage extends ConsumerWidget {
                     }
                   } catch (e) {
                     if (context.mounted) {
-                      Utility.showSnackBarAPI(context, 'ログアウト失敗: $e');
+                      utility.showSnackBarAPI(context, 'ログアウト失敗: $e');
                     }
                   }
                 },
@@ -65,7 +66,7 @@ class SettingsPage extends ConsumerWidget {
                       }
                     } catch (e) {
                       if (context.mounted) {
-                        Utility.showSnackBarAPI(context, 'アカウント削除失敗: $e');
+                        utility.showSnackBarAPI(context, 'アカウント削除失敗: $e');
                       }
                     }
                   },

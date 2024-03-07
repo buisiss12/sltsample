@@ -14,6 +14,7 @@ class AddPostPage extends HookConsumerWidget {
     final postTitle = useState('');
 
     final selectedPrefecture = useState<List<String>>([]);
+    final utility = Utility();
 
     Future<void> addPost() async {
       final auth = ref.watch(firebaseAuthProvider);
@@ -27,7 +28,7 @@ class AddPostPage extends HookConsumerWidget {
         final userNickname = userDoc.data()?['nickName'];
         if (userNickname == null || userNickname.isEmpty) {
           if (context.mounted) {
-            Utility.showSnackBarAPI(context, 'ニックネームを入力してください');
+            utility.showSnackBarAPI(context, 'ニックネームを入力してください');
           }
           return;
         }
@@ -81,7 +82,7 @@ class AddPostPage extends HookConsumerWidget {
                   controller: TextEditingController(
                       text: selectedPrefecture.value.join(', ')),
                   readOnly: true,
-                  onTap: () => Utility.selectMultiPrefectureDialog(
+                  onTap: () => utility.selectMultiPrefectureDialog(
                     context,
                     selectedPrefecture,
                   ),

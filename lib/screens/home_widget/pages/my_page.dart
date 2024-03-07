@@ -13,6 +13,7 @@ class MyPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final userStateFuture = ref.watch(userStateFutureProvider);
+    final utility = Utility();
 
     return Scaffold(
       body: Padding(
@@ -21,7 +22,7 @@ class MyPage extends ConsumerWidget {
           data: (users) {
             final user = users.isNotEmpty ? users.first : null;
             if (user != null) {
-              final age = Utility.birthdayToAgeConverter(user.birthday);
+              final age = utility.birthdayToAgeConverter(user.birthday);
               return DefaultTabController(
                 length: 3,
                 child: NestedScrollView(

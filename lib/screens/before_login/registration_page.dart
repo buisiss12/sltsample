@@ -23,13 +23,14 @@ class RegistrationPage extends HookConsumerWidget {
     final realName = useState<String>('');
     final gender = useState<String>('');
     final birthDay = useState<DateTime?>(null);
+    final utility = Utility();
 
     Future<void> registration() async {
       await auth.verifyPhoneNumber(
         phoneNumber: "+81${phoneNumber.value}",
         verificationCompleted: (PhoneAuthCredential credential) async {},
         verificationFailed: (FirebaseAuthException e) {
-          Utility.showSnackBarAPI(context, '認証に失敗しました: ${e.message}');
+          utility.showSnackBarAPI(context, '認証に失敗しました: ${e.message}');
         },
 //iOSの場合resendTokenは常にnull
         codeSent: (String verificationId, int? resendToken) async {
@@ -62,10 +63,10 @@ class RegistrationPage extends HookConsumerWidget {
             await auth.signInWithCredential(credential);
 
             //*非推奨:電話番号+パスワードで登録する際は下記コードも加える。（電話番号をメールアドレスとして登録、Authには電話番号認証、メール認証の二つのアカウントが作成される。ユーザーの識別"UID"は全て後者で管理される)　一応動く
-            // await auth.createUserWithEmailAndPassword(
-            //   email: "${phoneNumber.value}@asEmail.com",
-            //   password: passWord.value,
-            // );
+            await auth.createUserWithEmailAndPassword(
+              email: "${phoneNumber.value}@asEmail.com",
+              password: passWord.value,
+            );
 
             final userModel = UserModel(
               userUid: auth.currentUser!.uid,
@@ -89,7 +90,7 @@ class RegistrationPage extends HookConsumerWidget {
             }
           } on FirebaseAuthException catch (e) {
             if (context.mounted) {
-              Utility.showSnackBarAPI(context, 'アカウント作成に失敗しました: ${e.message}');
+              utility.showSnackBarAPI(context, 'アカウント作成に失敗しました: ${e.message}');
             }
           }
         },

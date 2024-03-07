@@ -22,6 +22,7 @@ class EditProfilePage extends ConsumerWidget {
 
     final imagePicker = ImagePicker();
     final selectedImage = ref.watch(selectedProfileImageProvider);
+    final utility = Utility();
 
     return GestureDetector(
       onTap: () => primaryFocus?.unfocus(),
@@ -141,7 +142,7 @@ class EditProfilePage extends ConsumerWidget {
                   onPressed: () async {
                     if (nicknameController.text.trim().isEmpty) {
                       if (context.mounted) {
-                        Utility.showSnackBarAPI(context, 'ニックネームを入力してください');
+                        utility.showSnackBarAPI(context, 'ニックネームを入力してください');
                       }
                       return;
                     }

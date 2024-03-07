@@ -15,6 +15,7 @@ class PostsPage extends HookConsumerWidget {
     final firestore = ref.watch(firebaseFirestoreProvider);
 
     final postsStream = ref.watch(postsStreamProvider);
+    final utility = Utility();
 
     return Scaffold(
       body: postsStream.when(
@@ -68,7 +69,7 @@ class PostsPage extends HookConsumerWidget {
                                     if (userNickname == null ||
                                         userNickname.isEmpty) {
                                       if (context.mounted) {
-                                        Utility.showSnackBarAPI(
+                                        utility.showSnackBarAPI(
                                             context, 'ニックネームを入力してください');
                                       }
                                       return;
