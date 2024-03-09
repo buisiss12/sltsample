@@ -1,4 +1,4 @@
-import 'package:sltsampleapp/screens/home_widget/home_page.dart';
+import 'package:sltsampleapp/screens/home.dart';
 import 'screens/before_login/login_page.dart';
 import 'provider/provider.dart';
 import 'firebase_options/firebase_options.dart';
@@ -30,7 +30,7 @@ class MyApp extends ConsumerWidget {
         stream: auth.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return HomePage();
+            return Home();
           }
           return const LoginPage();
         },

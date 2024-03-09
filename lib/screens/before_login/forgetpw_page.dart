@@ -17,7 +17,6 @@ class ForgetPwPage extends ConsumerWidget {
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               const Text(
                 'パスワードを忘れてしまった場合',

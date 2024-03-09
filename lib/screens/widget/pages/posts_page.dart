@@ -1,7 +1,7 @@
 import 'package:sltsampleapp/models/user_model.dart';
 import 'package:sltsampleapp/provider/provider.dart';
-import 'package:sltsampleapp/screens/home_widget/pages/addpost_page.dart';
-import 'package:sltsampleapp/screens/home_widget/pages/message_page.dart';
+import 'package:sltsampleapp/screens/widget/pages/addpost_page.dart';
+import 'package:sltsampleapp/screens/widget/pages/message_page.dart';
 import 'package:sltsampleapp/utils/utility.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';

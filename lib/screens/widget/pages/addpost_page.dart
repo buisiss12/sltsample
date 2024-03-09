@@ -1,6 +1,6 @@
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:sltsampleapp/provider/provider.dart';
-import 'package:sltsampleapp/screens/home_widget/home_page.dart';
+import 'package:sltsampleapp/screens/home.dart';
 import 'package:sltsampleapp/utils/utility.dart';
 import 'package:sltsampleapp/models/post_model.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +51,7 @@ class AddPostPage extends HookConsumerWidget {
 
         if (context.mounted) {
           Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => HomePage()),
+            MaterialPageRoute(builder: (context) => Home()),
             (Route<dynamic> route) => false,
           );
         }

@@ -2,7 +2,7 @@
 
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sltsampleapp/screens/home_widget/home_page.dart';
+import 'package:sltsampleapp/screens/home.dart';
 import 'package:sltsampleapp/utils/utility.dart';
 import 'registration_page.dart';
 import 'forgetpw_page.dart';
@@ -92,7 +92,7 @@ class LoginPage extends HookConsumerWidget {
                                   Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => HomePage(),
+                                      builder: (context) => Home(),
                                     ),
                                   );
                                 }

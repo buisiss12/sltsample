@@ -25,7 +25,6 @@ class OldMemberPage extends HookConsumerWidget {
           padding: const EdgeInsets.all(16.0),
           child: SingleChildScrollView(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 const Text(
                   '会員ID(数字４桁以上)',
@@ -119,52 +118,4 @@ class OldMemberPage extends HookConsumerWidget {
       ),
     );
   }
-
-  // void _selectStorePicker(BuildContext context, WidgetRef ref) {
-  //   Picker(
-  //       adapter: PickerDataAdapter<String>(
-  //         pickerData: [
-  //           "ag札幌",
-  //           "ag仙台",
-  //           "ソウル カンナム",
-  //           "ag金沢",
-  //           "宇都宮",
-  //           "大宮",
-  //           "ag上野",
-  //           "上野",
-  //           "新宿",
-  //           "ag渋谷",
-  //           "渋谷本店",
-  //           "渋谷駅前",
-  //           "恵比寿",
-  //           "町田",
-  //           "横浜",
-  //           "静岡",
-  //           "浜松",
-  //           "名古屋 栄",
-  //           "名古屋 錦",
-  //           "ag名古屋",
-  //           "京都",
-  //           "梅田",
-  //           "茶屋町",
-  //           "心斎橋",
-  //           "難波",
-  //           "神戸",
-  //           "岡山",
-  //           "広島",
-  //           "福岡",
-  //           "小倉",
-  //           "熊本",
-  //           "宮崎",
-  //           "鹿児島",
-  //           "ag沖縄"
-  //         ],
-  //       ),
-  //       hideHeader: true,
-  //       title: const Text("店舗を選択"),
-  //       onConfirm: (Picker picker, List value) {
-  //         ref.read(storeProvider.notifier).state =
-  //             picker.getSelectedValues()[0];
-  //       }).showModal(context);
-  // }
 }

@@ -1,14 +1,14 @@
-import 'package:sltsampleapp/screens/home_widget/pages/settings_page.dart';
-import 'package:sltsampleapp/screens/home_widget/pages/notice_page.dart';
-import 'package:sltsampleapp/screens/home_widget/pages/posts_page.dart';
-import 'package:sltsampleapp/screens/home_widget/pages/my_page.dart';
-import 'package:sltsampleapp/screens/home_widget/pages/recent_message_page.dart';
+import 'package:sltsampleapp/screens/widget/pages/settings_page.dart';
+import 'package:sltsampleapp/screens/widget/pages/notice_page.dart';
+import 'package:sltsampleapp/screens/widget/pages/posts_page.dart';
+import 'package:sltsampleapp/screens/widget/pages/my_page.dart';
+import 'package:sltsampleapp/screens/widget/pages/recent_message_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:sltsampleapp/screens/home_widget/pages/people_in_store_page.dart';
+import 'package:sltsampleapp/screens/widget/pages/people_in_store_page.dart';
 
-class HomePage extends HookWidget {
-  HomePage({super.key});
+class Home extends HookWidget {
+  Home({super.key});
 
   final labelsList = [
     '掲示板',
