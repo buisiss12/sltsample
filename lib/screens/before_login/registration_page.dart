@@ -48,8 +48,8 @@ class RegistrationPage extends HookConsumerWidget {
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   ),
                   ElevatedButton(
-                    child: const Text("認証"),
                     onPressed: () => Navigator.pop(context),
+                    child: const Text("認証"),
                   ),
                 ],
               );

@@ -1,11 +1,10 @@
 import 'package:sltsampleapp/screens/widget/pages/settings_page.dart';
-import 'package:sltsampleapp/screens/widget/pages/notice_page.dart';
 import 'package:sltsampleapp/screens/widget/pages/posts_page.dart';
 import 'package:sltsampleapp/screens/widget/pages/my_page.dart';
 import 'package:sltsampleapp/screens/widget/pages/recent_message_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:sltsampleapp/screens/widget/pages/people_in_store_page.dart';
+import 'package:sltsampleapp/screens/widget/pages/webview_page.dart';
 
 class Home extends HookWidget {
   Home({super.key});
@@ -39,7 +38,11 @@ class Home extends HookWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const NoticePage()),
+                MaterialPageRoute(
+                  builder: (context) => const WebviewPage(
+                    url: 'https://oriental-lounge.com/information/',
+                  ),
+                ),
               );
             },
           ),
@@ -57,7 +60,7 @@ class Home extends HookWidget {
       body: <Widget>[
         const PostsPage(),
         const RecentMessagePage(),
-        const PeopleInStorePage(),
+        const WebviewPage(url: 'https://oriental-lounge.com/#shop'),
         const Center(child: Text('メニュー')),
         const MyPage(),
       ][currentIndex.value],

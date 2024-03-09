@@ -1,5 +1,6 @@
 import 'package:sltsampleapp/provider/provider.dart';
 import 'package:sltsampleapp/screens/widget/pages/edit_profile_page.dart';
+import 'package:sltsampleapp/screens/widget/pages/webview_page.dart';
 import 'package:sltsampleapp/utils/utility.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -248,7 +249,11 @@ class SpecialMemberTab extends StatelessWidget {
       shrinkWrap: true,
       children: [
         const SizedBox(height: 16),
-        const Center(child: Text("各会員")),
+        const Center(
+            child: Text(
+          "各会員",
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        )),
         SizedBox(
           height: 150,
           child: PageView(
@@ -259,9 +264,18 @@ class SpecialMemberTab extends StatelessWidget {
             ],
           ),
         ),
-        const ElevatedButton(
-          onPressed: null,
-          child: Text("会員に入会する"),
+        ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const WebviewPage(
+                  url: 'https://oriental-lounge.com/members/',
+                ),
+              ),
+            );
+          },
+          child: const Text("会員に入会する"),
         ),
       ],
     );
