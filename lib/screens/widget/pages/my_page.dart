@@ -4,6 +4,7 @@ import 'package:sltsampleapp/screens/widget/pages/webview_page.dart';
 import 'package:sltsampleapp/utils/utility.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
 class MyPage extends ConsumerWidget {
   const MyPage({super.key});
@@ -130,7 +131,7 @@ class MyPage extends ConsumerWidget {
                         expandedHeight: 10, //barの高さ
                         bottom: TabBar(
                           tabs: [
-                            Tab(text: '会員ランク'),
+                            Tab(text: 'ランク'),
                             Tab(text: '特別会員'),
                             Tab(text: '称号'),
                           ],
@@ -139,6 +140,7 @@ class MyPage extends ConsumerWidget {
                     ];
                   },
                   body: const TabBarView(
+                    physics: NeverScrollableScrollPhysics(),
                     children: [
                       MemberRankTab(),
                       SpecialMemberTab(),
@@ -167,7 +169,7 @@ class MemberRankTab extends StatelessWidget {
       count,
       (index) => const Icon(
         Icons.diamond,
-        color: Colors.white,
+        color: Colors.black,
         size: 40,
       ),
     );
@@ -182,10 +184,13 @@ class MemberRankTab extends StatelessWidget {
         Stack(
           alignment: Alignment.center,
           children: <Widget>[
-            Image.asset('assets/images/membercard.png'),
+            Image.asset('assets/images/300x188rank.png'),
             Column(
               children: <Widget>[
-                const Text('会員ランク: Regular'),
+                const Text(
+                  'ランク: Regular',
+                  style: TextStyle(color: Colors.black),
+                ),
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   //アイコンの数指定
@@ -199,14 +204,23 @@ class MemberRankTab extends StatelessWidget {
           onPressed: () {
             Utility.showDialogAPI(
               context,
-              "会員ランク",
+              "ランク",
               "来店頻度、時間、アンケート回答数などにより評点が計算されます。\nランクが高くなると様々な特典を受け取ることができます。\n評点の計算方法などは随時アップデートされますので、急な点数の上下が発生することがありますがご了承ください。",
               () {},
             );
           },
-          child: const Text(
-            '会員ランクについて',
-            style: TextStyle(decoration: TextDecoration.underline),
+          child: const Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Icon(
+                Icons.help_outline,
+                size: 20,
+              ),
+              Text(
+                'ランクについて',
+                style: TextStyle(decoration: TextDecoration.underline),
+              ),
+            ],
           ),
         ),
         const SizedBox(height: 16),
@@ -216,20 +230,20 @@ class MemberRankTab extends StatelessWidget {
                 title: Text(shop),
                 children: [
                   ListTile(
-                    title: const Text('Regular会員'),
-                    subtitle: Text(Utility.regularBenefits),
+                    title: const Text('Regularランク'),
+                    subtitle: Text(Utility.regularRank),
                   ),
                   ListTile(
-                    title: const Text('Ruby会員'),
-                    subtitle: Text(Utility.rubyBenefits),
+                    title: const Text('Rubyランク'),
+                    subtitle: Text(Utility.rubyRank),
                   ),
                   ListTile(
-                    title: const Text('sapphire会員'),
-                    subtitle: Text(Utility.sapphireBenefits),
+                    title: const Text('sapphireランク'),
+                    subtitle: Text(Utility.sapphireRank),
                   ),
                   ListTile(
-                    title: const Text('diamond会員'),
-                    subtitle: Text(Utility.diamondBenefits),
+                    title: const Text('diamondランク'),
+                    subtitle: Text(Utility.diamondRank),
                   ),
                 ],
               ),
@@ -240,30 +254,44 @@ class MemberRankTab extends StatelessWidget {
   }
 }
 
-class SpecialMemberTab extends StatelessWidget {
+class SpecialMemberTab extends HookWidget {
   const SpecialMemberTab({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final utility = Utility();
+
+    final picIndex = useState(0);
+    final currentTitle = utility.getMemberTitle(picIndex.value);
+    final currentColor = utility.getMemberColor(picIndex.value);
+    final currentBenefits = utility.getMemberBenefits(picIndex.value);
+
     return ListView(
       shrinkWrap: true,
       children: [
         const SizedBox(height: 16),
-        const Center(
-            child: Text(
-          "各会員",
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-        )),
-        SizedBox(
-          height: 150,
-          child: PageView(
-            children: [
-              Image.asset('assets/images/320x200card1.png'),
-              Image.asset('assets/images/320x200card2.png'),
-              Image.asset('assets/images/320x200card3.png'),
-            ],
+        Center(
+          child: Text(
+            currentTitle,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
+        const SizedBox(height: 16),
+        SizedBox(
+          height: 150,
+          child: PageView.builder(
+            itemCount: 3,
+            controller: PageController(viewportFraction: 0.75),
+            onPageChanged: (index) => picIndex.value = index,
+            itemBuilder: (context, index) {
+              return Image.asset('assets/images/440x275card${index + 1}.png');
+            },
+          ),
+        ),
+        const SizedBox(height: 16),
         ElevatedButton(
           onPressed: () {
             Navigator.push(
@@ -275,8 +303,28 @@ class SpecialMemberTab extends StatelessWidget {
               ),
             );
           },
-          child: const Text("会員に入会する"),
+          child: Text("$currentTitleに入会する"),
         ),
+        const SizedBox(height: 16),
+        ...currentBenefits
+            .map(
+              (text) => Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.account_balance,
+                        color: currentColor,
+                      ),
+                      const SizedBox(width: 8),
+                      Flexible(child: Text(text)),
+                    ],
+                  ),
+                ),
+              ),
+            )
+            .toList(),
       ],
     );
   }

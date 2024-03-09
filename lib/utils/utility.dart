@@ -88,12 +88,6 @@ class Utility {
     '鹿児島',
     'ag沖縄'
   ];
-  static String regularBenefits = ("チャージ無料");
-  static String rubyBenefits = ("最初の30分無料(20時までに入店された方&2名以上)");
-  static String sapphireBenefits =
-      ("平日VIP ROOM半額\n*予約、お部屋の指定は不可\n*シャンパン等のサービス品提供は一切ございません\n*一般席への途中移動をお願いする可能性がございます");
-  static String diamondBenefits =
-      ("毎日22時までVIP ROOM無料\n*予約、お部屋の指定は不可\n*シャンパン等のサービス品提供は一切ございません\n*一般席への途中移動をお願いする可能性がございます");
 
   static String dateTimeConverter(DateTime postTime) {
     final currentTime = DateTime.now();
@@ -242,5 +236,69 @@ class Utility {
         );
       },
     );
+  }
+
+  static String regularRank = ("チャージ無料");
+  static String rubyRank = ("最初の30分無料(20時までに入店された方&2名以上)");
+  static String sapphireRank =
+      ("平日VIP ROOM半額\n*予約、お部屋の指定は不可\n*シャンパン等のサービス品提供は一切ございません\n*一般席への途中移動をお願いする可能性がございます");
+  static String diamondRank =
+      ("毎日22時までVIP ROOM無料\n*予約、お部屋の指定は不可\n*シャンパン等のサービス品提供は一切ございません\n*一般席への途中移動をお願いする可能性がございます");
+
+  String getMemberTitle(int index) {
+    switch (index) {
+      case 0:
+        return "グリーン会員";
+      case 1:
+        return "ゴールド会員";
+      case 2:
+        return "プラチナ会員";
+      default:
+        return "グリーン会員";
+    }
+  }
+
+  Color getMemberColor(int index) {
+    switch (index) {
+      case 0:
+        return Colors.green;
+      case 1:
+        return Colors.yellow;
+      case 2:
+        return Colors.grey;
+      default:
+        return Colors.lightGreen;
+    }
+  }
+
+  List<String> getMemberBenefits(int index) {
+    final green = [
+      '毎日21時まで「1時間相席(料金)が無料」',
+      '全国全店舗でご利用可能(1日1店舗目にご来店した店舗のみ)',
+      '昼営業「1時間相席料金が半額」',
+    ];
+    final gold = [
+      '毎日いつでも「1時間相席(料金)が無料」',
+      '全国全店舗でご利用可能(1日1店舗目にご来店した店舗のみ)',
+      '昼営業「1時間相席料金が半額」',
+    ];
+    final platinum = [
+      '毎日いつでも「時間無制限 相席料金が無料」',
+      '全国全店舗でご利用可能(1日複数店舗可)',
+      '昼営業「無制限 相席料金が半額」',
+      'オリエンタルラウンジ・ag 行き放題サービス',
+      '混雑時、優先入店',
+    ];
+
+    switch (index) {
+      case 0:
+        return green;
+      case 1:
+        return gold;
+      case 2:
+        return platinum;
+      default:
+        return green;
+    }
   }
 }
