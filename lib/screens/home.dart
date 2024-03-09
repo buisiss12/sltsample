@@ -40,6 +40,7 @@ class Home extends HookWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => const WebviewPage(
+                    appbarTitle: 'お知らせ',
                     url: 'https://oriental-lounge.com/information/',
                   ),
                 ),
@@ -60,7 +61,10 @@ class Home extends HookWidget {
       body: <Widget>[
         const PostsPage(),
         const RecentMessagePage(),
-        const WebviewPage(url: 'https://oriental-lounge.com/#shop'),
+        const WebviewPage(
+            appbarTitle: '',
+            url: 'https://oriental-lounge.com/#shop',
+            showAppBar: false),
         const Center(child: Text('メニュー')),
         const MyPage(),
       ][currentIndex.value],

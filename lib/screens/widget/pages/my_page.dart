@@ -298,6 +298,7 @@ class SpecialMemberTab extends HookWidget {
               context,
               MaterialPageRoute(
                 builder: (context) => const WebviewPage(
+                  appbarTitle: 'メンバーズクラブ',
                   url: 'https://oriental-lounge.com/members/',
                 ),
               ),
@@ -335,14 +336,49 @@ class HonorTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const currentValue = 1; //データベースとの通信（未実装のため数値を指定）
+    const maxValue = 2;
+    const progressValue = currentValue / maxValue;
     return ListView(
       shrinkWrap: true,
-      children: const [
-        Text('オリエンタルラウンジ・agへのご来店や滞在で付与される称号です。'),
+      children: [
+        const SizedBox(height: 16),
+        const Text('オリエンタルラウンジ・agへのご来店や滞在で付与される称号です。'),
+        const SizedBox(height: 16),
         ListTile(
-          leading: Icon(Icons.account_circle),
-          title: Text('称号 テスト'),
-          subtitle: Text('メーター'),
+          leading: Image.asset('assets/images/100x100coin.png'),
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  Image.asset('assets/images/150x40ribbon.png'),
+                  const Text(
+                    '初回来店',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16), // titleとsubtitleの間のスキマ
+            ],
+          ),
+          subtitle: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: LinearProgressIndicator(
+                  value: progressValue,
+                  backgroundColor: Colors.grey[200],
+                  valueColor: const AlwaysStoppedAnimation<Color>(Colors.blue),
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.only(left: 10),
+                child: Text("$currentValue/$maxValue"),
+              ),
+            ],
+          ),
         ),
       ],
     );
