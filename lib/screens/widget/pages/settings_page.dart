@@ -1,6 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sltsampleapp/provider/provider.dart';
-import 'package:sltsampleapp/screens/before_login/login_page.dart';
+import 'package:sltsampleapp/screens/widget/pages/login_page.dart';
 import 'package:sltsampleapp/utils/utility.dart';
 import 'package:flutter/material.dart';
 

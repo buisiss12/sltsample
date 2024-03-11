@@ -1,5 +1,5 @@
 import 'package:sltsampleapp/screens/home.dart';
-import 'screens/before_login/login_page.dart';
+import 'screens/widget/pages/login_page.dart';
 import 'provider/provider.dart';
 import 'firebase_options/firebase_options.dart';
 import 'package:flutter/material.dart';

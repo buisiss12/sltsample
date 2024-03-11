@@ -336,7 +336,9 @@ class HonorTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const currentValue = 1; //データベースとの通信（未実装のため数値を指定）
+    //データベースとの通信（未実装のため数値を指定）
+    const honorTitle = '初回来店';
+    const currentValue = 1;
     const maxValue = 2;
     const progressValue = currentValue / maxValue;
     return ListView(
@@ -355,7 +357,7 @@ class HonorTab extends StatelessWidget {
                 children: [
                   Image.asset('assets/images/150x40ribbon.png'),
                   const Text(
-                    '初回来店',
+                    honorTitle,
                     style: TextStyle(color: Colors.black),
                   ),
                 ],

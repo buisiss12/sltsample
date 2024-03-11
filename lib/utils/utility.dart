@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 
 class Utility {
@@ -104,6 +105,34 @@ class Utility {
     } else {
       return '${postTime.year}/${postTime.month}/${postTime.day}';
     }
+  }
+
+  Future<String?> showSMSCodeDialog(BuildContext context) async {
+    String? smsCode;
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("認証コード"),
+          content: const Text("SMS宛に届いた認証コードを入力してください"),
+          actions: <Widget>[
+            TextFormField(
+              onChanged: (value) {
+                smsCode = value;
+              },
+              keyboardType: TextInputType.number,
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              autofocus: true,
+            ),
+            ElevatedButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text("認証"),
+            ),
+          ],
+        );
+      },
+    );
+    return smsCode;
   }
 
   static void selectSinglePrefectureDialog(
