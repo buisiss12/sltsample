@@ -20,6 +20,7 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$UserModel {
+  String get userPhoneNumber => throw _privateConstructorUsedError;
   String get userUid => throw _privateConstructorUsedError;
   String get profileImageUrl => throw _privateConstructorUsedError;
   String get realName => throw _privateConstructorUsedError;
@@ -42,7 +43,8 @@ abstract class $UserModelCopyWith<$Res> {
       _$UserModelCopyWithImpl<$Res, UserModel>;
   @useResult
   $Res call(
-      {String userUid,
+      {String userPhoneNumber,
+      String userUid,
       String profileImageUrl,
       String realName,
       String nickName,
@@ -66,6 +68,7 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? userPhoneNumber = null,
     Object? userUid = null,
     Object? profileImageUrl = null,
     Object? realName = null,
@@ -77,6 +80,10 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
     Object? residence = null,
   }) {
     return _then(_value.copyWith(
+      userPhoneNumber: null == userPhoneNumber
+          ? _value.userPhoneNumber
+          : userPhoneNumber // ignore: cast_nullable_to_non_nullable
+              as String,
       userUid: null == userUid
           ? _value.userUid
           : userUid // ignore: cast_nullable_to_non_nullable
@@ -126,7 +133,8 @@ abstract class _$$UserModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String userUid,
+      {String userPhoneNumber,
+      String userUid,
       String profileImageUrl,
       String realName,
       String nickName,
@@ -148,6 +156,7 @@ class __$$UserModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? userPhoneNumber = null,
     Object? userUid = null,
     Object? profileImageUrl = null,
     Object? realName = null,
@@ -159,6 +168,10 @@ class __$$UserModelImplCopyWithImpl<$Res>
     Object? residence = null,
   }) {
     return _then(_$UserModelImpl(
+      userPhoneNumber: null == userPhoneNumber
+          ? _value.userPhoneNumber
+          : userPhoneNumber // ignore: cast_nullable_to_non_nullable
+              as String,
       userUid: null == userUid
           ? _value.userUid
           : userUid // ignore: cast_nullable_to_non_nullable
@@ -203,7 +216,8 @@ class __$$UserModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$UserModelImpl with DiagnosticableTreeMixin implements _UserModel {
   const _$UserModelImpl(
-      {required this.userUid,
+      {required this.userPhoneNumber,
+      required this.userUid,
       required this.profileImageUrl,
       required this.realName,
       required this.nickName,
@@ -216,6 +230,8 @@ class _$UserModelImpl with DiagnosticableTreeMixin implements _UserModel {
   factory _$UserModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserModelImplFromJson(json);
 
+  @override
+  final String userPhoneNumber;
   @override
   final String userUid;
   @override
@@ -237,7 +253,7 @@ class _$UserModelImpl with DiagnosticableTreeMixin implements _UserModel {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'UserModel(userUid: $userUid, profileImageUrl: $profileImageUrl, realName: $realName, nickName: $nickName, gender: $gender, birthday: $birthday, height: $height, job: $job, residence: $residence)';
+    return 'UserModel(userPhoneNumber: $userPhoneNumber, userUid: $userUid, profileImageUrl: $profileImageUrl, realName: $realName, nickName: $nickName, gender: $gender, birthday: $birthday, height: $height, job: $job, residence: $residence)';
   }
 
   @override
@@ -245,6 +261,7 @@ class _$UserModelImpl with DiagnosticableTreeMixin implements _UserModel {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'UserModel'))
+      ..add(DiagnosticsProperty('userPhoneNumber', userPhoneNumber))
       ..add(DiagnosticsProperty('userUid', userUid))
       ..add(DiagnosticsProperty('profileImageUrl', profileImageUrl))
       ..add(DiagnosticsProperty('realName', realName))
@@ -261,6 +278,8 @@ class _$UserModelImpl with DiagnosticableTreeMixin implements _UserModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UserModelImpl &&
+            (identical(other.userPhoneNumber, userPhoneNumber) ||
+                other.userPhoneNumber == userPhoneNumber) &&
             (identical(other.userUid, userUid) || other.userUid == userUid) &&
             (identical(other.profileImageUrl, profileImageUrl) ||
                 other.profileImageUrl == profileImageUrl) &&
@@ -279,8 +298,18 @@ class _$UserModelImpl with DiagnosticableTreeMixin implements _UserModel {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, userUid, profileImageUrl,
-      realName, nickName, gender, birthday, height, job, residence);
+  int get hashCode => Object.hash(
+      runtimeType,
+      userPhoneNumber,
+      userUid,
+      profileImageUrl,
+      realName,
+      nickName,
+      gender,
+      birthday,
+      height,
+      job,
+      residence);
 
   @JsonKey(ignore: true)
   @override
@@ -298,7 +327,8 @@ class _$UserModelImpl with DiagnosticableTreeMixin implements _UserModel {
 
 abstract class _UserModel implements UserModel {
   const factory _UserModel(
-      {required final String userUid,
+      {required final String userPhoneNumber,
+      required final String userUid,
       required final String profileImageUrl,
       required final String realName,
       required final String nickName,
@@ -311,6 +341,8 @@ abstract class _UserModel implements UserModel {
   factory _UserModel.fromJson(Map<String, dynamic> json) =
       _$UserModelImpl.fromJson;
 
+  @override
+  String get userPhoneNumber;
   @override
   String get userUid;
   @override

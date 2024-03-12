@@ -8,6 +8,7 @@ part of 'user_model.dart';
 
 _$UserModelImpl _$$UserModelImplFromJson(Map<String, dynamic> json) =>
     _$UserModelImpl(
+      userPhoneNumber: json['userPhoneNumber'] as String,
       userUid: json['userUid'] as String,
       profileImageUrl: json['profileImageUrl'] as String,
       realName: json['realName'] as String,
@@ -21,6 +22,7 @@ _$UserModelImpl _$$UserModelImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
     <String, dynamic>{
+      'userPhoneNumber': instance.userPhoneNumber,
       'userUid': instance.userUid,
       'profileImageUrl': instance.profileImageUrl,
       'realName': instance.realName,

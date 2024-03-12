@@ -18,11 +18,23 @@ class LoginPageState extends ConsumerState<LoginPage> {
   final Utility utility = Utility();
   String phoneNumber = '';
 
-  Future<void> verifyPhoneSMS() async {
+  Future<void> verifyPhoneSMSforLogin() async {
+    final usersCollection =
+        ref.read(firebaseFirestoreProvider).collection('users');
+    final querySnapshot = await usersCollection
+        .where('userPhoneNumber', isEqualTo: phoneNumber)
+        .get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      if (mounted) {
+        utility.showSnackBarAPI(context, 'この電話番号は既に登録されています。');
+      }
+      return;
+    }
     await ref.read(firebaseAuthProvider).verifyPhoneNumber(
           phoneNumber: "+81$phoneNumber",
           verificationCompleted: (PhoneAuthCredential credential) async {
-            await signInAndRedirect(credential);
+            await signInAndRedirectForLogin(credential);
           },
           verificationFailed: (FirebaseAuthException e) {
             utility.showSnackBarAPI(context, '認証失敗: ${e.message}');
@@ -34,14 +46,14 @@ class LoginPageState extends ConsumerState<LoginPage> {
                 verificationId: verificationId,
                 smsCode: smsCode,
               );
-              await signInAndRedirect(credential);
+              await signInAndRedirectForLogin(credential);
             }
           },
           codeAutoRetrievalTimeout: (String verificationId) {},
         );
   }
 
-  Future<void> signInAndRedirect(PhoneAuthCredential credential) async {
+  Future<void> signInAndRedirectForLogin(PhoneAuthCredential credential) async {
     try {
       final userCredential =
           await ref.read(firebaseAuthProvider).signInWithCredential(credential);
@@ -104,7 +116,7 @@ class LoginPageState extends ConsumerState<LoginPage> {
                 ElevatedButton(
                   onPressed: phoneNumber.isNotEmpty
                       ? () {
-                          verifyPhoneSMS();
+                          verifyPhoneSMSforLogin();
                         }
                       : null,
                   child: const Text('ログイン'),

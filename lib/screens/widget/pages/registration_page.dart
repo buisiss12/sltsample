@@ -25,6 +25,18 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
   DateTime? birthDay;
 
   Future<void> verifyPhoneSMS() async {
+    final usersCollection =
+        ref.read(firebaseFirestoreProvider).collection('users');
+    final querySnapshot = await usersCollection
+        .where('userPhoneNumber', isEqualTo: phoneNumber)
+        .get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      if (mounted) {
+        utility.showSnackBarAPI(context, 'この電話番号は既に登録されています。');
+      }
+      return;
+    }
     await ref.read(firebaseAuthProvider).verifyPhoneNumber(
           phoneNumber: "+81$phoneNumber",
           verificationCompleted: (PhoneAuthCredential credential) async {
@@ -58,6 +70,7 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
         return;
       }
       final userModel = UserModel(
+        userPhoneNumber: phoneNumber,
         userUid: userCredential.user!.uid,
         profileImageUrl: '',
         realName: realName,
@@ -76,7 +89,7 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
           MaterialPageRoute(builder: (context) => Home()),
           (Route<dynamic> route) => false,
         );
-        utility.showSnackBarAPI(context, 'アカウント作成成功');
+        utility.showSnackBarAPI(context, '会員登録成功');
       }
     } on FirebaseAuthException catch (e) {
       if (mounted) {

@@ -195,15 +195,15 @@ class Utility {
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text("キャンセル"),
               onPressed: () => Navigator.of(context).pop(),
+              child: const Text("キャンセル"),
             ),
             TextButton(
-              child: const Text('OK'),
               onPressed: () {
                 selectedPrefecture.value = selectedValues;
                 Navigator.of(context).pop();
               },
+              child: const Text('OK'),
             ),
           ],
         );
@@ -251,15 +251,15 @@ class Utility {
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text("キャンセル"),
               onPressed: () => Navigator.of(context).pop(),
+              child: const Text("キャンセル"),
             ),
             TextButton(
-              child: const Text('OK'),
               onPressed: () {
                 onConfirm();
                 Navigator.of(context).pop();
               },
+              child: const Text('OK'),
             ),
           ],
         );
