@@ -25,7 +25,12 @@ class MyApp extends ConsumerWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'サンプル',
-      theme: ThemeData.dark(),
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.blueAccent,
+          brightness: Brightness.dark,
+        ),
+      ),
       home: StreamBuilder<User?>(
         stream: auth.authStateChanges(),
         builder: (context, snapshot) {
