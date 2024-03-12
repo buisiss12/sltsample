@@ -1,10 +1,12 @@
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:sltsampleapp/models/message_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+// Project imports:
 import 'package:sltsampleapp/utils/utility.dart';
 import 'package:sltsampleapp/provider/provider.dart';
+import 'package:sltsampleapp/models/message_model.dart';
 
 class MessagePage extends HookConsumerWidget {
   final String currentUserUid;

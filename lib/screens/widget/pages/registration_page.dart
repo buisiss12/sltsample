@@ -1,12 +1,14 @@
-import 'package:sltsampleapp/models/user_model.dart';
-import 'package:sltsampleapp/screens/home.dart';
-import 'login_page.dart';
-import '../../../utils/utility.dart';
-import '../../../provider/provider.dart';
-import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+// Project imports:
+import 'package:sltsampleapp/models/user_model.dart';
+import 'package:sltsampleapp/provider/provider.dart';
+import 'package:sltsampleapp/screens/home.dart';
+import 'package:sltsampleapp/screens/widget/pages/login_page.dart';
+import 'package:sltsampleapp/utils/utility.dart';
 
 class RegistrationPage extends ConsumerStatefulWidget {
   const RegistrationPage({super.key});
@@ -18,7 +20,6 @@ class RegistrationPage extends ConsumerStatefulWidget {
 
 class _RegistrationPageState extends ConsumerState<RegistrationPage> {
   final utility = Utility();
-
   String phoneNumber = '';
   String realName = '';
   String gender = '';

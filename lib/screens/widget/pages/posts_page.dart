@@ -1,21 +1,22 @@
+import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+// Project imports:
 import 'package:sltsampleapp/models/user_model.dart';
 import 'package:sltsampleapp/provider/provider.dart';
 import 'package:sltsampleapp/screens/widget/pages/addpost_page.dart';
 import 'package:sltsampleapp/screens/widget/pages/message_page.dart';
 import 'package:sltsampleapp/utils/utility.dart';
-import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class PostsPage extends HookConsumerWidget {
   const PostsPage({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final utility = Utility();
     final auth = ref.watch(firebaseAuthProvider);
     final currentUser = auth.currentUser;
     final firestore = ref.watch(firebaseFirestoreProvider);
-
     final postsStream = ref.watch(postsStreamProvider);
-    final utility = Utility();
 
     return Scaffold(
       body: postsStream.when(

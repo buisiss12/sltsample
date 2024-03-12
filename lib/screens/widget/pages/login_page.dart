@@ -1,11 +1,13 @@
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sltsampleapp/screens/home.dart';
-import 'package:sltsampleapp/utils/utility.dart';
-import 'registration_page.dart';
-import '../../../provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+// Project imports:
+import 'package:sltsampleapp/screens/home.dart';
+import 'package:sltsampleapp/screens/widget/pages/registration_page.dart';
+import 'package:sltsampleapp/utils/utility.dart';
+import 'package:sltsampleapp/provider/provider.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({Key? key}) : super(key: key);

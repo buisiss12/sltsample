@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+
+// Project imports:
 import 'package:sltsampleapp/models/user_model.dart';
 import 'package:sltsampleapp/provider/provider.dart';
 import 'package:sltsampleapp/utils/utility.dart';
@@ -14,15 +16,14 @@ class EditProfilePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final utility = Utility();
     final nicknameController = TextEditingController(text: user.nickName);
     final genderController = TextEditingController(text: user.gender);
     final heightController = TextEditingController(text: user.height);
     final jobController = TextEditingController(text: user.job);
     final residenceController = TextEditingController(text: user.residence);
-
     final imagePicker = ImagePicker();
     final selectedImage = ref.watch(selectedProfileImageProvider);
-    final utility = Utility();
 
     return GestureDetector(
       onTap: () => primaryFocus?.unfocus(),

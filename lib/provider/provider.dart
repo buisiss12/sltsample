@@ -1,8 +1,10 @@
 import 'dart:io';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+// Project imports:
 import 'package:sltsampleapp/models/recent_message_model.dart';
 import 'package:sltsampleapp/models/post_model.dart';
 import 'package:sltsampleapp/models/user_model.dart';

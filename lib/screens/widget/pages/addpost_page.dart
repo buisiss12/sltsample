@@ -1,9 +1,11 @@
+import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+// Project imports:
 import 'package:sltsampleapp/provider/provider.dart';
 import 'package:sltsampleapp/screens/home.dart';
 import 'package:sltsampleapp/utils/utility.dart';
 import 'package:sltsampleapp/models/post_model.dart';
-import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class AddPostPage extends ConsumerStatefulWidget {
   const AddPostPage({super.key});
@@ -14,10 +16,9 @@ class AddPostPage extends ConsumerStatefulWidget {
 
 class _AddPostPageState extends ConsumerState<AddPostPage> {
   final utility = Utility();
-
-  String postTitle = "";
   // ValueNotifierは値が変更されたときに、変更を検知して通知する
   final selectedPrefecture = ValueNotifier<List<String>>([]);
+  String postTitle = "";
 
   @override
   void dispose() {

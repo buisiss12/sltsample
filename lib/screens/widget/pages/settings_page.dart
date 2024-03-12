@@ -1,17 +1,19 @@
+import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+// Project imports:
 import 'package:sltsampleapp/provider/provider.dart';
 import 'package:sltsampleapp/screens/widget/pages/login_page.dart';
 import 'package:sltsampleapp/utils/utility.dart';
-import 'package:flutter/material.dart';
 
 class SettingsPage extends ConsumerWidget {
   const SettingsPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final utility = Utility();
     final auth = ref.watch(firebaseAuthProvider);
     final currentUser = auth.currentUser;
-    final utility = Utility();
 
     return Scaffold(
       appBar: AppBar(title: const Text('設定')),

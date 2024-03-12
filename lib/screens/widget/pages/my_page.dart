@@ -1,18 +1,20 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+// Project imports:
 import 'package:sltsampleapp/provider/provider.dart';
 import 'package:sltsampleapp/screens/widget/pages/edit_profile_page.dart';
 import 'package:sltsampleapp/screens/widget/pages/webview_page.dart';
 import 'package:sltsampleapp/utils/utility.dart';
-import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 
 class MyPage extends ConsumerWidget {
   const MyPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userStateFuture = ref.watch(userStateFutureProvider);
     final utility = Utility();
+    final userStateFuture = ref.watch(userStateFutureProvider);
 
     return Scaffold(
       body: Padding(
