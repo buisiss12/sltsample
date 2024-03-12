@@ -18,42 +18,40 @@ class LoginPageState extends ConsumerState<LoginPage> {
   final Utility utility = Utility();
   String phoneNumber = '';
 
-  Future<void> verifyPhoneSMSforLogin() async {
-    final usersCollection =
-        ref.read(firebaseFirestoreProvider).collection('users');
-    final querySnapshot = await usersCollection
-        .where('userPhoneNumber', isEqualTo: phoneNumber)
-        .get();
+  Future<void> verifyPhoneSmsForLogIn() async {
+    final isRegistered = await ref
+        .read(userStateAPIProvider)
+        .isPhoneNumberRegistered(phoneNumber);
 
-    if (querySnapshot.docs.isNotEmpty) {
+    if (isRegistered) {
+      await ref.read(firebaseAuthProvider).verifyPhoneNumber(
+            phoneNumber: "+81$phoneNumber",
+            verificationCompleted: (PhoneAuthCredential credential) async {
+              await logIn(credential);
+            },
+            verificationFailed: (FirebaseAuthException e) {
+              utility.showSnackBarAPI(context, '認証失敗: ${e.message}');
+            },
+            codeSent: (String verificationId, int? resendToken) async {
+              final String? smsCode = await utility.showSMSCodeDialog(context);
+              if (smsCode != null && smsCode.isNotEmpty) {
+                final credential = PhoneAuthProvider.credential(
+                  verificationId: verificationId,
+                  smsCode: smsCode,
+                );
+                await logIn(credential);
+              }
+            },
+            codeAutoRetrievalTimeout: (String verificationId) {},
+          );
+    } else {
       if (mounted) {
-        utility.showSnackBarAPI(context, 'この電話番号は既に登録されています。');
+        utility.showSnackBarAPI(context, 'この電話番号は登録されていません。');
       }
-      return;
     }
-    await ref.read(firebaseAuthProvider).verifyPhoneNumber(
-          phoneNumber: "+81$phoneNumber",
-          verificationCompleted: (PhoneAuthCredential credential) async {
-            await signInAndRedirectForLogin(credential);
-          },
-          verificationFailed: (FirebaseAuthException e) {
-            utility.showSnackBarAPI(context, '認証失敗: ${e.message}');
-          },
-          codeSent: (String verificationId, int? resendToken) async {
-            final String? smsCode = await utility.showSMSCodeDialog(context);
-            if (smsCode != null && smsCode.isNotEmpty) {
-              final credential = PhoneAuthProvider.credential(
-                verificationId: verificationId,
-                smsCode: smsCode,
-              );
-              await signInAndRedirectForLogin(credential);
-            }
-          },
-          codeAutoRetrievalTimeout: (String verificationId) {},
-        );
   }
 
-  Future<void> signInAndRedirectForLogin(PhoneAuthCredential credential) async {
+  Future<void> logIn(PhoneAuthCredential credential) async {
     try {
       final userCredential =
           await ref.read(firebaseAuthProvider).signInWithCredential(credential);
@@ -116,7 +114,7 @@ class LoginPageState extends ConsumerState<LoginPage> {
                 ElevatedButton(
                   onPressed: phoneNumber.isNotEmpty
                       ? () {
-                          verifyPhoneSMSforLogin();
+                          verifyPhoneSmsForLogIn();
                         }
                       : null,
                   child: const Text('ログイン'),

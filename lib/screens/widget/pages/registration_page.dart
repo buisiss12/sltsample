@@ -24,23 +24,22 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
   String gender = '';
   DateTime? birthDay;
 
-  Future<void> verifyPhoneSMS() async {
-    final usersCollection =
-        ref.read(firebaseFirestoreProvider).collection('users');
-    final querySnapshot = await usersCollection
-        .where('userPhoneNumber', isEqualTo: phoneNumber)
-        .get();
+  Future<void> verifyPhoneSmsForRegist() async {
+    final isRegistered = await ref
+        .read(userStateAPIProvider)
+        .isPhoneNumberRegistered(phoneNumber);
 
-    if (querySnapshot.docs.isNotEmpty) {
+    if (isRegistered) {
       if (mounted) {
         utility.showSnackBarAPI(context, 'この電話番号は既に登録されています。');
       }
       return;
     }
+
     await ref.read(firebaseAuthProvider).verifyPhoneNumber(
           phoneNumber: "+81$phoneNumber",
           verificationCompleted: (PhoneAuthCredential credential) async {
-            await signInAndRedirect(credential);
+            await signInAndCreateUser(credential);
           },
           verificationFailed: (FirebaseAuthException e) {
             utility.showSnackBarAPI(context, '認証失敗: ${e.message}');
@@ -52,14 +51,14 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
                 verificationId: verificationId,
                 smsCode: smsCode,
               );
-              await signInAndRedirect(credential);
+              await signInAndCreateUser(credential);
             }
           },
           codeAutoRetrievalTimeout: (String verificationId) {},
         );
   }
 
-  Future<void> signInAndRedirect(PhoneAuthCredential credential) async {
+  Future<void> signInAndCreateUser(PhoneAuthCredential credential) async {
     try {
       final userCredential =
           await ref.read(firebaseAuthProvider).signInWithCredential(credential);
@@ -209,7 +208,7 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
                           gender.isNotEmpty &&
                           birthDay != null &&
                           phoneNumber.isNotEmpty
-                      ? verifyPhoneSMS
+                      ? verifyPhoneSmsForRegist
                       : null,
                   child: const Text('会員登録'),
                 ),

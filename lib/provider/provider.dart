@@ -48,6 +48,15 @@ class UserStateAPI {
       return [];
     }
   }
+
+  Future<bool> isPhoneNumberRegistered(String phoneNumber) async {
+    final querySnapshot = await ref
+        .read(firebaseFirestoreProvider)
+        .collection('users')
+        .where('userPhoneNumber', isEqualTo: phoneNumber)
+        .get();
+    return querySnapshot.docs.isNotEmpty; // 同一の電話番号があればtrue、なければfalseを返す
+  }
 }
 
 final getPostedUserUidProvider =
