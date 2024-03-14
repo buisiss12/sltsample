@@ -31,8 +31,10 @@ class UserStateAPI {
           .read(firebaseFirestoreProvider)
           .collection('users')
           .doc(user.uid)
-          .set(userState.toJson(),
-              SetOptions(merge: true)); //指定したフィールドのみを更新または追加するoption
+          .set(
+            userState.toJson(),
+            SetOptions(merge: true),
+          ); //指定したフィールドのみを更新または追加するoption
     }
   }
 
