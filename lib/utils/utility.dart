@@ -136,7 +136,9 @@ class Utility {
   }
 
   static void selectSinglePrefectureDialog(
-      BuildContext context, TextEditingController residenceController) async {
+    BuildContext context,
+    TextEditingController residenceController,
+  ) async {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -158,54 +160,6 @@ class Utility {
               },
             ),
           ),
-        );
-      },
-    );
-  }
-
-  Future<void> selectMultiPrefectureDialog(BuildContext context,
-      ValueNotifier<List<String>> selectedPrefecture) async {
-    final List<String> selectedValues = List.from(selectedPrefecture.value);
-    await showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('都道府県を選択'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: prefecture.map(
-                (String prefecture) {
-                  return CheckboxListTile(
-                    value: selectedValues.contains(prefecture),
-                    title: Text(prefecture),
-                    onChanged: (bool? value) {
-                      if (value == true) {
-                        if (!selectedValues.contains(prefecture)) {
-                          selectedValues.add(prefecture);
-                        }
-                      } else {
-                        selectedValues.remove(prefecture);
-                      }
-                      (context as Element).markNeedsBuild();
-                    },
-                  );
-                },
-              ).toList(),
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text("キャンセル"),
-            ),
-            TextButton(
-              onPressed: () {
-                selectedPrefecture.value = selectedValues;
-                Navigator.of(context).pop();
-              },
-              child: const Text('OK'),
-            ),
-          ],
         );
       },
     );

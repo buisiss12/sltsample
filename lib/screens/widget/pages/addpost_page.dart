@@ -16,15 +16,8 @@ class AddPostPage extends ConsumerStatefulWidget {
 
 class _AddPostPageState extends ConsumerState<AddPostPage> {
   final utility = Utility();
-  // ValueNotifierは値が変更されたときに、変更を検知して通知する
-  final selectedPrefecture = ValueNotifier<List<String>>([]);
+  List<String> selectedPrefecture = [];
   String postTitle = "";
-
-  @override
-  void dispose() {
-    selectedPrefecture.dispose();
-    super.dispose();
-  }
 
   Future<void> addPost() async {
     final auth = ref.watch(firebaseAuthProvider);
@@ -32,7 +25,7 @@ class _AddPostPageState extends ConsumerState<AddPostPage> {
     final firestore = ref.watch(firebaseFirestoreProvider);
     if (currentUser != null &&
         postTitle.isNotEmpty &&
-        selectedPrefecture.value.isNotEmpty) {
+        selectedPrefecture.isNotEmpty) {
       final userDoc =
           await firestore.collection('users').doc(currentUser.uid).get();
       final userNickname = userDoc.data()?['nickName'];
@@ -45,7 +38,7 @@ class _AddPostPageState extends ConsumerState<AddPostPage> {
       final postModel = PostModel(
         postId: '',
         postedUserUid: currentUser.uid,
-        prefecture: selectedPrefecture.value,
+        prefecture: selectedPrefecture,
         postTitle: postTitle,
         timestamp: DateTime.now(),
       );
@@ -68,6 +61,45 @@ class _AddPostPageState extends ConsumerState<AddPostPage> {
     }
   }
 
+  void showSelectPrefectureDialog(context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('都道府県を選択'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: Utility.prefecture.map(
+                (prefecture) {
+                  return CheckboxListTile(
+                    title: Text(prefecture),
+                    value: selectedPrefecture.contains(prefecture),
+                    onChanged: (bool? value) {
+                      setState(() {
+                        if (value == true) {
+                          selectedPrefecture.add(prefecture);
+                        } else {
+                          selectedPrefecture.remove(prefecture);
+                        }
+                        (context as Element).markNeedsBuild();
+                      });
+                    },
+                  );
+                },
+              ).toList(),
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -86,24 +118,16 @@ class _AddPostPageState extends ConsumerState<AddPostPage> {
                     '*宣伝、ネットワークビジネス、パーティー業者と見受けられるものは禁止となっております。見つけ次第、削除退会処置を取ります。'),
                 const SizedBox(height: 16),
                 const Text('希望地域'),
-                ValueListenableBuilder<List<String>>(
-                  valueListenable: selectedPrefecture,
-                  builder: (context, selectedPrefectures, _) {
-                    return TextField(
-                      controller: TextEditingController(
-                        text: selectedPrefectures.join(", "),
-                      ),
-                      decoration: const InputDecoration(
-                        hintText: '希望地域を選択',
-                        border: OutlineInputBorder(),
-                      ),
-                      readOnly: true,
-                      onTap: () => utility.selectMultiPrefectureDialog(
-                        context,
-                        selectedPrefecture,
-                      ),
-                    );
-                  },
+                TextField(
+                  controller: TextEditingController(
+                    text: selectedPrefecture.join(", "),
+                  ),
+                  decoration: const InputDecoration(
+                    hintText: '希望地域を選択',
+                    border: OutlineInputBorder(),
+                  ),
+                  readOnly: true,
+                  onTap: () => showSelectPrefectureDialog(context),
                 ),
                 const SizedBox(height: 16),
                 const Text('募集内容'),
@@ -121,10 +145,10 @@ class _AddPostPageState extends ConsumerState<AddPostPage> {
                   },
                 ),
                 ElevatedButton(
-                  onPressed: postTitle.isNotEmpty &&
-                          selectedPrefecture.value.isNotEmpty
-                      ? addPost
-                      : null,
+                  onPressed:
+                      postTitle.isNotEmpty && selectedPrefecture.isNotEmpty
+                          ? addPost
+                          : null,
                   child: const Text('投稿する'),
                 ),
               ],
