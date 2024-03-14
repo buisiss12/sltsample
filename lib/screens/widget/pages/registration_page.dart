@@ -81,7 +81,7 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
         job: '',
         residence: '',
       );
-      await ref.read(userStateAPIProvider).createUser(userModel);
+      await ref.read(userStateAPIProvider).setUser(userModel);
 
       if (mounted) {
         Navigator.pushAndRemoveUntil(

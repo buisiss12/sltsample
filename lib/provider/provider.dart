@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -15,16 +14,16 @@ final firebaseStorageProvider = Provider((ref) => FirebaseStorage.instance);
 
 final userStateFutureProvider = FutureProvider<List<UserModel>>((ref) async {
   final userStateAPI = UserStateAPI(ref);
-  return userStateAPI.fetchUsers();
+  return userStateAPI.getUsers();
 });
 
 final userStateAPIProvider = Provider<UserStateAPI>((ref) => UserStateAPI(ref));
 
 class UserStateAPI {
   UserStateAPI(this.ref);
-  final Ref ref;
+  final Ref ref; // ここに、refつけないと、メソッドでfireStoreProviderを参照できない
 
-  Future<void> createUser(UserModel userState) async {
+  Future<void> setUser(UserModel userState) async {
     final user = ref.read(firebaseAuthProvider).currentUser;
     if (user != null) {
       await ref
@@ -38,7 +37,7 @@ class UserStateAPI {
     }
   }
 
-  Future<List<UserModel>> fetchUsers() async {
+  Future<List<UserModel>> getUsers() async {
     final user = ref.read(firebaseAuthProvider).currentUser;
     if (user != null) {
       // 現在のユーザーのデータのみを取得
@@ -84,8 +83,6 @@ final postsStreamProvider = StreamProvider.autoDispose<List<PostModel>>((ref) {
     },
   );
 });
-
-final selectedProfileImageProvider = StateProvider<File?>((ref) => null);
 
 final messageStreamProvider =
     StreamProvider.family<List<RecentMessageModel>, String>((ref, userUid) {

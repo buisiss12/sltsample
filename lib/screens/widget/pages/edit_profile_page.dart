@@ -9,22 +9,84 @@ import 'package:sltsampleapp/models/user_model.dart';
 import 'package:sltsampleapp/provider/provider.dart';
 import 'package:sltsampleapp/utils/utility.dart';
 
-class EditProfilePage extends ConsumerWidget {
-  final UserModel user;
+final selectedProfileImageProvider = StateProvider<File?>((ref) => null);
 
+class EditProfilePage extends ConsumerStatefulWidget {
+  final UserModel user;
   const EditProfilePage({Key? key, required this.user}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final utility = Utility();
-    final nicknameController = TextEditingController(text: user.nickName);
-    final genderController = TextEditingController(text: user.gender);
-    final heightController = TextEditingController(text: user.height);
-    final jobController = TextEditingController(text: user.job);
-    final residenceController = TextEditingController(text: user.residence);
-    final imagePicker = ImagePicker();
-    final selectedImage = ref.watch(selectedProfileImageProvider);
+  UserProfilePageState createState() => UserProfilePageState();
+}
 
+class UserProfilePageState extends ConsumerState<EditProfilePage> {
+  final utility = Utility();
+  final imagePicker = ImagePicker();
+  final nicknameController = TextEditingController();
+  final genderController = TextEditingController();
+  final heightController = TextEditingController();
+  final jobController = TextEditingController();
+  final residenceController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    nicknameController.text = widget.user.nickName;
+    genderController.text = widget.user.gender;
+    heightController.text = widget.user.height;
+    jobController.text = widget.user.job;
+    residenceController.text = widget.user.residence;
+  }
+
+  @override
+  void dispose() {
+    nicknameController.dispose();
+    genderController.dispose();
+    heightController.dispose();
+    jobController.dispose();
+    residenceController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _pickImage() async {
+    final pickedFile = await imagePicker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      ref.read(selectedProfileImageProvider.notifier).state =
+          File(pickedFile.path);
+    }
+  }
+
+  Future<void> _saveProfile() async {
+    String? imageUrl;
+    final selectedImage = ref.read(selectedProfileImageProvider);
+
+    if (selectedImage != null) {
+      final uploadTask = ref
+          .read(firebaseStorageProvider)
+          .ref('profileImage_${widget.user.userUid}.jpg')
+          .putFile(selectedImage);
+      final snapshot = await uploadTask;
+      imageUrl = await snapshot.ref.getDownloadURL();
+    }
+
+    final updatedUser = widget.user.copyWith(
+      profileImageUrl: imageUrl ?? widget.user.profileImageUrl,
+      nickName: nicknameController.text,
+      height: heightController.text,
+      job: jobController.text,
+      residence: residenceController.text,
+    );
+
+    await ref.read(userStateAPIProvider).setUser(updatedUser);
+    ref.invalidate(userStateFutureProvider); //Future型のためキャッシュをクリアして再セット
+
+    if (context.mounted) {
+      Navigator.pop(context);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => primaryFocus?.unfocus(),
       child: Scaffold(
@@ -39,15 +101,7 @@ class EditProfilePage extends ConsumerWidget {
                     final selectedImage =
                         ref.watch(selectedProfileImageProvider);
                     return InkWell(
-                      onTap: () async {
-                        final pickedFile = await imagePicker.pickImage(
-                            source: ImageSource.gallery);
-                        if (pickedFile != null) {
-                          ref
-                              .read(selectedProfileImageProvider.notifier)
-                              .state = File(pickedFile.path);
-                        }
-                      },
+                      onTap: _pickImage,
                       child: Stack(
                         alignment: Alignment.bottomRight,
                         children: [
@@ -55,8 +109,8 @@ class EditProfilePage extends ConsumerWidget {
                             radius: 40,
                             backgroundImage: selectedImage != null
                                 ? FileImage(selectedImage)
-                                : (user.profileImageUrl.isNotEmpty
-                                        ? NetworkImage(user.profileImageUrl)
+                                : (widget.user.profileImageUrl.isNotEmpty
+                                        ? NetworkImage(widget.user.profileImageUrl)
                                         : const AssetImage(
                                             'assets/images/300x300defaultprofile.png'))
                                     as ImageProvider,
@@ -140,43 +194,7 @@ class EditProfilePage extends ConsumerWidget {
                 ),
                 const SizedBox(height: 16),
                 ElevatedButton(
-                  onPressed: () async {
-                    if (nicknameController.text.trim().isEmpty) {
-                      if (context.mounted) {
-                        utility.showSnackBarAPI(context, 'ニックネームを入力してください');
-                      }
-                      return;
-                    }
-                    String? imageUrl;
-                    if (selectedImage != null) {
-                      String fileName = 'profileImage_${user.userUid}.jpg';
-                      final fireStorage = ref.watch(firebaseStorageProvider);
-                      final storageRef = fireStorage
-                          .ref()
-                          .child('profileImages')
-                          .child(fileName);
-                      await storageRef.putFile(selectedImage);
-                      imageUrl = await storageRef.getDownloadURL();
-                    } else {
-                      imageUrl = user.profileImageUrl;
-                    }
-
-                    final updatedUser = user.copyWith(
-                      nickName: nicknameController.text,
-                      profileImageUrl: imageUrl,
-                      height: heightController.text,
-                      job: jobController.text,
-                      residence: residenceController.text,
-                    );
-                    await ref
-                        .read(userStateAPIProvider)
-                        .createUser(updatedUser);
-                    ref.invalidate(userStateFutureProvider);
-
-                    if (context.mounted) {
-                      Navigator.pop(context);
-                    }
-                  },
+                  onPressed: _saveProfile,
                   child: const Text('保存'),
                 ),
               ],
