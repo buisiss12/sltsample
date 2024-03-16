@@ -94,9 +94,9 @@ class LoginPageState extends ConsumerState<LoginPage> {
                   'ログイン',
                   style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 32),
                 const Text(
-                  '電話番号 または 会員ID',
+                  '電話番号',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 TextField(

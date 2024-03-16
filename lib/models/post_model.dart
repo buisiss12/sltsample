@@ -11,7 +11,7 @@ class PostModel with _$PostModel {
     required String postedUserUid,
     required String postTitle,
     required List<String> prefecture,
-    DateTime? timestamp,
+    required DateTime timestamp,
   }) = _PostModel;
 
   factory PostModel.fromJson(Map<String, Object?> json) =>

@@ -24,7 +24,7 @@ class MessagePage extends HookConsumerWidget {
     final chatService = ChatService(firestore);
     final chatText = useTextEditingController();
     final scrollController = useScrollController();
-    final receiverUserDetails = ref.watch(userDetailProvider(receiverUid));
+    final receiverUserDetails = ref.watch(getUserUidProvider(receiverUid));
 
     void sendMessage() async {
       if (chatText.text.isEmpty) return;
@@ -110,7 +110,7 @@ class MessagePage extends HookConsumerWidget {
                                 ),
                               ),
                               Text(
-                                Utility.dateTimeConverter(message.timestamp!),
+                                Utility.dateTimeConverter(message.timestamp),
                                 style: TextStyle(
                                   color: isMe ? Colors.white70 : Colors.black54,
                                   fontSize: 10,

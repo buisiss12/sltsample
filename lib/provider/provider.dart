@@ -69,6 +69,16 @@ final getPostedUserUidProvider =
   return UserModel.fromJson(snapshot.data() ?? {});
 });
 
+final getUserUidProvider =
+    FutureProvider.family<UserModel, String>((ref, userUid) async {
+  final firestore = ref.read(firebaseFirestoreProvider);
+  final snapshot = await firestore.collection('users').doc(userUid).get();
+  if (snapshot.exists) {
+    return UserModel.fromJson(snapshot.data()!);
+  }
+  throw Exception("User not found");
+});
+
 final postsStreamProvider = StreamProvider.autoDispose<List<PostModel>>((ref) {
   final firestore = ref.watch(firebaseFirestoreProvider);
   return firestore
@@ -98,14 +108,4 @@ final messageStreamProvider =
           .toList();
     },
   );
-});
-
-final userDetailProvider =
-    FutureProvider.family<UserModel, String>((ref, userUid) async {
-  final firestore = ref.read(firebaseFirestoreProvider);
-  final docSnapshot = await firestore.collection('users').doc(userUid).get();
-  if (docSnapshot.exists) {
-    return UserModel.fromJson(docSnapshot.data()!);
-  }
-  throw Exception("User not found");
 });

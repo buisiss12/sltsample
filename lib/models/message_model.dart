@@ -11,7 +11,7 @@ class MessageModel with _$MessageModel {
     required String receiverUid,
     required String text,
     required String userUid,
-    DateTime? timestamp,
+    required DateTime timestamp,
   }) = _MessageModel;
 
   factory MessageModel.fromJson(Map<String, Object?> json) =>

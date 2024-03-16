@@ -64,9 +64,10 @@ class Home extends HookWidget {
         const PostsPage(),
         const RecentMessagePage(),
         const WebviewPage(
-            appbarTitle: '',
-            url: 'https://oriental-lounge.com/#shop',
-            showAppBar: false),
+          appbarTitle: '',
+          url: 'https://oriental-lounge.com/#shop',
+          showAppBar: false,
+        ),
         const Center(child: Text('メニュー')),
         const MyPage(),
       ][currentIndex.value],

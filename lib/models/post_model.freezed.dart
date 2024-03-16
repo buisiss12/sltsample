@@ -24,7 +24,7 @@ mixin _$PostModel {
   String get postedUserUid => throw _privateConstructorUsedError;
   String get postTitle => throw _privateConstructorUsedError;
   List<String> get prefecture => throw _privateConstructorUsedError;
-  DateTime? get timestamp => throw _privateConstructorUsedError;
+  DateTime get timestamp => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -42,7 +42,7 @@ abstract class $PostModelCopyWith<$Res> {
       String postedUserUid,
       String postTitle,
       List<String> prefecture,
-      DateTime? timestamp});
+      DateTime timestamp});
 }
 
 /// @nodoc
@@ -62,7 +62,7 @@ class _$PostModelCopyWithImpl<$Res, $Val extends PostModel>
     Object? postedUserUid = null,
     Object? postTitle = null,
     Object? prefecture = null,
-    Object? timestamp = freezed,
+    Object? timestamp = null,
   }) {
     return _then(_value.copyWith(
       postId: null == postId
@@ -81,10 +81,10 @@ class _$PostModelCopyWithImpl<$Res, $Val extends PostModel>
           ? _value.prefecture
           : prefecture // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      timestamp: freezed == timestamp
+      timestamp: null == timestamp
           ? _value.timestamp
           : timestamp // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+              as DateTime,
     ) as $Val);
   }
 }
@@ -102,7 +102,7 @@ abstract class _$$PostModelImplCopyWith<$Res>
       String postedUserUid,
       String postTitle,
       List<String> prefecture,
-      DateTime? timestamp});
+      DateTime timestamp});
 }
 
 /// @nodoc
@@ -120,7 +120,7 @@ class __$$PostModelImplCopyWithImpl<$Res>
     Object? postedUserUid = null,
     Object? postTitle = null,
     Object? prefecture = null,
-    Object? timestamp = freezed,
+    Object? timestamp = null,
   }) {
     return _then(_$PostModelImpl(
       postId: null == postId
@@ -139,10 +139,10 @@ class __$$PostModelImplCopyWithImpl<$Res>
           ? _value._prefecture
           : prefecture // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      timestamp: freezed == timestamp
+      timestamp: null == timestamp
           ? _value.timestamp
           : timestamp // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+              as DateTime,
     ));
   }
 }
@@ -155,7 +155,7 @@ class _$PostModelImpl with DiagnosticableTreeMixin implements _PostModel {
       required this.postedUserUid,
       required this.postTitle,
       required final List<String> prefecture,
-      this.timestamp})
+      required this.timestamp})
       : _prefecture = prefecture;
 
   factory _$PostModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -176,7 +176,7 @@ class _$PostModelImpl with DiagnosticableTreeMixin implements _PostModel {
   }
 
   @override
-  final DateTime? timestamp;
+  final DateTime timestamp;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -236,7 +236,7 @@ abstract class _PostModel implements PostModel {
       required final String postedUserUid,
       required final String postTitle,
       required final List<String> prefecture,
-      final DateTime? timestamp}) = _$PostModelImpl;
+      required final DateTime timestamp}) = _$PostModelImpl;
 
   factory _PostModel.fromJson(Map<String, dynamic> json) =
       _$PostModelImpl.fromJson;
@@ -250,7 +250,7 @@ abstract class _PostModel implements PostModel {
   @override
   List<String> get prefecture;
   @override
-  DateTime? get timestamp;
+  DateTime get timestamp;
   @override
   @JsonKey(ignore: true)
   _$$PostModelImplCopyWith<_$PostModelImpl> get copyWith =>

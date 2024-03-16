@@ -24,7 +24,7 @@ mixin _$MessageModel {
   String get receiverUid => throw _privateConstructorUsedError;
   String get text => throw _privateConstructorUsedError;
   String get userUid => throw _privateConstructorUsedError;
-  DateTime? get timestamp => throw _privateConstructorUsedError;
+  DateTime get timestamp => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -43,7 +43,7 @@ abstract class $MessageModelCopyWith<$Res> {
       String receiverUid,
       String text,
       String userUid,
-      DateTime? timestamp});
+      DateTime timestamp});
 }
 
 /// @nodoc
@@ -63,7 +63,7 @@ class _$MessageModelCopyWithImpl<$Res, $Val extends MessageModel>
     Object? receiverUid = null,
     Object? text = null,
     Object? userUid = null,
-    Object? timestamp = freezed,
+    Object? timestamp = null,
   }) {
     return _then(_value.copyWith(
       senderUid: null == senderUid
@@ -82,10 +82,10 @@ class _$MessageModelCopyWithImpl<$Res, $Val extends MessageModel>
           ? _value.userUid
           : userUid // ignore: cast_nullable_to_non_nullable
               as String,
-      timestamp: freezed == timestamp
+      timestamp: null == timestamp
           ? _value.timestamp
           : timestamp // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+              as DateTime,
     ) as $Val);
   }
 }
@@ -103,7 +103,7 @@ abstract class _$$MessageModelImplCopyWith<$Res>
       String receiverUid,
       String text,
       String userUid,
-      DateTime? timestamp});
+      DateTime timestamp});
 }
 
 /// @nodoc
@@ -121,7 +121,7 @@ class __$$MessageModelImplCopyWithImpl<$Res>
     Object? receiverUid = null,
     Object? text = null,
     Object? userUid = null,
-    Object? timestamp = freezed,
+    Object? timestamp = null,
   }) {
     return _then(_$MessageModelImpl(
       senderUid: null == senderUid
@@ -140,10 +140,10 @@ class __$$MessageModelImplCopyWithImpl<$Res>
           ? _value.userUid
           : userUid // ignore: cast_nullable_to_non_nullable
               as String,
-      timestamp: freezed == timestamp
+      timestamp: null == timestamp
           ? _value.timestamp
           : timestamp // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+              as DateTime,
     ));
   }
 }
@@ -156,7 +156,7 @@ class _$MessageModelImpl with DiagnosticableTreeMixin implements _MessageModel {
       required this.receiverUid,
       required this.text,
       required this.userUid,
-      this.timestamp});
+      required this.timestamp});
 
   factory _$MessageModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$MessageModelImplFromJson(json);
@@ -170,7 +170,7 @@ class _$MessageModelImpl with DiagnosticableTreeMixin implements _MessageModel {
   @override
   final String userUid;
   @override
-  final DateTime? timestamp;
+  final DateTime timestamp;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -229,7 +229,7 @@ abstract class _MessageModel implements MessageModel {
       required final String receiverUid,
       required final String text,
       required final String userUid,
-      final DateTime? timestamp}) = _$MessageModelImpl;
+      required final DateTime timestamp}) = _$MessageModelImpl;
 
   factory _MessageModel.fromJson(Map<String, dynamic> json) =
       _$MessageModelImpl.fromJson;
@@ -243,7 +243,7 @@ abstract class _MessageModel implements MessageModel {
   @override
   String get userUid;
   @override
-  DateTime? get timestamp;
+  DateTime get timestamp;
   @override
   @JsonKey(ignore: true)
   _$$MessageModelImplCopyWith<_$MessageModelImpl> get copyWith =>

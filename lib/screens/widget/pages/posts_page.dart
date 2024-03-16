@@ -52,7 +52,7 @@ class PostsPage extends HookConsumerWidget {
                       ),
                       trailing: Column(
                         children: [
-                          Text(Utility.dateTimeConverter(post.timestamp!)),
+                          Text(Utility.dateTimeConverter(post.timestamp)),
                           const SizedBox(height: 8),
                           currentUser?.uid != post.postedUserUid
                               ? InkWell(

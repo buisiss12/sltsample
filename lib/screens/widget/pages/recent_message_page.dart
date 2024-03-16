@@ -23,7 +23,7 @@ class RecentMessagePage extends HookConsumerWidget {
             final message = messages[index];
             final otherUserUid =
                 message.userUid.firstWhere((uid) => uid != currentUser.uid);
-            final getOtherUserUid = ref.watch(userDetailProvider(otherUserUid));
+            final getOtherUserUid = ref.watch(getUserUidProvider(otherUserUid));
             final getTime = Utility.dateTimeConverter(
                 message.lastMessageTimestamp ?? DateTime.now());
 
