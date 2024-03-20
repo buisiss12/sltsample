@@ -42,7 +42,16 @@ class PostsPage extends HookConsumerWidget {
                                     'assets/images/300x300defaultprofile.png')
                                 as ImageProvider,
                       ),
-                      title: Text(user.nickName),
+                      title: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(user.nickName),
+                          Text(
+                            Utility.dateTimeConverter(post.timestamp),
+                            style: const TextStyle(fontSize: 10),
+                          ),
+                        ],
+                      ),
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -50,65 +59,53 @@ class PostsPage extends HookConsumerWidget {
                           Text('本文: ${post.postTitle}'),
                         ],
                       ),
-                      trailing: Column(
-                        children: [
-                          Text(Utility.dateTimeConverter(post.timestamp)),
-                          const SizedBox(height: 8),
-                          currentUser?.uid != post.postedUserUid
-                              ? InkWell(
-                                  child: const Icon(
-                                    Icons.email,
-                                    size: 28.0,
-                                  ),
-                                  onTap: () async {
-                                    final userDoc = await firestore
-                                        .collection('users')
-                                        .doc(currentUser?.uid)
-                                        .get();
-                                    final userNickname =
-                                        userDoc.data()?['nickName'];
-                                    if (userNickname == null ||
-                                        userNickname.isEmpty) {
-                                      if (context.mounted) {
-                                        utility.showSnackBarAPI(
-                                            context, 'ニックネームを入力してください');
-                                      }
-                                      return;
-                                    }
-                                    if (context.mounted) {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => MessagePage(
-                                            currentUserUid: currentUser!.uid,
-                                            receiverUid: post.postedUserUid,
-                                          ),
-                                        ),
-                                      );
-                                    }
+                      trailing: currentUser?.uid != post.postedUserUid
+                          ? IconButton(
+                              icon: const Icon(Icons.email),
+                              onPressed: () async {
+                                final userDoc = await firestore
+                                    .collection('users')
+                                    .doc(currentUser?.uid)
+                                    .get();
+                                final userNickname =
+                                    userDoc.data()?['nickName'];
+                                if (userNickname == null ||
+                                    userNickname.isEmpty) {
+                                  if (context.mounted) {
+                                    utility.showSnackBarAPI(
+                                        context, 'ニックネームを入力してください');
+                                  }
+                                  return;
+                                }
+                                if (context.mounted) {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => MessagePage(
+                                        currentUserUid: currentUser!.uid,
+                                        receiverUid: post.postedUserUid,
+                                      ),
+                                    ),
+                                  );
+                                }
+                              },
+                            )
+                          : IconButton(
+                              icon: const Icon(Icons.delete),
+                              onPressed: () async {
+                                Utility.showDialogAPI(
+                                  context,
+                                  '投稿を削除',
+                                  'この投稿を削除してもよろしいですか？',
+                                  () async {
+                                    await firestore
+                                        .collection('posts')
+                                        .doc(post.postId)
+                                        .delete();
                                   },
-                                )
-                              : InkWell(
-                                  child: const Icon(
-                                    Icons.delete,
-                                    size: 28.0,
-                                  ),
-                                  onTap: () async {
-                                    Utility.showDialogAPI(
-                                      context,
-                                      '投稿を削除',
-                                      'この投稿を削除してもよろしいですか？',
-                                      () async {
-                                        await firestore
-                                            .collection('posts')
-                                            .doc(post.postId)
-                                            .delete();
-                                      },
-                                    );
-                                  },
-                                ),
-                        ],
-                      ),
+                                );
+                              },
+                            ),
                     ),
                   );
                 } else {

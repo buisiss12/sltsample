@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -9,7 +9,7 @@ import 'package:sltsampleapp/models/user_model.dart';
 import 'package:sltsampleapp/provider/provider.dart';
 import 'package:sltsampleapp/utils/utility.dart';
 
-final selectedProfileImageProvider = StateProvider<File?>((ref) => null);
+final selectedProfileImageProvider = StateProvider<Uint8List?>((ref) => null);
 
 class EditProfilePage extends ConsumerStatefulWidget {
   final UserModel user;
@@ -51,8 +51,8 @@ class UserProfilePageState extends ConsumerState<EditProfilePage> {
   Future<void> _pickImage() async {
     final pickedFile = await imagePicker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
-      ref.read(selectedProfileImageProvider.notifier).state =
-          File(pickedFile.path);
+      final imageData = await pickedFile.readAsBytes();
+      ref.read(selectedProfileImageProvider.notifier).state = imageData;
     }
   }
 
@@ -61,10 +61,12 @@ class UserProfilePageState extends ConsumerState<EditProfilePage> {
     final selectedImage = ref.read(selectedProfileImageProvider);
 
     if (selectedImage != null) {
+      var metadata =
+          SettableMetadata(contentType: "image/jpeg"); //.jpegデータとして保存する
       final uploadTask = ref
           .read(firebaseStorageProvider)
-          .ref('profileImage_${widget.user.userUid}.jpg')
-          .putFile(selectedImage);
+          .ref('image/profileImage_${widget.user.userUid}.jpeg')
+          .putData(selectedImage, metadata);
       final snapshot = await uploadTask;
       imageUrl = await snapshot.ref.getDownloadURL();
     }
@@ -108,7 +110,7 @@ class UserProfilePageState extends ConsumerState<EditProfilePage> {
                           CircleAvatar(
                             radius: 40,
                             backgroundImage: selectedImage != null
-                                ? FileImage(selectedImage)
+                                ? MemoryImage(selectedImage)
                                 : (widget.user.profileImageUrl.isNotEmpty
                                         ? NetworkImage(widget.user.profileImageUrl)
                                         : const AssetImage(
