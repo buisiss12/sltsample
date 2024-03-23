@@ -89,7 +89,7 @@ class LoginPageState extends ConsumerState<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const SizedBox(height: 70),
-                Image.asset('assets/images/1080x384solotte.png'),
+                Image.asset('assets/images/1080x384title.png'),
                 const Text(
                   'ログイン',
                   style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),

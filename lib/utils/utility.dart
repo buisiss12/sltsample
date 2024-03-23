@@ -284,4 +284,31 @@ class Utility {
         return green;
     }
   }
+
+  static List<HonorData> getHonorDataList() {
+    return [
+      HonorData(title: '初回来店', currentValue: 1, maxValue: 1),
+      HonorData(title: '3回来店', currentValue: 1, maxValue: 3),
+      HonorData(title: '5回来店', currentValue: 1, maxValue: 5),
+      HonorData(title: '2店舗はしご', currentValue: 0, maxValue: 1),
+      HonorData(title: '3店舗はしご', currentValue: 0, maxValue: 2),
+      HonorData(title: '4店舗はしご', currentValue: 0, maxValue: 3),
+      HonorData(title: 'VIP利用5回', currentValue: 1, maxValue: 5),
+      HonorData(title: 'VIP利用10回', currentValue: 1, maxValue: 10),
+      HonorData(title: '連続ログイン3日', currentValue: 3, maxValue: 3),
+      HonorData(title: '連続ログイン5日', currentValue: 3, maxValue: 5),
+      HonorData(title: '連続ログイン10日', currentValue: 3, maxValue: 10),
+    ];
+  }
+}
+
+class HonorData {
+  final String title;
+  final int currentValue;
+  final int maxValue;
+
+  HonorData(
+      {required this.title,
+      required this.currentValue,
+      required this.maxValue});
 }

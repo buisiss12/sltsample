@@ -339,17 +339,16 @@ class HonorTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //データベースとの通信（未実装のため数値を指定）
-    const honorTitle = '初回来店';
-    const currentValue = 1;
-    const maxValue = 2;
-    const progressValue = currentValue / maxValue;
-    return ListView(
-      shrinkWrap: true,
-      children: [
-        const SizedBox(height: 16),
-        const Text('オリエンタルラウンジ・agへのご来店や滞在で付与される称号です。'),
-        const SizedBox(height: 16),
-        ListTile(
+    final honorDataList = Utility.getHonorDataList();
+
+    return ListView.builder(
+      itemCount: honorDataList.length,
+      itemBuilder: (context, index) {
+        final honor = honorDataList[index];
+        final progressValue = honor.currentValue / honor.maxValue;
+        final isAchieved = honor.currentValue >= honor.maxValue;
+
+        return ListTile(
           leading: Image.asset('assets/images/100x100coin.png'),
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -358,9 +357,9 @@ class HonorTab extends StatelessWidget {
                 alignment: Alignment.center,
                 children: [
                   Image.asset('assets/images/150x40ribbon.png'),
-                  const Text(
-                    honorTitle,
-                    style: TextStyle(color: Colors.black),
+                  Text(
+                    honor.title,
+                    style: const TextStyle(color: Colors.black),
                   ),
                 ],
               ),
@@ -374,17 +373,20 @@ class HonorTab extends StatelessWidget {
                 child: LinearProgressIndicator(
                   value: progressValue,
                   backgroundColor: Colors.grey[200],
-                  valueColor: const AlwaysStoppedAnimation<Color>(Colors.blue),
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                      isAchieved ? Colors.green : Colors.blue),
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.only(left: 10),
-                child: Text("$currentValue/$maxValue"),
+              Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: isAchieved
+                    ? const Text("達成済み")
+                    : Text("${honor.currentValue}/${honor.maxValue}"),
               ),
             ],
           ),
-        ),
-      ],
+        );
+      },
     );
   }
 }

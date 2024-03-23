@@ -68,7 +68,7 @@ class Home extends HookWidget {
           url: 'https://oriental-lounge.com/#shop',
           showAppBar: false,
         ),
-        const Center(child: Text('メニュー')),
+        const Center(child: Text('入店処理後にご覧になれます。')),
         const MyPage(),
       ][currentIndex.value],
       bottomNavigationBar: NavigationBar(
