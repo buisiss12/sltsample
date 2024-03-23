@@ -37,7 +37,7 @@
 - プラットフォーム  
 iOS 12.0以上  
 Android 5.0以上  
-Web(Chrome)  
+Web(Chrome)一部機能制限有    
 
 # -以下個人的なメモ-
 - IoTボタンでチェンジ  

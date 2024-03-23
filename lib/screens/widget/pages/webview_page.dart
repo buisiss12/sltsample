@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class WebviewPage extends StatelessWidget {
   final String appbarTitle;
@@ -15,13 +17,35 @@ class WebviewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: showAppBar
-          ? AppBar(title: Text(appbarTitle))
-          : null, // 店内人数のページでのみ既にAppBarが実装されているため無効化
-      body: WebViewWidget(
-        controller: WebViewController()..loadRequest(Uri.parse(url)),
-      ),
-    );
+    // Flutter Webの場合、新規タブを開く
+    if (kIsWeb) {
+      return Scaffold(
+        appBar: showAppBar ? AppBar(title: Text(appbarTitle)) : null,
+        body: Center(
+          child: TextButton(
+            onPressed: () async {
+              final Uri uri = Uri.parse(url);
+              if (await canLaunchUrl(uri)) {
+                await launchUrl(uri);
+              } else {
+                throw 'Could not launch $url';
+              }
+            },
+            child: const Text(
+              'Flutter for Webの場合は新規タブを開きます。',
+              style: TextStyle(decoration: TextDecoration.underline),
+            ),
+          ),
+        ),
+      );
+    } else {
+      // iOSとAndroidの場合、WebViewを使用
+      return Scaffold(
+        appBar: showAppBar ? AppBar(title: Text(appbarTitle)) : null,
+        body: WebViewWidget(
+          controller: WebViewController()..loadRequest(Uri.parse(url)),
+        ),
+      );
+    }
   }
 }
