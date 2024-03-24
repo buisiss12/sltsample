@@ -4,7 +4,7 @@
 
 
 # -お急ぎの方へ-
-- こちらのリンクからWebで動作を確認いただけます。(Chrome,Safari)一部機能制限有り
+- こちらのリンクからWebで動作を確認いただけます。(Chrome,Safari) 🚨Webでは下記のテスト用の電話番号のみ使用できます。  
 https://solottesample.web.app/
 
 
@@ -34,7 +34,7 @@ https://solottesample.web.app/
 - ユーザーのプロフィール  
 'users'.'ユーザーUID'.各フィールド  
 - 掲示板のポストデータ  
-'posts'.'投稿者のユーザーUID'.各フィールド  
+'posts'.'ランダム'.各フィールド  
 - メッセージデータ(サブコレクション)  
 'conversations'.'両者ののユーザーUIDの組み合わせ'.'messages'.各フィールド  
 - 最近のメッセージデータ  
