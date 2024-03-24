@@ -264,6 +264,8 @@ class SpecialMemberTab extends HookWidget {
     final utility = Utility();
 
     final picIndex = useState(0);
+    //この数値は選択されていない写真がかすかに見えるようにする割合の数値
+    final pageController = usePageController(viewportFraction: 0.75);
     final currentTitle = utility.getMemberTitle(picIndex.value);
     final currentColor = utility.getMemberColor(picIndex.value);
     final currentBenefits = utility.getMemberBenefits(picIndex.value);
@@ -282,16 +284,43 @@ class SpecialMemberTab extends HookWidget {
           ),
         ),
         const SizedBox(height: 16),
-        SizedBox(
-          height: 150,
-          child: PageView.builder(
-            itemCount: 3,
-            controller: PageController(viewportFraction: 0.75),
-            onPageChanged: (index) => picIndex.value = index,
-            itemBuilder: (context, index) {
-              return Image.asset('assets/images/440x275card${index + 1}.png');
-            },
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            IconButton(
+              icon: const Icon(Icons.arrow_left),
+              onPressed: () {
+                pageController.previousPage(
+                    duration: const Duration(milliseconds: 400),
+                    curve: Curves.easeInOut);
+              },
+            ),
+            Flexible(
+              child: SizedBox(
+                height: 150,
+                child: PageView.builder(
+                  itemCount: 3,
+                  controller: pageController,
+                  onPageChanged: (index) => picIndex.value = index,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 6),
+                      child: Image.asset(
+                          'assets/images/440x275card${index + 1}.png'),
+                    );
+                  },
+                ),
+              ),
+            ),
+            IconButton(
+              icon: const Icon(Icons.arrow_right),
+              onPressed: () {
+                pageController.nextPage(
+                    duration: const Duration(milliseconds: 400),
+                    curve: Curves.easeInOut);
+              },
+            ),
+          ],
         ),
         const SizedBox(height: 16),
         ElevatedButton(
