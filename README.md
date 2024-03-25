@@ -59,7 +59,4 @@ Web(Chrome,Safari)一部機能制限有
 - UI/UXの改善  
 - Firebase使用料を抑えた設計  
 
-![IMG_0037](https://github.com/buisiss12/sltsample/assets/132786917/432629da-7bb9-409c-838f-64d9080c2754)
-![IMG_0036](https://github.com/buisiss12/sltsample/assets/132786917/cdd24733-7b24-4d51-bfe3-da8abfce8079)
-![IMG_0035](https://github.com/buisiss12/sltsample/assets/132786917/e6ef5452-ea1e-40eb-9784-151241b31d92)
-![IMG_0034](https://github.com/buisiss12/sltsample/assets/132786917/a765eb19-f381-46aa-a974-4de7a8992381)
+![handss](https://github.com/buisiss12/sltsample/assets/132786917/93c3a782-aad6-4539-954d-c4980bee0743)
