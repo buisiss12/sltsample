@@ -1,10 +1,12 @@
 # はじめに
-- このアプリはユーザーが掲示板へポストを投稿したり、他ユーザーとメッセージを行い、一緒に居酒屋へ行くトモダチを見つけるアプリです。 
+- このアプリはユーザーが掲示板へポストを投稿したり、他ユーザーとメッセージを行い、一緒に居酒屋へ行くトモダチを見つけるアプリです。  
 - 会員登録/ログインは電話番号のみで行います。(SMS認証) テスト用の電話番号を使用したい場合は下記の"電話番号&SMS確認コード"を使用してください。  
 
 
 # -お急ぎの方へ-
-- こちらのリンクからWebで動作を確認いただけます。(Chrome,Safari) 🚨Webでは下記のテスト用の電話番号のみ使用できます。  
+- こちらのリンクからWebで動作を確認いただけます。(Chrome,Safari)  
+🚨Webでは下記のテスト用の電話番号のみ使用できます。  
+
 https://solottesample.web.app/
 
 
@@ -19,6 +21,8 @@ https://solottesample.web.app/
 - 080-1111-7777	 756666  
 - 080-1111-8888	 124141  
 - 080-1111-9999	 858966  
+
+- ゲスト用アカウント  
 - 080-2222-0000	 646262  
 
 
@@ -47,10 +51,15 @@ https://solottesample.web.app/
 - プラットフォーム  
 iOS 12.0以上  
 Android 5.0以上  
-Web(Chrome,Safari)一部機能制限有    
+Web(Chrome,Safari)一部機能制限有  
 
 
 ## -改善点-
 - riverpodの理解と効率的な状態管理の模索  
 - UI/UXの改善  
 - Firebase使用料を抑えた設計  
+
+![IMG_0037](https://github.com/buisiss12/sltsample/assets/132786917/432629da-7bb9-409c-838f-64d9080c2754)
+![IMG_0036](https://github.com/buisiss12/sltsample/assets/132786917/cdd24733-7b24-4d51-bfe3-da8abfce8079)
+![IMG_0035](https://github.com/buisiss12/sltsample/assets/132786917/e6ef5452-ea1e-40eb-9784-151241b31d92)
+![IMG_0034](https://github.com/buisiss12/sltsample/assets/132786917/a765eb19-f381-46aa-a974-4de7a8992381)
