@@ -24,6 +24,7 @@ class LoginPageState extends ConsumerState<LoginPage> {
     final isRegistered = await ref
         .read(userStateAPIProvider)
         .isPhoneNumberRegistered(phoneNumber);
+    ref.invalidate(userStateFutureProvider);
 
     if (isRegistered) {
       await ref.read(firebaseAuthProvider).verifyPhoneNumber(

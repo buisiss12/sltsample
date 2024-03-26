@@ -29,6 +29,7 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
     final isRegistered = await ref
         .read(userStateAPIProvider)
         .isPhoneNumberRegistered(phoneNumber);
+    ref.invalidate(userStateFutureProvider);
 
     if (isRegistered) {
       if (mounted) {
