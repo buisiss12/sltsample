@@ -87,7 +87,7 @@ class Utility {
     '熊本',
     '宮崎',
     '鹿児島',
-    'ag沖縄'
+    'ag沖縄',
   ];
 
   static String dateTimeConverter(DateTime postTime) {

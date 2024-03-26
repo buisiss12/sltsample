@@ -100,6 +100,7 @@ final messageStreamProvider =
   return firestore
       .collection('conversations')
       .where('userUid', arrayContains: userUid)
+      .orderBy('lastMessageTimestamp', descending: true)
       .snapshots()
       .map(
     (snapshot) {
