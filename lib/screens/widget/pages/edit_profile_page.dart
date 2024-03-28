@@ -187,6 +187,7 @@ class UserProfilePageState extends ConsumerState<EditProfilePage> {
                   decoration: const InputDecoration(
                     labelText: '居住地',
                     border: OutlineInputBorder(),
+                    suffixIcon: Icon(Icons.expand_more),
                   ),
                   readOnly: true,
                   onTap: () => Utility.selectSinglePrefectureDialog(

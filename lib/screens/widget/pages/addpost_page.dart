@@ -125,6 +125,7 @@ class _AddPostPageState extends ConsumerState<AddPostPage> {
                   decoration: const InputDecoration(
                     hintText: '希望地域を選択',
                     border: OutlineInputBorder(),
+                    suffixIcon: Icon(Icons.expand_more),
                   ),
                   readOnly: true,
                   onTap: () => showSelectPrefectureDialog(context),

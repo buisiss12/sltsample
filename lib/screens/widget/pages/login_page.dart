@@ -134,6 +134,8 @@ class LoginPageState extends ConsumerState<LoginPage> {
                   },
                   child: const Text('新規会員登録'),
                 ),
+                const SizedBox(height: 16),
+                const Text('*Flutter for Webの場合は実際の電話番号はご利用できません'),
               ],
             ),
           ),
